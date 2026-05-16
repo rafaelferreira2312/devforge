@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Node.js · DevForge</title>
-    <meta name="description" content="Setup completo do Node.js para Linux, Windows e macOS. Scripts de instalação, troubleshooting, extensões VSCode, Docker e muito mais.">
+    <title>Python · DevForge</title>
+    <meta name="description" content="Setup completo do Python para Linux, Windows e macOS. Scripts de instalação, virtualenv, pip, troubleshooting, extensões VSCode, Docker e muito mais.">
     <meta name="author" content="Rafael Ferreira">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -73,8 +73,8 @@
         <div class="pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Stacks</div>
         <a href="php.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-php w-5 text-indigo-500"></i><span>PHP</span></a>
         <a href="wordpress.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-wordpress w-5 text-blue-500"></i><span>WordPress</span></a>
-        <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span></a>
-        <a href="python.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-python w-5 text-yellow-500"></i><span>Python</span></a>
+        <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span></a>
+        <a href="python.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fab fa-python w-5 text-yellow-500"></i><span>Python</span></a>
         <a href="java.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-java w-5 text-red-500"></i><span>Java</span></a>
         <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
         <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span></a>
@@ -102,8 +102,8 @@
             <div class="pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Stacks</div>
             <a href="php.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-php w-5 text-indigo-500"></i><span>PHP</span></a>
             <a href="wordpress.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-wordpress w-5 text-blue-500"></i><span>WordPress</span></a>
-            <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span></a>
-            <a href="python.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-python w-5 text-yellow-500"></i><span>Python</span></a>
+            <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span></a>
+            <a href="python.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fab fa-python w-5 text-yellow-500"></i><span>Python</span></a>
             <a href="java.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-java w-5 text-red-500"></i><span>Java</span></a>
             <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
             <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span></a>
@@ -128,37 +128,37 @@
         <div class="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
             <!-- Cabeçalho -->
             <div class="flex items-center gap-4 mb-8">
-                <i class="fab fa-node text-6xl text-green-600"></i>
-                <div><h1 class="text-3xl sm:text-4xl font-bold tracking-tight">Node.js</h1><p class="text-gray-600 dark:text-gray-400 mt-1">Runtime JavaScript assíncrono e orientado a eventos, ideal para APIs, microsserviços e aplicações em tempo real.</p></div>
+                <i class="fab fa-python text-6xl text-yellow-500"></i>
+                <div><h1 class="text-3xl sm:text-4xl font-bold tracking-tight">Python</h1><p class="text-gray-600 dark:text-gray-400 mt-1">Linguagem versátil para desenvolvimento web, ciência de dados, automação, IA e muito mais.</p></div>
             </div>
 
             <!-- Seletor de versão e comandos dinâmicos -->
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
                 <h2 class="text-xl font-semibold mb-4">⚡ Instalação automatizada</h2>
                 <div class="mb-4 flex flex-wrap gap-4 items-center">
-                    <label class="text-sm font-medium">Versão do Node.js:</label>
-                    <select id="nodeVersion" class="version-selector bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700 rounded-md px-3 py-1">
-                        <option value="22">Node.js 22 (recomendada)</option>
-                        <option value="20">Node.js 20 (LTS)</option>
-                        <option value="18">Node.js 18 (LTS)</option>
-                        <option value="16">Node.js 16 (legado)</option>
+                    <label class="text-sm font-medium">Versão do Python:</label>
+                    <select id="pythonVersion" class="version-selector bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700 rounded-md px-3 py-1">
+                        <option value="3.12">Python 3.12 (recomendada)</option>
+                        <option value="3.11">Python 3.11 (LTS)</option>
+                        <option value="3.10">Python 3.10 (LTS)</option>
+                        <option value="3.9">Python 3.9 (legado)</option>
                     </select>
                 </div>
                 <div class="space-y-5">
-                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-linux text-lg text-yellow-600"></i><span class="font-medium">Linux / WSL</span></div><div class="relative code-block"><code id="linuxCmd" class="text-green-400 text-xs sm:text-sm break-all">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/nodejs/install.sh | bash -s 22</code><button class="copy-btn" data-cmd-id="linuxCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
-                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-windows text-lg text-blue-500"></i><span class="font-medium">Windows PowerShell (Admin)</span></div><div class="relative code-block"><code id="winCmd" class="text-green-400 text-xs sm:text-sm break-all">Set-ExecutionPolicy Bypass -Scope Process; iex "& { $(irm https://rafaelferreira2312.github.io/devforge/scripts/nodejs/install.ps1) } 22"</code><button class="copy-btn" data-cmd-id="winCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
-                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-apple text-lg text-gray-500"></i><span class="font-medium">macOS (Homebrew)</span></div><div class="relative code-block"><code id="macCmd" class="text-green-400 text-xs sm:text-sm break-all">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/nodejs/install.sh | bash -s 22</code><button class="copy-btn" data-cmd-id="macCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
+                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-linux text-lg text-yellow-600"></i><span class="font-medium">Linux / WSL</span></div><div class="relative code-block"><code id="linuxCmd" class="text-green-400 text-xs sm:text-sm break-all">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/python/install.sh | bash -s 3.12</code><button class="copy-btn" data-cmd-id="linuxCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
+                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-windows text-lg text-blue-500"></i><span class="font-medium">Windows PowerShell (Admin)</span></div><div class="relative code-block"><code id="winCmd" class="text-green-400 text-xs sm:text-sm break-all">Set-ExecutionPolicy Bypass -Scope Process; iex "& { $(irm https://rafaelferreira2312.github.io/devforge/scripts/python/install.ps1) } 3.12"</code><button class="copy-btn" data-cmd-id="winCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
+                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-apple text-lg text-gray-500"></i><span class="font-medium">macOS (Homebrew)</span></div><div class="relative code-block"><code id="macCmd" class="text-green-400 text-xs sm:text-sm break-all">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/python/install.sh | bash -s 3.12</code><button class="copy-btn" data-cmd-id="macCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
                 </div>
-                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-database"></i> Os scripts fazem backup automático do ambiente npm global antes de instalar ou atualizar.</p>
+                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-database"></i> Os scripts fazem backup automático da sua lista de pacotes pip antes de instalar.</p>
             </div>
 
             <!-- Requisitos e Hardware -->
             <div class="grid md:grid-cols-2 gap-6 mb-8">
                 <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6"><h3 class="text-lg font-bold mb-3 flex items-center gap-2"><i class="fas fa-microchip text-blue-500"></i> Requisitos mínimos</h3>
-                    <ul class="list-disc list-inside space-y-1 text-sm"><li>CPU: 2+ núcleos (x86_64 ou ARM64)</li><li>RAM: 2 GB (recomendado 4 GB para projetos maiores)</li><li>Armazenamento: 5 GB SSD</li><li>SO: Ubuntu 20.04+, Debian 11+, RHEL 8+, Windows 10/11, macOS 11+</li></ul>
+                    <ul class="list-disc list-inside space-y-1 text-sm"><li>CPU: 2+ núcleos (x86_64 ou ARM64)</li><li>RAM: 2 GB (recomendado 4 GB para Data Science)</li><li>Armazenamento: 5 GB SSD</li><li>SO: Ubuntu 20.04+, Debian 11+, RHEL 8+, Windows 10/11, macOS 11+</li></ul>
                 </div>
                 <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6"><h3 class="text-lg font-bold mb-3 flex items-center gap-2"><i class="fas fa-laptop-code text-green-500"></i> Hardware recomendado (Dev)</h3>
-                    <ul class="list-disc list-inside space-y-1 text-sm"><li>Notebook: Dell XPS, MacBook Pro M1/M2, Lenovo ThinkPad</li><li>CPU: i5 / Ryzen 5 ou superior</li><li>RAM: 16 GB (32 GB para containers + IDE)</li><li>SSD NVMe 256 GB+</li></ul>
+                    <ul class="list-disc list-inside space-y-1 text-sm"><li>Notebook: Dell XPS, MacBook Pro M1/M2, Lenovo ThinkPad</li><li>CPU: i7 / Ryzen 7 ou superior (para ML)</li><li>RAM: 16 GB (32 GB para Data Science + containers)</li><li>GPU: NVIDIA CUDA (para treinamento de IA)</li></ul>
                 </div>
             </div>
 
@@ -167,15 +167,15 @@
                 <h2 class="text-xl font-semibold mb-4">🛠️ Stack recomendada</h2>
                 <div class="grid md:grid-cols-2 gap-6">
                     <div><h3 class="font-medium mb-2 flex items-center gap-2"><i class="fas fa-boxes text-purple-500"></i> Ferramentas essenciais</h3>
-                        <ul class="list-disc list-inside text-sm space-y-1"><li>Gerenciador de versões: nvm / fnm</li><li>Gerenciador de pacotes: npm / yarn / pnpm</li><li>Framework: Express.js / Fastify / Nest.js</li><li>TypeScript: suporte nativo ou ts-node</li><li>Process Manager: PM2</li></ul>
+                        <ul class="list-disc list-inside text-sm space-y-1"><li>Gerenciador de ambientes: virtualenv / conda</li><li>Gerenciador de pacotes: pip / poetry</li><li>Framework web: Django / Flask / FastAPI</li><li>Data Science: Jupyter Notebook / VS Code</li><li>Versionamento: git + GitHub</li></ul>
                     </div>
                     <div><h3 class="font-medium mb-2 flex items-center gap-2"><i class="fab fa-vscode text-blue-500"></i> Extensões VSCode</h3>
-                        <ul class="list-disc list-inside text-sm space-y-1"><li>JavaScript/TypeScript (built-in)</li><li>ES7+ React/Redux/React-Native snippets</li><li>npm Intellisense</li><li>Prettier - Code formatter</li><li>Thunder Client (alternativa ao Postman)</li></ul>
+                        <ul class="list-disc list-inside text-sm space-y-1"><li>Python (Microsoft)</li><li>Pylance</li><li>Python Docstring Generator</li><li>Jupyter</li><li>Python Test Explorer</li></ul>
                     </div>
                 </div>
                 <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800"><h3 class="font-medium mb-2 flex items-center gap-2"><i class="fab fa-docker text-blue-500"></i> Docker (opcional)</h3>
                     <div class="relative code-block mt-2">
-                        <code id="dockerCmd" class="text-green-400 text-xs sm:text-sm break-all">docker run -d -p 3000:3000 --name node-app node:22-alpine node -e "require('http').createServer((req,res)=>{res.end('Hello DevForge!')}).listen(3000)"</code>
+                        <code id="dockerCmd" class="text-green-400 text-xs sm:text-sm break-all">docker run -it --rm python:3.12-slim python -c "print('DevForge - Python Ready!')"</code>
                         <button class="copy-btn absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs" data-cmd-id="dockerCmd"><i class="far fa-copy"></i> Copiar</button>
                     </div>
                 </div>
@@ -185,9 +185,10 @@
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
                 <h2 class="text-xl font-semibold mb-4">🔧 Troubleshooting (diagnósticos reais)</h2>
                 <div class="space-y-4">
-                    <div class="border-l-4 border-red-400 pl-4"><p class="font-medium">❌ Erro: "node: command not found"</p><p class="text-sm">Causa: Node.js não instalado ou PATH não configurado.<br>Solução: Verifique com <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">which node</code> ou reinstale usando o script DevForge.</p></div>
-                    <div class="border-l-4 border-yellow-400 pl-4"><p class="font-medium">⚠️ Erro: "EACCES: permission denied" ao instalar pacotes globais</p><p class="text-sm">Causa: Permissões incorretas na pasta npm global.<br>Solução: Corrija com <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">sudo chown -R $(whoami) ~/.npm</code> ou use nvm.</p></div>
-                    <div class="border-l-4 border-blue-400 pl-4"><p class="font-medium">🐘 Erro: "node-gyp" falha ao compilar módulos nativos</p><p class="text-sm">Causa: Dependências de build faltando.<br>Solução: Instale build-essential e Python: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">sudo apt install build-essential python3</code></p></div>
+                    <div class="border-l-4 border-red-400 pl-4"><p class="font-medium">❌ Erro: "python: command not found"</p><p class="text-sm">Causa: Python não instalado ou PATH não configurado.<br>Solução: Verifique com <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">which python3</code> ou reinstale usando o script DevForge.</p></div>
+                    <div class="border-l-4 border-yellow-400 pl-4"><p class="font-medium">⚠️ Erro: "pip: command not found"</p><p class="text-sm">Causa: pip não instalado.<br>Solução: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">python -m ensurepip --upgrade</code> ou <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">sudo apt install python3-pip</code></p></div>
+                    <div class="border-l-4 border-blue-400 pl-4"><p class="font-medium">🐘 Erro: "ModuleNotFoundError: No module named 'xyz'"</p><p class="text-sm">Causa: Pacote não instalado no ambiente atual.<br>Solução: Ative o virtualenv e instale: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">pip install xyz</code></p></div>
+                    <div class="border-l-4 border-purple-400 pl-4"><p class="font-medium">⚠️ Aviso: "pip is being invoked by an old script wrapper"</p><p class="text-sm">Causa: Versão do pip desatualizada.<br>Solução: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">python -m pip install --upgrade pip</code></p></div>
                 </div>
                 
                 <!-- DIAGNÓSTICO AUTOMÁTICO -->
@@ -195,11 +196,11 @@
                     <p class="text-sm font-medium flex items-center gap-2 mb-2"><i class="fas fa-stethoscope text-blue-500"></i> Diagnóstico automático:</p>
                     <div class="relative">
                         <div class="bg-gray-900 rounded-lg p-3 font-mono text-xs sm:text-sm overflow-x-auto">
-                            <code id="diagCmd" class="text-green-400 whitespace-pre-wrap break-all">node -v && npm -v && npx --version && npm list -g --depth=0 && echo "---" && which node && which npm</code>
+                            <code id="diagCmd" class="text-green-400 whitespace-pre-wrap break-all">python3 --version && pip3 --version && pip3 list --format=freeze | head -10 && echo "---" && which python3 && which pip3</code>
                         </div>
                         <button class="copy-btn absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs" data-cmd-id="diagCmd"><i class="far fa-copy"></i> Copiar</button>
                     </div>
-                    <p class="text-xs text-gray-500 mt-2"><i class="fas fa-info-circle"></i> Este comando verifica: versão do Node.js, versão do npm, pacotes globais instalados e localização dos binários.</p>
+                    <p class="text-xs text-gray-500 mt-2"><i class="fas fa-info-circle"></i> Este comando verifica: versão do Python, versão do pip, 10 primeiros pacotes instalados e localização dos binários.</p>
                 </div>
             </div>
 
@@ -207,23 +208,34 @@
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
                 <h2 class="text-xl font-semibold mb-4">📜 Scripts prontos</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                    <a href="../scripts/nodejs/install.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install.sh</a>
-                    <a href="../scripts/nodejs/install.ps1" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install.ps1</a>
-                    <a href="../scripts/nodejs/uninstall.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-trash"></i> uninstall.sh</a>
-                    <a href="../scripts/nodejs/backup-env.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-archive"></i> backup-env.sh</a>
+                    <a href="../scripts/python/install.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install.sh</a>
+                    <a href="../scripts/python/install.ps1" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install.ps1</a>
+                    <a href="../scripts/python/uninstall.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-trash"></i> uninstall.sh</a>
+                    <a href="../scripts/python/backup-env.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-archive"></i> backup-env.sh</a>
                 </div>
                 <p class="text-xs text-gray-500 mt-4"><i class="fas fa-shield-alt"></i> Scripts verificados no Ubuntu 22.04/24.04, Debian 12, macOS 13+ e Windows 10/11.</p>
             </div>
 
-            <!-- Comandos úteis -->
+            <!-- Pip comandos úteis -->
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
-                <h2 class="text-xl font-semibold mb-4">⚙️ Comandos npm úteis</h2>
+                <h2 class="text-xl font-semibold mb-4">⚙️ Comandos pip úteis</h2>
                 <div class="grid gap-3 text-sm">
-                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">npm init -y</code> – cria um novo projeto Node.js</div>
-                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">npm install express</code> – instala uma dependência</div>
-                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">npm run dev</code> – executa script de desenvolvimento</div>
-                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">npm outdated</code> – verifica dependências desatualizadas</div>
-                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">npm update</code> – atualiza dependências</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">pip install requests</code> – instala um pacote</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">pip freeze > requirements.txt</code> – exporta dependências</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">pip install -r requirements.txt</code> – instala dependências</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">pip uninstall pacote</code> – remove um pacote</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">pip list --outdated</code> – lista pacotes desatualizados</div>
+                </div>
+            </div>
+
+            <!-- Virtualenv -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">📦 Ambientes virtuais (virtualenv)</h2>
+                <div class="grid gap-3 text-sm">
+                    <div class="flex items-center gap-2"><i class="fas fa-plus-circle text-green-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">python -m venv venv</code> – cria ambiente virtual</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-play-circle text-blue-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">source venv/bin/activate</code> – ativa (Linux/Mac)</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-play-circle text-blue-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">venv\Scripts\activate</code> – ativa (Windows)</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-stop-circle text-red-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">deactivate</code> – desativa ambiente</div>
                 </div>
             </div>
 
@@ -231,17 +243,17 @@
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
                 <h2 class="text-xl font-semibold mb-4">❓ Perguntas frequentes</h2>
                 <div class="space-y-3">
-                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-question-circle text-blue-500"></i> Como gerenciar múltiplas versões do Node.js?</summary><p class="text-sm mt-2 pl-6">Use o nvm (Node Version Manager): <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">nvm install 20 && nvm use 20</code>. O script de instalação do DevForge já inclui o nvm opcionalmente.</p></details>
-                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-database text-green-500"></i> O script de instalação faz backup dos meus pacotes globais?</summary><p class="text-sm mt-2 pl-6">Sim! Antes de qualquer modificação, o script salva a lista de pacotes globais em <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">~/npm-global-backup.txt</code>.</p></details>
-                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-cloud-upload-alt text-purple-500"></i> Node.js em produção: qual versão usar?</summary><p class="text-sm mt-2 pl-6">Sempre use a versão LTS (Long Term Support). Atualmente a versão 20 LTS é a mais estável para produção.</p></details>
-                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-chart-line text-orange-500"></i> Como monitorar uma aplicação Node.js em produção?</summary><p class="text-sm mt-2 pl-6">Use PM2: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">pm2 start app.js && pm2 monit</code>. O DevForge oferece scripts prontos para configurar o PM2.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-question-circle text-blue-500"></i> Como gerenciar múltiplas versões do Python?</summary><p class="text-sm mt-2 pl-6">Use o pyenv: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">pyenv install 3.11.5 && pyenv global 3.11.5</code>. O script de instalação do DevForge inclui o pyenv opcionalmente.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-database text-green-500"></i> O script de instalação faz backup dos meus pacotes?</summary><p class="text-sm mt-2 pl-6">Sim! Antes de qualquer modificação, o script salva a lista de pacotes pip em <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">~/pip-packages-backup.txt</code>.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-cloud-upload-alt text-purple-500"></i> Python para Data Science: qual versão usar?</summary><p class="text-sm mt-2 pl-6">Use Python 3.11 ou 3.12 com Anaconda ou Miniconda para gerenciar bibliotecas como numpy, pandas, tensorflow.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-chart-line text-orange-500"></i> Como acelerar instalação de pacotes pip?</summary><p class="text-sm mt-2 pl-6">Use cache: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">pip install --cache-dir ~/.pip-cache pacote</code> ou mude para o mirror brasileiro: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">-i https://mirror.ufscar.br/pypi/web/simple</code></p></details>
                 </div>
             </div>
 
             <!-- Rodapé -->
             <footer class="mt-10 pt-6 border-t border-gray-200 dark:border-gray-800">
                 <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
-                    <p>DevForge © 2025-2026 - Open Source sob licença MIT</p>
+                    <p>DevForge © 2024-2025 - Open Source sob licença MIT</p>
                     <div class="flex gap-4"><a href="https://github.com/rafaelferreira2312/devforge" target="_blank" class="hover:text-blue-600"><i class="fab fa-github"></i> GitHub</a><span><i class="fab fa-whatsapp text-green-600"></i> (21) 97160-4248</span><span><i class="fas fa-pix text-green-500"></i> PIX: (21) 97160-4248</span></div>
                 </div>
             </footer>
@@ -251,16 +263,16 @@
 
 <script>
     // Seletor de versão
-    const versionSelect = document.getElementById('nodeVersion');
+    const versionSelect = document.getElementById('pythonVersion');
     const linuxCmdSpan = document.getElementById('linuxCmd');
     const winCmdSpan = document.getElementById('winCmd');
     const macCmdSpan = document.getElementById('macCmd');
 
     function updateCommands() {
         const ver = versionSelect.value;
-        linuxCmdSpan.innerText = `curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/nodejs/install.sh | bash -s ${ver}`;
-        winCmdSpan.innerText = `Set-ExecutionPolicy Bypass -Scope Process; iex "& { $(irm https://rafaelferreira2312.github.io/devforge/scripts/nodejs/install.ps1) } ${ver}"`;
-        macCmdSpan.innerText = `curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/nodejs/install.sh | bash -s ${ver}`;
+        linuxCmdSpan.innerText = `curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/python/install.sh | bash -s ${ver}`;
+        winCmdSpan.innerText = `Set-ExecutionPolicy Bypass -Scope Process; iex "& { $(irm https://rafaelferreira2312.github.io/devforge/scripts/python/install.ps1) } ${ver}"`;
+        macCmdSpan.innerText = `curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/python/install.sh | bash -s ${ver}`;
     }
     versionSelect.addEventListener('change', updateCommands);
     updateCommands();
@@ -331,12 +343,10 @@
             if (input) {
                 input.addEventListener('input', (e) => {
                     const term = e.target.value.toLowerCase();
-                    document.querySelectorAll('details, .card').forEach(card => {
+                    document.querySelectorAll('details').forEach(card => {
                         if (card && card.innerText) {
                             const text = card.innerText.toLowerCase();
-                            if (card.tagName === 'DETAILS') {
-                                card.style.display = text.includes(term) ? 'block' : 'none';
-                            }
+                            card.style.display = text.includes(term) ? 'block' : 'none';
                         }
                     });
                 });
