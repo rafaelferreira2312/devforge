@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Mobile · DevForge</title>
+    <meta name="description" content="Setup completo para desenvolvimento mobile: Android, iOS, React Native, Flutter, Ionic, Cordova, Xamarin, KMM. Comandos, scripts e diagnósticos.">
+    <meta name="author" content="Rafael Ferreira">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <style>
+        * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        
+        @media (min-width: 1024px) {
+            .layout-desktop { display: flex; min-height: 100vh; }
+            .sidebar-desktop { position: fixed; top: 0; left: 0; width: 280px; height: 100vh; overflow-y: auto; border-right: 1px solid; }
+            .main-content-desktop { margin-left: 280px; flex: 1; min-height: 100vh; }
+        }
+        
+        .sidebar-mobile {
+            position: fixed; top: 0; left: 0; width: 280px; height: 100vh; z-index: 1000;
+            transform: translateX(-100%); transition: transform 0.3s ease-in-out; overflow-y: auto;
+        }
+        .sidebar-mobile.open { transform: translateX(0); }
+        .overlay-mobile {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5);
+            z-index: 999; display: none;
+        }
+        .overlay-mobile.open { display: block; }
+        
+        @media (min-width: 1024px) {
+            .sidebar-mobile, .mobile-header, .overlay-mobile { display: none !important; }
+        }
+        @media (max-width: 1023px) {
+            .sidebar-desktop { display: none !important; }
+            .main-content-desktop { margin-left: 0 !important; }
+        }
+        
+        .code-block { background: #0d1117; border-radius: 0.75rem; padding: 1rem; font-family: 'SF Mono', monospace; font-size: 0.75rem; overflow-x: auto; position: relative; }
+        .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; background: #1f2937; border: none; color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.5rem; border-radius: 0.375rem; cursor: pointer; transition: all 0.2s; }
+        .copy-btn:hover { background: #374151; color: #f3f4f6; }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        .dark ::-webkit-scrollbar-track { background: #1e1e2f; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; }
+        
+        .platform-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .platform-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-200">
+
+<div id="overlayMobile" class="overlay-mobile" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR MOBILE -->
+<aside id="sidebarMobile" class="sidebar-mobile bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 shadow-xl">
+    <div class="p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center">
+        <div>
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">forge your dev environment</p>
+        </div>
+        <button id="closeSidebarBtn" class="text-gray-500 hover:text-gray-700 dark:text-gray-400"><i class="fas fa-times text-xl"></i></button>
+    </div>
+    <div class="px-4 mt-4 mb-4">
+        <div class="relative">
+            <input type="text" id="globalSearchMobile" placeholder="Buscar stacks, comandos..." class="w-full bg-gray-100 dark:bg-gray-800 border-0 rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-blue-500">
+            <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i>
+        </div>
+    </div>
+    <nav class="flex-1 px-4 space-y-1 text-sm pb-20">
+        <a href="../index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-tachometer-alt w-5"></i><span>Dashboard</span></a>
+        <div class="pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Stacks</div>
+        <a href="php.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-php w-5 text-indigo-500"></i><span>PHP</span></a>
+        <a href="wordpress.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-wordpress w-5 text-blue-500"></i><span>WordPress</span></a>
+        <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span></a>
+        <a href="python.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-python w-5 text-yellow-500"></i><span>Python</span></a>
+        <a href="java.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-java w-5 text-red-500"></i><span>Java</span></a>
+        <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
+        <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span></a>
+        <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-gem w-5 text-red-400"></i><span>Rails</span></a>
+        <a href="devops.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cloud-upload-alt w-5 text-purple-500"></i><span>DevOps</span></a>
+        <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span></a>
+        <a href="docker.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-docker w-5 text-blue-500"></i><span>Docker</span></a>
+        <a href="linux.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-linux w-5 text-yellow-600"></i><span>Linux</span></a>
+        <a href="windows.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-windows w-5 text-blue-500"></i><span>Windows</span></a>
+        <a href="mobile.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fas fa-mobile-alt w-5 text-gray-500"></i><span>Mobile</span></a>
+        <a href="cybersecurity.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-shield-alt w-5 text-green-500"></i><span>Security</span></a>
+    </nav>
+    <div class="p-4 border-t border-gray-200 dark:border-gray-800">
+        <button id="darkModeToggleMobile" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm flex items-center gap-3"><i class="fas fa-moon w-5"></i><span>Alternar tema</span></button>
+    </div>
+</aside>
+
+<!-- LAYOUT DESKTOP -->
+<div class="layout-desktop">
+    <aside class="sidebar-desktop bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col">
+        <div class="p-6"><h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1><p class="text-xs text-gray-500 dark:text-gray-400 mt-1">forge your dev environment</p></div>
+        <div class="px-4 mb-4"><div class="relative"><input type="text" id="globalSearchDesktop" placeholder="Buscar stacks, comandos..." class="w-full bg-gray-100 dark:bg-gray-800 border-0 rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-blue-500"><i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i></div></div>
+        <nav class="flex-1 px-4 space-y-1 text-sm overflow-y-auto pb-4">
+            <a href="../index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-tachometer-alt w-5"></i><span>Dashboard</span></a>
+            <div class="pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Stacks</div>
+            <a href="php.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-php w-5 text-indigo-500"></i><span>PHP</span></a>
+            <a href="wordpress.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-wordpress w-5 text-blue-500"></i><span>WordPress</span></a>
+            <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span></a>
+            <a href="python.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-python w-5 text-yellow-500"></i><span>Python</span></a>
+            <a href="java.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-java w-5 text-red-500"></i><span>Java</span></a>
+            <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
+            <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span></a>
+            <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-gem w-5 text-red-400"></i><span>Rails</span></a>
+            <a href="devops.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cloud-upload-alt w-5 text-purple-500"></i><span>DevOps</span></a>
+            <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span></a>
+            <a href="docker.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-docker w-5 text-blue-500"></i><span>Docker</span></a>
+            <a href="linux.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-linux w-5 text-yellow-600"></i><span>Linux</span></a>
+            <a href="windows.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-windows w-5 text-blue-500"></i><span>Windows</span></a>
+            <a href="mobile.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fas fa-mobile-alt w-5 text-gray-500"></i><span>Mobile</span></a>
+            <a href="cybersecurity.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-shield-alt w-5 text-green-500"></i><span>Security</span></a>
+        </nav>
+        <div class="p-4 border-t border-gray-200 dark:border-gray-800"><button id="darkModeToggleDesktop" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm flex items-center gap-3"><i class="fas fa-moon w-5"></i><span>Alternar tema</span></button></div>
+    </aside>
+
+    <main class="main-content-desktop">
+        <div class="mobile-header sticky top-0 bg-gray-50 dark:bg-gray-950 z-30 p-4 border-b border-gray-200 dark:border-gray-800 flex items-center gap-3 lg:hidden">
+            <button id="openSidebarBtn" class="text-gray-600 dark:text-gray-300"><i class="fas fa-bars text-2xl"></i></button>
+            <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+            <!-- Cabeçalho -->
+            <div class="flex items-center gap-4 mb-8">
+                <i class="fas fa-mobile-alt text-6xl text-gray-500"></i>
+                <div><h1 class="text-3xl sm:text-4xl font-bold tracking-tight">Desenvolvimento Mobile</h1><p class="text-gray-600 dark:text-gray-400 mt-1">Setup completo para desenvolvimento mobile: Android (Java/Kotlin), iOS (Swift), React Native, Flutter, Ionic, Cordova, Xamarin/.NET MAUI e KMM.</p></div>
+            </div>
+
+            <!-- Badges -->
+            <div class="flex flex-wrap gap-2 mb-8">
+                <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-xs">📱 Android</span>
+                <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-xs">🍎 iOS</span>
+                <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs">⚛️ React Native</span>
+                <span class="px-3 py-1 bg-sky-100 dark:bg-sky-900/30 text-sky-700 dark:text-sky-300 rounded-full text-xs">🦋 Flutter</span>
+                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-xs">⚡ Ionic</span>
+                <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded-full text-xs">📦 Cordova</span>
+                <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-full text-xs">🔷 Xamarin</span>
+                <span class="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-full text-xs">🎯 KMM</span>
+            </div>
+
+            <!-- Instalação Automatizada -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">⚡ Instalação Automatizada - Mobile Stack</h2>
+                <div class="space-y-5">
+                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-windows text-lg text-blue-500"></i><span class="font-medium">Windows / Linux / macOS</span></div><div class="relative code-block"><code id="mobileCmd" class="text-green-400 text-xs sm:text-sm break-all">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/mobile/install-mobile.sh | bash</code><button class="copy-btn" data-cmd-id="mobileCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
+                </div>
+                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-microchip"></i> Instala: Android Studio, SDK, emuladores, Node.js, React Native CLI, Flutter SDK, Ionic CLI, Cordova, .NET MAUI, Xcode Command Line Tools (macOS).</p>
+            </div>
+
+            <!-- ==================== ANDROID (Nativo) ==================== -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8 platform-card">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fab fa-android text-3xl text-green-500"></i>
+                    <h2 class="text-xl font-semibold">Android (Java / Kotlin)</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-medium text-sm mb-2">📦 Instalação</p>
+                        <div class="relative code-block"><code id="androidInstall" class="text-green-400 text-xs break-all">sudo apt install openjdk-17-jdk android-sdk</code><button class="copy-btn" data-cmd-id="androidInstall"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="androidStudio" class="text-green-400 text-xs break-all">winget install Google.AndroidStudio</code><button class="copy-btn" data-cmd-id="androidStudio"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                    <div>
+                        <p class="font-medium text-sm mb-2">🚀 Comandos Essenciais</p>
+                        <div class="relative code-block"><code id="androidCreate" class="text-green-400 text-xs break-all">./gradlew assembleDebug</code><button class="copy-btn" data-cmd-id="androidCreate"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="androidRun" class="text-green-400 text-xs break-all">./gradlew installDebug</code><button class="copy-btn" data-cmd-id="androidRun"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="androidEmulator" class="text-green-400 text-xs break-all">emulator -avd Pixel_4_API_33</code><button class="copy-btn" data-cmd-id="androidEmulator"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="androidAdb" class="text-green-400 text-xs break-all">adb devices</code><button class="copy-btn" data-cmd-id="androidAdb"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                </div>
+                <div class="mt-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
+                    <p class="text-sm font-medium mb-2">📝 build.gradle (app level)</p>
+                    <div class="relative code-block">
+                        <code id="androidGradle" class="text-green-400 text-xs break-all whitespace-pre-wrap">
+android {
+    compileSdk 34
+    defaultConfig {
+        applicationId "com.example.app"
+        minSdk 21
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+    }
+}
+dependencies {
+    implementation 'androidx.core:core-ktx:1.12.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.9.0'
+}
+                        </code>
+                        <button class="copy-btn" data-cmd-id="androidGradle"><i class="far fa-copy"></i> Copiar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== iOS (Swift) ==================== -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8 platform-card">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fab fa-apple text-3xl text-gray-500"></i>
+                    <h2 class="text-xl font-semibold">iOS (Swift) - Apenas macOS</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-medium text-sm mb-2">📦 Instalação</p>
+                        <div class="relative code-block"><code id="iosInstall" class="text-green-400 text-xs break-all">xcode-select --install</code><button class="copy-btn" data-cmd-id="iosInstall"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="iosCocoa" class="text-green-400 text-xs break-all">sudo gem install cocoapods</code><button class="copy-btn" data-cmd-id="iosCocoa"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                    <div>
+                        <p class="font-medium text-sm mb-2">🚀 Comandos Essenciais</p>
+                        <div class="relative code-block"><code id="iosBuild" class="text-green-400 text-xs break-all">xcodebuild -workspace App.xcworkspace -scheme App build</code><button class="copy-btn" data-cmd-id="iosBuild"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="iosSimulator" class="text-green-400 text-xs break-all">xcrun simctl list devices</code><button class="copy-btn" data-cmd-id="iosSimulator"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="iosRun" class="text-green-400 text-xs break-all">pod install</code><button class="copy-btn" data-cmd-id="iosRun"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                </div>
+                <div class="mt-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
+                    <p class="text-sm font-medium mb-2">📝 SwiftUI Example</p>
+                    <div class="relative code-block">
+                        <code id="iosSwift" class="text-green-400 text-xs break-all whitespace-pre-wrap">
+import SwiftUI
+
+struct ContentView: View {
+    var body: some View {
+        VStack {
+            Text("Hello, DevForge!")
+                .font(.title)
+                .padding()
+        }
+    }
+}
+                        </code>
+                        <button class="copy-btn" data-cmd-id="iosSwift"><i class="far fa-copy"></i> Copiar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== REACT NATIVE ==================== -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8 platform-card">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fab fa-react text-3xl text-blue-500"></i>
+                    <h2 class="text-xl font-semibold">React Native</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-medium text-sm mb-2">📦 Instalação</p>
+                        <div class="relative code-block"><code id="rnInstall" class="text-green-400 text-xs break-all">npm install -g react-native-cli</code><button class="copy-btn" data-cmd-id="rnInstall"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="rnExpo" class="text-green-400 text-xs break-all">npx create-expo-app MyApp</code><button class="copy-btn" data-cmd-id="rnExpo"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="rnInit" class="text-green-400 text-xs break-all">npx react-native init MyApp</code><button class="copy-btn" data-cmd-id="rnInit"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                    <div>
+                        <p class="font-medium text-sm mb-2">🚀 Comandos Essenciais</p>
+                        <div class="relative code-block"><code id="rnStart" class="text-green-400 text-xs break-all">npx react-native start</code><button class="copy-btn" data-cmd-id="rnStart"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="rnAndroid" class="text-green-400 text-xs break-all">npx react-native run-android</code><button class="copy-btn" data-cmd-id="rnAndroid"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="rnIos" class="text-green-400 text-xs break-all">npx react-native run-ios</code><button class="copy-btn" data-cmd-id="rnIos"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="rnBuild" class="text-green-400 text-xs break-all">cd android && ./gradlew assembleRelease</code><button class="copy-btn" data-cmd-id="rnBuild"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                </div>
+                <div class="mt-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
+                    <p class="text-sm font-medium mb-2">📝 App.js Example</p>
+                    <div class="relative code-block">
+                        <code id="rnCode" class="text-green-400 text-xs break-all whitespace-pre-wrap">
+import React from 'react';
+import { View, Text, StyleSheet } from 'react-native';
+
+const App = () => (
+  &lt;View style={styles.container}&gt;
+    &lt;Text&gt;Hello DevForge!&lt;/Text&gt;
+  &lt;/View&gt;
+);
+
+const styles = StyleSheet.create({
+  container: { flex: 1, justifyContent: 'center', alignItems: 'center' }
+});
+
+export default App;
+                        </code>
+                        <button class="copy-btn" data-cmd-id="rnCode"><i class="far fa-copy"></i> Copiar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== FLUTTER ==================== -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8 platform-card">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-feather-alt text-3xl text-sky-500"></i>
+                    <h2 class="text-xl font-semibold">Flutter</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-medium text-sm mb-2">📦 Instalação</p>
+                        <div class="relative code-block"><code id="flutterInstall" class="text-green-400 text-xs break-all">git clone https://github.com/flutter/flutter.git -b stable</code><button class="copy-btn" data-cmd-id="flutterInstall"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="flutterPath" class="text-green-400 text-xs break-all">export PATH="$PATH:`pwd`/flutter/bin"</code><button class="copy-btn" data-cmd-id="flutterPath"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="flutterDoctor" class="text-green-400 text-xs break-all">flutter doctor</code><button class="copy-btn" data-cmd-id="flutterDoctor"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                    <div>
+                        <p class="font-medium text-sm mb-2">🚀 Comandos Essenciais</p>
+                        <div class="relative code-block"><code id="flutterCreate" class="text-green-400 text-xs break-all">flutter create my_app</code><button class="copy-btn" data-cmd-id="flutterCreate"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="flutterRun" class="text-green-400 text-xs break-all">flutter run</code><button class="copy-btn" data-cmd-id="flutterRun"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="flutterBuild" class="text-green-400 text-xs break-all">flutter build apk</code><button class="copy-btn" data-cmd-id="flutterBuild"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="flutterPub" class="text-green-400 text-xs break-all">flutter pub get</code><button class="copy-btn" data-cmd-id="flutterPub"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                </div>
+                <div class="mt-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
+                    <p class="text-sm font-medium mb-2">📝 main.dart Example</p>
+                    <div class="relative code-block">
+                        <code id="flutterCode" class="text-green-400 text-xs break-all whitespace-pre-wrap">
+import 'package:flutter/material.dart';
+
+void main() => runApp(MyApp());
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('DevForge')),
+        body: Center(child: Text('Hello Flutter!')),
+      ),
+    );
+  }
+}
+                        </code>
+                        <button class="copy-btn" data-cmd-id="flutterCode"><i class="far fa-copy"></i> Copiar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== IONIC ==================== -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8 platform-card">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-bolt text-3xl text-purple-500"></i>
+                    <h2 class="text-xl font-semibold">Ionic (Angular/React/Vue)</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-medium text-sm mb-2">📦 Instalação</p>
+                        <div class="relative code-block"><code id="ionicInstall" class="text-green-400 text-xs break-all">npm install -g @ionic/cli</code><button class="copy-btn" data-cmd-id="ionicInstall"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="ionicStart" class="text-green-400 text-xs break-all">ionic start myApp blank --type=react</code><button class="copy-btn" data-cmd-id="ionicStart"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                    <div>
+                        <p class="font-medium text-sm mb-2">🚀 Comandos Essenciais</p>
+                        <div class="relative code-block"><code id="ionicServe" class="text-green-400 text-xs break-all">ionic serve</code><button class="copy-btn" data-cmd-id="ionicServe"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="ionicBuild" class="text-green-400 text-xs break-all">ionic build</code><button class="copy-btn" data-cmd-id="ionicBuild"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="ionicCapacitor" class="text-green-400 text-xs break-all">npx cap add android && npx cap sync</code><button class="copy-btn" data-cmd-id="ionicCapacitor"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== CORDOVA ==================== -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8 platform-card">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-box text-3xl text-orange-500"></i>
+                    <h2 class="text-xl font-semibold">Apache Cordova</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-medium text-sm mb-2">📦 Instalação</p>
+                        <div class="relative code-block"><code id="cordovaInstall" class="text-green-400 text-xs break-all">npm install -g cordova</code><button class="copy-btn" data-cmd-id="cordovaInstall"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="cordovaCreate" class="text-green-400 text-xs break-all">cordova create myApp com.example.app MyApp</code><button class="copy-btn" data-cmd-id="cordovaCreate"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                    <div>
+                        <p class="font-medium text-sm mb-2">🚀 Comandos Essenciais</p>
+                        <div class="relative code-block"><code id="cordovaPlatform" class="text-green-400 text-xs break-all">cordova platform add android ios</code><button class="copy-btn" data-cmd-id="cordovaPlatform"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="cordovaBuild" class="text-green-400 text-xs break-all">cordova build android</code><button class="copy-btn" data-cmd-id="cordovaBuild"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="cordovaRun" class="text-green-400 text-xs break-all">cordova run android --emulator</code><button class="copy-btn" data-cmd-id="cordovaRun"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== XAMARIN / .NET MAUI ==================== -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8 platform-card">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fab fa-microsoft text-3xl text-indigo-500"></i>
+                    <h2 class="text-xl font-semibold">.NET MAUI (Xamarin.Forms)</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-medium text-sm mb-2">📦 Instalação</p>
+                        <div class="relative code-block"><code id="mauiInstall" class="text-green-400 text-xs break-all">dotnet workload install maui</code><button class="copy-btn" data-cmd-id="mauiInstall"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="mauiCreate" class="text-green-400 text-xs break-all">dotnet new maui -n MyApp</code><button class="copy-btn" data-cmd-id="mauiCreate"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                    <div>
+                        <p class="font-medium text-sm mb-2">🚀 Comandos Essenciais</p>
+                        <div class="relative code-block"><code id="mauiBuild" class="text-green-400 text-xs break-all">dotnet build -c Release</code><button class="copy-btn" data-cmd-id="mauiBuild"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="mauiRun" class="text-green-400 text-xs break-all">dotnet build -t:Run -f net8.0-android</code><button class="copy-btn" data-cmd-id="mauiRun"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== KMM (Kotlin Multiplatform) ==================== -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8 platform-card">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fab fa-kickstarter-k text-3xl text-red-500"></i>
+                    <h2 class="text-xl font-semibold">KMM (Kotlin Multiplatform Mobile)</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-medium text-sm mb-2">📦 Instalação</p>
+                        <div class="relative code-block"><code id="kmmInstall" class="text-green-400 text-xs break-all">curl -s https://get.sdkman.io | bash</code><button class="copy-btn" data-cmd-id="kmmInstall"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="kmmCreate" class="text-green-400 text-xs break-all">sdk install kotlin</code><button class="copy-btn" data-cmd-id="kmmCreate"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                    <div>
+                        <p class="font-medium text-sm mb-2">🚀 Comandos Essenciais</p>
+                        <div class="relative code-block"><code id="kmmBuild" class="text-green-400 text-xs break-all">./gradlew build</code><button class="copy-btn" data-cmd-id="kmmBuild"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="kmmTest" class="text-green-400 text-xs break-all">./gradlew allTests</code><button class="copy-btn" data-cmd-id="kmmTest"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Troubleshooting -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">🔧 Troubleshooting Mobile</h2>
+                <div class="space-y-4">
+                    <div class="border-l-4 border-red-400 pl-4"><p class="font-medium">❌ Erro: "SDK not found" (Android)</p><p class="text-sm">Causa: Android SDK não configurado.<br>Solução: Configure ANDROID_HOME no .bashrc: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">export ANDROID_HOME=$HOME/Android/Sdk</code></p></div>
+                    <div class="border-l-4 border-yellow-400 pl-4"><p class="font-medium">⚠️ Erro: "No iOS signing certificate found"</p><p class="text-sm">Causa: Certificado de desenvolvimento não configurado no Xcode.<br>Solução: Abra Xcode → Preferences → Accounts e adicione sua conta Apple Developer.</p></div>
+                    <div class="border-l-4 border-blue-400 pl-4"><p class="font-medium">🐘 React Native: "Metro bundler failed"</p><p class="text-sm">Solução: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">npx react-native start --reset-cache</code></p></div>
+                </div>
+                
+                <!-- DIAGNÓSTICO AUTOMÁTICO -->
+                <div class="mt-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
+                    <p class="text-sm font-medium flex items-center gap-2 mb-2"><i class="fas fa-stethoscope text-blue-500"></i> Diagnóstico automático Mobile:</p>
+                    <div class="relative">
+                        <div class="bg-gray-900 rounded-lg p-3 font-mono text-xs sm:text-sm overflow-x-auto">
+                            <code id="diagCmd" class="text-green-400 whitespace-pre-wrap break-all">java -version && node -v && npm -v && flutter doctor && npx react-native --version && ionic --version && cordova --version && dotnet --version</code>
+                        </div>
+                        <button class="copy-btn absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs" data-cmd-id="diagCmd"><i class="far fa-copy"></i> Copiar</button>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2"><i class="fas fa-info-circle"></i> Este comando verifica versões das principais ferramentas mobile.</p>
+                </div>
+            </div>
+
+            <!-- Scripts Mobile -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">📜 Scripts prontos</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                    <a href="../scripts/mobile/install-mobile.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install-mobile.sh</a>
+                    <a href="../scripts/mobile/android-emulator.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-microchip"></i> android-emulator.sh</a>
+                    <a href="../scripts/mobile/react-native-project.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fab fa-react"></i> rn-project.sh</a>
+                    <a href="../scripts/mobile/flutter-project.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-feather-alt"></i> flutter-project.sh</a>
+                </div>
+                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-shield-alt"></i> Scripts verificados no Ubuntu 22.04/24.04, macOS 13+ e Windows 10/11 (WSL2).</p>
+            </div>
+
+            <!-- FAQ -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
+                <h2 class="text-xl font-semibold mb-4">❓ Perguntas frequentes - Mobile</h2>
+                <div class="space-y-3">
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-question-circle text-blue-500"></i> React Native vs Flutter: qual escolher?</summary><p class="text-sm mt-2 pl-6">React Native: melhor para devs JS/React, biblioteca madura. Flutter: melhor performance, UI consistente, linguagem Dart. Ambos são excelentes!</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-database text-green-500"></i> Como testar apps iOS sem Mac?</summary><p class="text-sm mt-2 pl-6">Use serviços de CI/CD como GitHub Actions (macOS runners), BrowserStack, Sauce Labs ou TestFlight para testes remotos.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-shield-alt text-purple-500"></i> Melhor stack para MVP rápido?</summary><p class="text-sm mt-2 pl-6">React Native + Expo ou Flutter. Ambos têm hot-reload, vasta comunidade e publicação rápida nas stores.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-chart-line text-orange-500"></i> Como publicar apps nas stores?</summary><p class="text-sm mt-2 pl-6">Android: gere .aab com `./gradlew bundleRelease`, publique na Google Play Console. iOS: gere .ipa, publique no App Store Connect com Transporter.</p></details>
+                </div>
+            </div>
+
+            <!-- Rodapé -->
+            <footer class="mt-10 pt-6 border-t border-gray-200 dark:border-gray-800">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+                    <p>DevForge © 2025-2026 - Open Source sob licença MIT</p>
+                    <div class="flex gap-4"><a href="https://github.com/rafaelferreira2312/devforge" target="_blank" class="hover:text-blue-600"><i class="fab fa-github"></i> GitHub</a><span><i class="fab fa-whatsapp text-green-600"></i> (21) 97160-4248</span><span><i class="fas fa-pix text-green-500"></i> PIX: (21) 97160-4248</span></div>
+                </div>
+            </footer>
+        </div>
+    </main>
+</div>
+
+<script>
+    // Botão copiar
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const cmdId = btn.getAttribute('data-cmd-id');
+            const codeElement = document.getElementById(cmdId);
+            if (codeElement) {
+                navigator.clipboard.writeText(codeElement.innerText);
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✓ Copiado!';
+                setTimeout(() => btn.innerHTML = originalText, 1500);
+            }
+        });
+    });
+
+    // Sidebar mobile
+    const sidebar = document.getElementById('sidebarMobile');
+    const overlay = document.getElementById('overlayMobile');
+
+    window.openSidebar = function() {
+        sidebar.classList.add('open');
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    window.closeSidebar = function() {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    document.getElementById('openSidebarBtn')?.addEventListener('click', openSidebar);
+    document.getElementById('closeSidebarBtn')?.addEventListener('click', closeSidebar);
+
+    document.querySelectorAll('#sidebarMobile a').forEach(link => {
+        link.addEventListener('click', closeSidebar);
+    });
+
+    // Dark Mode
+    function initDarkMode() {
+        const isDark = localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        
+        if (isDark) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        
+        const toggleButtons = document.querySelectorAll('#darkModeToggleDesktop, #darkModeToggleMobile');
+        toggleButtons.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+                });
+            }
+        });
+    }
+
+    initDarkMode();
+</script>
+</body>
+</html>
