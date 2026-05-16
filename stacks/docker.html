@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Docker · DevForge</title>
+    <meta name="description" content="Setup completo do Docker e Docker Compose. Comandos essenciais, Dockerfiles, docker-compose.yml, boas práticas, troubleshooting e scripts de instalação.">
+    <meta name="author" content="Rafael Ferreira">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <style>
+        * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        
+        @media (min-width: 1024px) {
+            .layout-desktop { display: flex; min-height: 100vh; }
+            .sidebar-desktop { position: fixed; top: 0; left: 0; width: 280px; height: 100vh; overflow-y: auto; border-right: 1px solid; }
+            .main-content-desktop { margin-left: 280px; flex: 1; min-height: 100vh; }
+        }
+        
+        .sidebar-mobile {
+            position: fixed; top: 0; left: 0; width: 280px; height: 100vh; z-index: 1000;
+            transform: translateX(-100%); transition: transform 0.3s ease-in-out; overflow-y: auto;
+        }
+        .sidebar-mobile.open { transform: translateX(0); }
+        .overlay-mobile {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5);
+            z-index: 999; display: none;
+        }
+        .overlay-mobile.open { display: block; }
+        
+        @media (min-width: 1024px) {
+            .sidebar-mobile, .mobile-header, .overlay-mobile { display: none !important; }
+        }
+        @media (max-width: 1023px) {
+            .sidebar-desktop { display: none !important; }
+            .main-content-desktop { margin-left: 0 !important; }
+        }
+        
+        .code-block { background: #0d1117; border-radius: 0.75rem; padding: 1rem; font-family: 'SF Mono', monospace; font-size: 0.75rem; overflow-x: auto; position: relative; }
+        .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; background: #1f2937; border: none; color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.5rem; border-radius: 0.375rem; cursor: pointer; transition: all 0.2s; }
+        .copy-btn:hover { background: #374151; color: #f3f4f6; }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        .dark ::-webkit-scrollbar-track { background: #1e1e2f; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; }
+        
+        .docker-bg {
+            background: linear-gradient(135deg, #0db7ed 0%, #0a6e8a 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-200">
+
+<div id="overlayMobile" class="overlay-mobile" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR MOBILE -->
+<aside id="sidebarMobile" class="sidebar-mobile bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 shadow-xl">
+    <div class="p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center">
+        <div>
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">forge your dev environment</p>
+        </div>
+        <button id="closeSidebarBtn" class="text-gray-500 hover:text-gray-700 dark:text-gray-400"><i class="fas fa-times text-xl"></i></button>
+    </div>
+    <div class="px-4 mt-4 mb-4">
+        <div class="relative">
+            <input type="text" id="globalSearchMobile" placeholder="Buscar stacks, comandos..." class="w-full bg-gray-100 dark:bg-gray-800 border-0 rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-blue-500">
+            <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i>
+        </div>
+    </div>
+    <nav class="flex-1 px-4 space-y-1 text-sm pb-20">
+        <a href="../index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-tachometer-alt w-5"></i><span>Dashboard</span></a>
+        <div class="pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Stacks</div>
+        <a href="php.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-php w-5 text-indigo-500"></i><span>PHP</span></a>
+        <a href="wordpress.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-wordpress w-5 text-blue-500"></i><span>WordPress</span></a>
+        <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span></a>
+        <a href="python.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-python w-5 text-yellow-500"></i><span>Python</span></a>
+        <a href="java.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-java w-5 text-red-500"></i><span>Java</span></a>
+        <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
+        <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span></a>
+        <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-gem w-5 text-red-400"></i><span>Rails</span></a>
+        <a href="devops.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cloud-upload-alt w-5 text-purple-500"></i><span>DevOps</span></a>
+        <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span></a>
+        <a href="docker.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fab fa-docker w-5 text-blue-500"></i><span>Docker</span></a>
+        <a href="linux.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-linux w-5 text-yellow-600"></i><span>Linux</span></a>
+        <a href="windows.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-windows w-5 text-blue-500"></i><span>Windows</span></a>
+        <a href="mobile.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-mobile-alt w-5 text-gray-500"></i><span>Mobile</span></a>
+        <a href="cybersecurity.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-shield-alt w-5 text-green-500"></i><span>Security</span></a>
+    </nav>
+    <div class="p-4 border-t border-gray-200 dark:border-gray-800">
+        <button id="darkModeToggleMobile" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm flex items-center gap-3"><i class="fas fa-moon w-5"></i><span>Alternar tema</span></button>
+    </div>
+</aside>
+
+<!-- LAYOUT DESKTOP -->
+<div class="layout-desktop">
+    <aside class="sidebar-desktop bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col">
+        <div class="p-6"><h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1><p class="text-xs text-gray-500 dark:text-gray-400 mt-1">forge your dev environment</p></div>
+        <div class="px-4 mb-4"><div class="relative"><input type="text" id="globalSearchDesktop" placeholder="Buscar stacks, comandos..." class="w-full bg-gray-100 dark:bg-gray-800 border-0 rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-blue-500"><i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i></div></div>
+        <nav class="flex-1 px-4 space-y-1 text-sm overflow-y-auto pb-4">
+            <a href="../index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-tachometer-alt w-5"></i><span>Dashboard</span></a>
+            <div class="pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Stacks</div>
+            <a href="php.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-php w-5 text-indigo-500"></i><span>PHP</span></a>
+            <a href="wordpress.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-wordpress w-5 text-blue-500"></i><span>WordPress</span></a>
+            <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span></a>
+            <a href="python.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-python w-5 text-yellow-500"></i><span>Python</span></a>
+            <a href="java.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-java w-5 text-red-500"></i><span>Java</span></a>
+            <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
+            <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span></a>
+            <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-gem w-5 text-red-400"></i><span>Rails</span></a>
+            <a href="devops.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cloud-upload-alt w-5 text-purple-500"></i><span>DevOps</span></a>
+            <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span></a>
+            <a href="docker.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fab fa-docker w-5 text-blue-500"></i><span>Docker</span></a>
+            <a href="linux.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-linux w-5 text-yellow-600"></i><span>Linux</span></a>
+            <a href="windows.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-windows w-5 text-blue-500"></i><span>Windows</span></a>
+            <a href="mobile.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-mobile-alt w-5 text-gray-500"></i><span>Mobile</span></a>
+            <a href="cybersecurity.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-shield-alt w-5 text-green-500"></i><span>Security</span></a>
+        </nav>
+        <div class="p-4 border-t border-gray-200 dark:border-gray-800"><button id="darkModeToggleDesktop" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm flex items-center gap-3"><i class="fas fa-moon w-5"></i><span>Alternar tema</span></button></div>
+    </aside>
+
+    <main class="main-content-desktop">
+        <div class="mobile-header sticky top-0 bg-gray-50 dark:bg-gray-950 z-30 p-4 border-b border-gray-200 dark:border-gray-800 flex items-center gap-3 lg:hidden">
+            <button id="openSidebarBtn" class="text-gray-600 dark:text-gray-300"><i class="fas fa-bars text-2xl"></i></button>
+            <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+            <!-- Cabeçalho -->
+            <div class="flex items-center gap-4 mb-8">
+                <i class="fab fa-docker text-6xl text-blue-500"></i>
+                <div><h1 class="text-3xl sm:text-4xl font-bold tracking-tight">Docker</h1><p class="text-gray-600 dark:text-gray-400 mt-1">Plataforma de containerização que permite empacotar aplicações e dependências em contêineres isolados, garantindo portabilidade e consistência em qualquer ambiente.</p></div>
+            </div>
+
+            <!-- Badges -->
+            <div class="flex flex-wrap gap-2 mb-8">
+                <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs">🐳 Docker Engine</span>
+                <span class="px-3 py-1 bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300 rounded-full text-xs">📦 Docker Compose</span>
+                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-xs">📤 Docker Hub</span>
+                <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-xs">🔒 Docker Scout</span>
+                <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded-full text-xs">📊 Docker Stats</span>
+            </div>
+
+            <!-- Instalação -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">⚡ Instalação do Docker</h2>
+                <div class="space-y-5">
+                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-linux text-lg text-yellow-600"></i><span class="font-medium">Linux (Ubuntu/Debian)</span></div><div class="relative code-block"><code id="linuxCmd" class="text-green-400 text-xs sm:text-sm break-all">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/docker/install-docker.sh | bash</code><button class="copy-btn" data-cmd-id="linuxCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
+                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-windows text-lg text-blue-500"></i><span class="font-medium">Windows (Docker Desktop)</span></div><div class="relative code-block"><code id="winCmd" class="text-green-400 text-xs sm:text-sm break-all">winget install Docker.DockerDesktop</code><button class="copy-btn" data-cmd-id="winCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
+                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-apple text-lg text-gray-500"></i><span class="font-medium">macOS (Docker Desktop)</span></div><div class="relative code-block"><code id="macCmd" class="text-green-400 text-xs sm:text-sm break-all">brew install --cask docker</code><button class="copy-btn" data-cmd-id="macCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
+                </div>
+                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-check-circle"></i> Após instalação, execute <code>docker --version</code> para verificar.</p>
+            </div>
+
+            <!-- Comandos Essenciais Docker -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">🐳 Comandos Essenciais Docker</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-medium text-sm mb-2">📦 Gerenciamento de Containers</p>
+                        <div class="relative code-block"><code id="dockerRun" class="text-green-400 text-xs break-all">docker run -d -p 80:80 --name nginx nginx:alpine</code><button class="copy-btn" data-cmd-id="dockerRun"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="dockerPs" class="text-green-400 text-xs break-all">docker ps -a</code><button class="copy-btn" data-cmd-id="dockerPs"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="dockerStop" class="text-green-400 text-xs break-all">docker stop nginx</code><button class="copy-btn" data-cmd-id="dockerStop"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="dockerStart" class="text-green-400 text-xs break-all">docker start nginx</code><button class="copy-btn" data-cmd-id="dockerStart"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="dockerRm" class="text-green-400 text-xs break-all">docker rm -f nginx</code><button class="copy-btn" data-cmd-id="dockerRm"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                    <div>
+                        <p class="font-medium text-sm mb-2">📦 Imagens e Logs</p>
+                        <div class="relative code-block"><code id="dockerImages" class="text-green-400 text-xs break-all">docker images</code><button class="copy-btn" data-cmd-id="dockerImages"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="dockerPull" class="text-green-400 text-xs break-all">docker pull ubuntu:22.04</code><button class="copy-btn" data-cmd-id="dockerPull"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="dockerLogs" class="text-green-400 text-xs break-all">docker logs -f nginx</code><button class="copy-btn" data-cmd-id="dockerLogs"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="dockerExec" class="text-green-400 text-xs break-all">docker exec -it nginx /bin/bash</code><button class="copy-btn" data-cmd-id="dockerExec"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="dockerRmi" class="text-green-400 text-xs break-all">docker rmi nginx:alpine</code><button class="copy-btn" data-cmd-id="dockerRmi"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Dockerfile Exemplo -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-file-code text-2xl text-blue-500"></i>
+                    <h2 class="text-xl font-semibold">Dockerfile - Exemplos</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-medium text-sm mb-2">🐍 Python App</p>
+                        <div class="relative code-block">
+                            <code id="dockerfilePython" class="text-green-400 text-xs break-all whitespace-pre-wrap">
+FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY . .
+CMD ["python", "app.py"]
+                            </code>
+                            <button class="copy-btn" data-cmd-id="dockerfilePython"><i class="far fa-copy"></i> Copiar</button>
+                        </div>
+                    </div>
+                    <div>
+                        <p class="font-medium text-sm mb-2">🟢 Node.js App</p>
+                        <div class="relative code-block">
+                            <code id="dockerfileNode" class="text-green-400 text-xs break-all whitespace-pre-wrap">
+FROM node:20-alpine
+WORKDIR /app
+COPY package*.json .
+RUN npm ci --only=production
+COPY . .
+EXPOSE 3000
+CMD ["node", "server.js"]
+                            </code>
+                            <button class="copy-btn" data-cmd-id="dockerfileNode"><i class="far fa-copy"></i> Copiar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <p class="font-medium text-sm mb-2">🐘 PHP + Nginx</p>
+                    <div class="relative code-block">
+                        <code id="dockerfilePhp" class="text-green-400 text-xs break-all whitespace-pre-wrap">
+FROM php:8.3-fpm-alpine
+RUN docker-php-ext-install pdo pdo_mysql mysqli
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+WORKDIR /var/www/html
+COPY . .
+CMD ["php-fpm"]
+                        </code>
+                        <button class="copy-btn" data-cmd-id="dockerfilePhp"><i class="far fa-copy"></i> Copiar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Docker Compose -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-layer-group text-2xl text-cyan-500"></i>
+                    <h2 class="text-xl font-semibold">Docker Compose</h2>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Exemplo: WordPress + MySQL + phpMyAdmin</p>
+                <div class="relative code-block">
+                    <code id="dockerCompose" class="text-green-400 text-xs break-all whitespace-pre-wrap">
+version: '3.8'
+services:
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wpuser
+      MYSQL_PASSWORD: wppass
+    volumes:
+      - db_data:/var/lib/mysql
+
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    ports:
+      - "8080:80"
+    restart: always
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wpuser
+      WORDPRESS_DB_PASSWORD: wppass
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - wp_data:/var/www/html
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+
+volumes:
+  db_data:
+  wp_data:
+                    </code>
+                    <button class="copy-btn" data-cmd-id="dockerCompose"><i class="far fa-copy"></i> Copiar</button>
+                </div>
+                <div class="mt-3 flex flex-wrap gap-2">
+                    <div class="relative code-block inline-block"><code id="composeUp" class="text-green-400 text-xs">docker-compose up -d</code><button class="copy-btn" data-cmd-id="composeUp"><i class="far fa-copy"></i> Copiar</button></div>
+                    <div class="relative code-block inline-block"><code id="composeDown" class="text-green-400 text-xs">docker-compose down -v</code><button class="copy-btn" data-cmd-id="composeDown"><i class="far fa-copy"></i> Copiar</button></div>
+                    <div class="relative code-block inline-block"><code id="composeLogs" class="text-green-400 text-xs">docker-compose logs -f</code><button class="copy-btn" data-cmd-id="composeLogs"><i class="far fa-copy"></i> Copiar</button></div>
+                    <div class="relative code-block inline-block"><code id="composePs" class="text-green-400 text-xs">docker-compose ps</code><button class="copy-btn" data-cmd-id="composePs"><i class="far fa-copy"></i> Copiar</button></div>
+                </div>
+            </div>
+
+            <!-- Comandos Avançados -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">🚀 Comandos Avançados</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <div class="relative code-block"><code id="dockerBuild" class="text-green-400 text-xs break-all">docker build -t minha-app:latest .</code><button class="copy-btn" data-cmd-id="dockerBuild"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="dockerTag" class="text-green-400 text-xs break-all">docker tag minha-app:latest meuuser/minha-app:v1</code><button class="copy-btn" data-cmd-id="dockerTag"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="dockerPush" class="text-green-400 text-xs break-all">docker push meuuser/minha-app:v1</code><button class="copy-btn" data-cmd-id="dockerPush"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                    <div>
+                        <div class="relative code-block"><code id="dockerNetwork" class="text-green-400 text-xs break-all">docker network create minha-rede</code><button class="copy-btn" data-cmd-id="dockerNetwork"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="dockerVolume" class="text-green-400 text-xs break-all">docker volume create meu-volume</code><button class="copy-btn" data-cmd-id="dockerVolume"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="dockerSystem" class="text-green-400 text-xs break-all">docker system prune -a -f</code><button class="copy-btn" data-cmd-id="dockerSystem"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Boas Práticas -->
+            <div class="bg-gradient-to-r from-blue-600 to-cyan-600 rounded-xl p-5 sm:p-6 mb-8 text-white">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2"><i class="fas fa-star"></i> Boas Práticas Docker</h2>
+                <div class="grid md:grid-cols-2 gap-3 text-sm">
+                    <div class="flex items-start gap-2"><i class="fas fa-check-circle mt-1"></i><span>Use imagens oficiais e específicas (ex: python:3.11-slim)</span></div>
+                    <div class="flex items-start gap-2"><i class="fas fa-check-circle mt-1"></i><span>Multi-stage builds para reduzir tamanho</span></div>
+                    <div class="flex items-start gap-2"><i class="fas fa-check-circle mt-1"></i><span>Não rode containers como root</span></div>
+                    <div class="flex items-start gap-2"><i class="fas fa-check-circle mt-1"></i><span>Use .dockerignore para excluir arquivos desnecessários</span></div>
+                    <div class="flex items-start gap-2"><i class="fas fa-check-circle mt-1"></i><span>Mantenha uma camada por instrução (combine RUN commands)</span></div>
+                    <div class="flex items-start gap-2"><i class="fas fa-check-circle mt-1"></i><span>Use healthcheck para monitorar containers</span></div>
+                    <div class="flex items-start gap-2"><i class="fas fa-check-circle mt-1"></i><span>Varíe versões de imagens com variáveis ARG</span></div>
+                    <div class="flex items-start gap-2"><i class="fas fa-check-circle mt-1"></i><span>Use Docker Scout para vulnerabilidades</span></div>
+                </div>
+            </div>
+
+            <!-- Troubleshooting -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">🔧 Troubleshooting Docker</h2>
+                <div class="space-y-4">
+                    <div class="border-l-4 border-red-400 pl-4"><p class="font-medium">❌ Erro: "docker: permission denied"</p><p class="text-sm">Causa: Usuário não está no grupo docker.<br>Solução: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">sudo usermod -aG docker $USER && newgrp docker</code></p></div>
+                    <div class="border-l-4 border-yellow-400 pl-4"><p class="font-medium">⚠️ Erro: "port is already allocated"</p><p class="text-sm">Causa: Porta já em uso por outro container ou processo.<br>Solução: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">docker ps</code> para listar containers e <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">docker stop</code> ou mapeie porta diferente.</p></div>
+                    <div class="border-l-4 border-blue-400 pl-4"><p class="font-medium">🐘 Erro: "No space left on device"</p><p class="text-sm">Causa: Docker consumiu todo espaço em disco.<br>Solução: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">docker system prune -a -f && docker volume prune -f</code></p></div>
+                </div>
+                
+                <!-- DIAGNÓSTICO AUTOMÁTICO -->
+                <div class="mt-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
+                    <p class="text-sm font-medium flex items-center gap-2 mb-2"><i class="fas fa-stethoscope text-blue-500"></i> Diagnóstico automático Docker:</p>
+                    <div class="relative">
+                        <div class="bg-gray-900 rounded-lg p-3 font-mono text-xs sm:text-sm overflow-x-auto">
+                            <code id="diagCmd" class="text-green-400 whitespace-pre-wrap break-all">docker --version && docker-compose --version && docker info && docker ps && echo "---" && docker system df</code>
+                        </div>
+                        <button class="copy-btn absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs" data-cmd-id="diagCmd"><i class="far fa-copy"></i> Copiar</button>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2"><i class="fas fa-info-circle"></i> Este comando verifica versão do Docker, Docker Compose, informações do sistema, containers rodando e uso de disco.</p>
+                </div>
+            </div>
+
+            <!-- Scripts Docker -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">📜 Scripts prontos</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                    <a href="../scripts/docker/install-docker.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install-docker.sh</a>
+                    <a href="../scripts/docker/install-docker.ps1" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install-docker.ps1</a>
+                    <a href="../scripts/docker/docker-compose-full.yml" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-file"></i> docker-compose.yml</a>
+                    <a href="../scripts/docker/cleanup-docker.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-trash"></i> cleanup-docker.sh</a>
+                </div>
+                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-shield-alt"></i> Scripts verificados no Ubuntu 22.04/24.04, Debian 12, macOS 13+ e Windows 10/11.</p>
+            </div>
+
+            <!-- FAQ -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
+                <h2 class="text-xl font-semibold mb-4">❓ Perguntas frequentes - Docker</h2>
+                <div class="space-y-3">
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-question-circle text-blue-500"></i> Diferença entre Docker e Virtual Machine?</summary><p class="text-sm mt-2 pl-6">Docker compartilha o kernel do host, é mais leve e rápido. VMs tem kernel próprio, mais isoladas mas pesadas.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-database text-green-500"></i> Como persistir dados em containers?</summary><p class="text-sm mt-2 pl-6">Use volumes (<code>docker volume create</code>) ou bind mounts (<code>-v /host/path:/container/path</code>).</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-shield-alt text-purple-500"></i> Como reduzir tamanho da imagem Docker?</summary><p class="text-sm mt-2 pl-6">Use imagens alpine/slim, multi-stage builds, combine RUN commands e use .dockerignore.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-chart-line text-orange-500"></i> Como monitorar containers em produção?</summary><p class="text-sm mt-2 pl-6">Use <code>docker stats</code>, Prometheus + cAdvisor, ou ferramentas como Portainer e Docker Scout.</p></details>
+                </div>
+            </div>
+
+            <!-- Rodapé -->
+            <footer class="mt-10 pt-6 border-t border-gray-200 dark:border-gray-800">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+                    <p>DevForge © 2024-2025 - Open Source sob licença MIT</p>
+                    <div class="flex gap-4"><a href="https://github.com/rafaelferreira2312/devforge" target="_blank" class="hover:text-blue-600"><i class="fab fa-github"></i> GitHub</a><span><i class="fab fa-whatsapp text-green-600"></i> (21) 97160-4248</span><span><i class="fas fa-pix text-green-500"></i> PIX: (21) 97160-4248</span></div>
+                </div>
+            </footer>
+        </div>
+    </main>
+</div>
+
+<script>
+    // Botão copiar
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const cmdId = btn.getAttribute('data-cmd-id');
+            const codeElement = document.getElementById(cmdId);
+            if (codeElement) {
+                navigator.clipboard.writeText(codeElement.innerText);
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✓ Copiado!';
+                setTimeout(() => btn.innerHTML = originalText, 1500);
+            }
+        });
+    });
+
+    // Sidebar mobile
+    const sidebar = document.getElementById('sidebarMobile');
+    const overlay = document.getElementById('overlayMobile');
+
+    window.openSidebar = function() {
+        sidebar.classList.add('open');
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    window.closeSidebar = function() {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    document.getElementById('openSidebarBtn')?.addEventListener('click', openSidebar);
+    document.getElementById('closeSidebarBtn')?.addEventListener('click', closeSidebar);
+
+    document.querySelectorAll('#sidebarMobile a').forEach(link => {
+        link.addEventListener('click', closeSidebar);
+    });
+
+    // Dark Mode
+    function initDarkMode() {
+        const isDark = localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        
+        if (isDark) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        
+        const toggleButtons = document.querySelectorAll('#darkModeToggleDesktop, #darkModeToggleMobile');
+        toggleButtons.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+                });
+            }
+        });
+    }
+
+    // Busca global
+    function initSearch() {
+        const searchInputs = ['globalSearchDesktop', 'globalSearchMobile'];
+        searchInputs.forEach(id => {
+            const input = document.getElementById(id);
+            if (input) {
+                input.addEventListener('input', (e) => {
+                    const term = e.target.value.toLowerCase();
+                    document.querySelectorAll('details').forEach(card => {
+                        if (card && card.innerText) {
+                            const text = card.innerText.toLowerCase();
+                            card.style.display = text.includes(term) ? 'block' : 'none';
+                        }
+                    });
+                });
+            }
+        });
+    }
+
+    initDarkMode();
+    initSearch();
+</script>
+</body>
+</html>
