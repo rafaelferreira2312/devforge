@@ -2,22 +2,102 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>PHP · DevForge</title>
     <meta name="description" content="Setup completo do PHP para Linux, Windows e macOS. Scripts de instalação, troubleshooting, extensões VSCode, Docker e muito mais.">
+    <meta name="author" content="Rafael Ferreira">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/main.css">
     <style>
-        /* Estilos adicionais para os comandos */
+        * {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        
+        /* Desktop: sidebar fixa */
+        @media (min-width: 1024px) {
+            .layout-desktop {
+                display: flex;
+                min-height: 100vh;
+            }
+            .sidebar-desktop {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 280px;
+                height: 100vh;
+                overflow-y: auto;
+                border-right: 1px solid;
+            }
+            .main-content-desktop {
+                margin-left: 280px;
+                flex: 1;
+                min-height: 100vh;
+            }
+        }
+        
+        /* Sidebar mobile */
+        .sidebar-mobile {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            z-index: 1000;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            overflow-y: auto;
+        }
+        .sidebar-mobile.open {
+            transform: translateX(0);
+        }
+        .overlay-mobile {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+        .overlay-mobile.open {
+            display: block;
+        }
+        
+        @media (min-width: 1024px) {
+            .sidebar-mobile, .mobile-header, .overlay-mobile {
+                display: none !important;
+            }
+        }
+        
+        @media (max-width: 1023px) {
+            .sidebar-desktop {
+                display: none !important;
+            }
+            .main-content-desktop {
+                margin-left: 0 !important;
+            }
+        }
+        
+        .card-hover {
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
+        }
+        
         .code-block {
             background: #0d1117;
             border-radius: 0.75rem;
             padding: 1rem;
             font-family: 'SF Mono', 'Fira Code', monospace;
-            font-size: 0.875rem;
+            font-size: 0.75rem;
             overflow-x: auto;
             position: relative;
         }
+        
         .copy-btn {
             position: absolute;
             top: 0.5rem;
@@ -25,7 +105,7 @@
             background: #1f2937;
             border: none;
             color: #9ca3af;
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             padding: 0.25rem 0.5rem;
             border-radius: 0.375rem;
             cursor: pointer;
@@ -35,6 +115,7 @@
             background: #374151;
             color: #f3f4f6;
         }
+        
         .version-selector {
             background: #1f2937;
             border-radius: 0.5rem;
@@ -42,54 +123,200 @@
             color: white;
             border: 1px solid #374151;
         }
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: #1e1e2f;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-200">
 
-<div class="flex h-screen overflow-hidden">
-    <!-- SIDEBAR (igual à index) -->
-    <aside class="w-72 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 flex flex-col shrink-0 overflow-y-auto">
+<!-- OVERLAY MOBILE -->
+<div id="overlayMobile" class="overlay-mobile" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR MOBILE (HAMBÚRGUER) -->
+<aside id="sidebarMobile" class="sidebar-mobile bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 shadow-xl">
+    <div class="p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center">
+        <div>
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">forge your dev environment</p>
+        </div>
+        <button id="closeSidebarBtn" class="text-gray-500 hover:text-gray-700 dark:text-gray-400">
+            <i class="fas fa-times text-xl"></i>
+        </button>
+    </div>
+    <div class="px-4 mt-4 mb-4">
+        <div class="relative">
+            <input type="text" id="globalSearchMobile" placeholder="Buscar stacks, comandos..." class="w-full bg-gray-100 dark:bg-gray-800 border-0 rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-blue-500">
+            <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i>
+        </div>
+    </div>
+    <nav class="flex-1 px-4 space-y-1 text-sm pb-20">
+        <a href="../index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+            <i class="fas fa-tachometer-alt w-5"></i><span>Dashboard</span>
+        </a>
+        <div class="pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Stacks</div>
+        <a href="php.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium">
+            <i class="fab fa-php w-5 text-indigo-500"></i><span>PHP</span>
+        </a>
+        <a href="wordpress.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+            <i class="fab fa-wordpress w-5 text-blue-500"></i><span>WordPress</span>
+        </a>
+        <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+            <i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span>
+        </a>
+        <a href="python.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+            <i class="fab fa-python w-5 text-yellow-500"></i><span>Python</span>
+        </a>
+        <a href="java.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+            <i class="fab fa-java w-5 text-red-500"></i><span>Java</span>
+        </a>
+        <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+            <i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span>
+        </a>
+        <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+            <i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span>
+        </a>
+        <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+            <i class="fas fa-gem w-5 text-red-400"></i><span>Rails</span>
+        </a>
+        <a href="devops.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+            <i class="fas fa-cloud-upload-alt w-5 text-purple-500"></i><span>DevOps</span>
+        </a>
+        <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+            <i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span>
+        </a>
+        <a href="docker.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+            <i class="fab fa-docker w-5 text-blue-500"></i><span>Docker</span>
+        </a>
+        <a href="linux.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+            <i class="fab fa-linux w-5 text-yellow-600"></i><span>Linux</span>
+        </a>
+        <a href="windows.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+            <i class="fab fa-windows w-5 text-blue-500"></i><span>Windows</span>
+        </a>
+        <a href="mobile.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+            <i class="fas fa-mobile-alt w-5 text-gray-500"></i><span>Mobile</span>
+        </a>
+        <a href="cybersecurity.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+            <i class="fas fa-shield-alt w-5 text-green-500"></i><span>Security</span>
+        </a>
+    </nav>
+    <div class="p-4 border-t border-gray-200 dark:border-gray-800">
+        <button id="darkModeToggleMobile" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm flex items-center gap-3">
+            <i class="fas fa-moon w-5"></i><span>Alternar tema</span>
+        </button>
+    </div>
+</aside>
+
+<!-- LAYOUT DESKTOP -->
+<div class="layout-desktop">
+    <!-- SIDEBAR DESKTOP -->
+    <aside class="sidebar-desktop bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col">
         <div class="p-6">
             <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1>
             <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">forge your dev environment</p>
         </div>
-        <nav class="flex-1 px-4 space-y-1 text-sm">
-            <a href="../index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">🏠 Dashboard</a>
+        <div class="px-4 mb-4">
+            <div class="relative">
+                <input type="text" id="globalSearchDesktop" placeholder="Buscar stacks, comandos..." class="w-full bg-gray-100 dark:bg-gray-800 border-0 rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-blue-500">
+                <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i>
+            </div>
+        </div>
+        <nav class="flex-1 px-4 space-y-1 text-sm overflow-y-auto pb-4">
+            <a href="../index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i class="fas fa-tachometer-alt w-5"></i><span>Dashboard</span>
+            </a>
             <div class="pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Stacks</div>
-            <a href="php.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium">🐘 PHP</a>
-            <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">🟢 Node.js</a>
-            <a href="python.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">🐍 Python</a>
-            <a href="java.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">☕ Java</a>
-            <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">⚡ Go</a>
-            <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">🦀 Rust</a>
-            <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">💎 Rails</a>
-            <a href="devops.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">🔧 DevOps</a>
-            <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">🧠 IA/ML</a>
-            <a href="docker.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">🐳 Docker</a>
-            <a href="linux.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">🐧 Linux</a>
-            <a href="windows.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">🪟 Windows</a>
-            <a href="mobile.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">📱 Mobile</a>
-            <a href="cybersecurity.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">🔒 Security</a>
+            <a href="php.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium">
+                <i class="fab fa-php w-5 text-indigo-500"></i><span>PHP</span>
+            </a>
+            <a href="wordpress.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i class="fab fa-wordpress w-5 text-blue-500"></i><span>WordPress</span>
+            </a>
+            <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span>
+            </a>
+            <a href="python.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i class="fab fa-python w-5 text-yellow-500"></i><span>Python</span>
+            </a>
+            <a href="java.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i class="fab fa-java w-5 text-red-500"></i><span>Java</span>
+            </a>
+            <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span>
+            </a>
+            <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span>
+            </a>
+            <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i class="fas fa-gem w-5 text-red-400"></i><span>Rails</span>
+            </a>
+            <a href="devops.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i class="fas fa-cloud-upload-alt w-5 text-purple-500"></i><span>DevOps</span>
+            </a>
+            <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span>
+            </a>
+            <a href="docker.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i class="fab fa-docker w-5 text-blue-500"></i><span>Docker</span>
+            </a>
+            <a href="linux.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i class="fab fa-linux w-5 text-yellow-600"></i><span>Linux</span>
+            </a>
+            <a href="windows.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i class="fab fa-windows w-5 text-blue-500"></i><span>Windows</span>
+            </a>
+            <a href="mobile.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i class="fas fa-mobile-alt w-5 text-gray-500"></i><span>Mobile</span>
+            </a>
+            <a href="cybersecurity.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+                <i class="fas fa-shield-alt w-5 text-green-500"></i><span>Security</span>
+            </a>
         </nav>
         <div class="p-4 border-t border-gray-200 dark:border-gray-800">
-            <button id="darkModeToggle" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm">🌓 Alternar tema</button>
+            <button id="darkModeToggleDesktop" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm flex items-center gap-3">
+                <i class="fas fa-moon w-5"></i><span>Alternar tema</span>
+            </button>
         </div>
     </aside>
 
-    <!-- MAIN -->
-    <main class="flex-1 overflow-y-auto">
-        <div class="max-w-5xl mx-auto px-6 py-8">
+    <!-- MAIN CONTENT -->
+    <main class="main-content-desktop">
+        <!-- Header mobile -->
+        <div class="mobile-header sticky top-0 bg-gray-50 dark:bg-gray-950 z-30 p-4 border-b border-gray-200 dark:border-gray-800 flex items-center gap-3 lg:hidden">
+            <button id="openSidebarBtn" class="text-gray-600 dark:text-gray-300">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+            <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1>
+        </div>
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
             <!-- Cabeçalho da stack -->
             <div class="flex items-center gap-4 mb-8">
-                <span class="text-6xl">🐘</span>
+                <i class="fab fa-php text-6xl text-indigo-500"></i>
                 <div>
-                    <h1 class="text-4xl font-bold tracking-tight">PHP</h1>
+                    <h1 class="text-3xl sm:text-4xl font-bold tracking-tight">PHP</h1>
                     <p class="text-gray-600 dark:text-gray-400 mt-1">Linguagem de script amplamente usada para web, com ecossistema maduro (Laravel, Symfony, WordPress).</p>
                 </div>
             </div>
 
             <!-- Seletor de versão e comandos dinâmicos -->
-            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6 mb-8">
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
                 <h2 class="text-xl font-semibold mb-4">⚡ Instalação automatizada</h2>
                 <div class="mb-4 flex flex-wrap gap-4 items-center">
                     <label class="text-sm font-medium">Versão do PHP:</label>
@@ -99,39 +326,39 @@
                         <option value="8.1">PHP 8.1 (legado)</option>
                     </select>
                 </div>
-                <div class="space-y-6">
+                <div class="space-y-5">
                     <!-- Linux / WSL -->
                     <div>
-                        <div class="flex items-center gap-2 mb-2"><span class="text-lg">🐧</span><span class="font-medium">Linux / WSL</span></div>
+                        <div class="flex items-center gap-2 mb-2"><i class="fab fa-linux text-lg text-yellow-600"></i><span class="font-medium">Linux / WSL</span></div>
                         <div class="relative code-block">
-                            <code id="linuxCmd" class="text-green-400">curl -fsSL https://devforge.sh/install/php.sh | bash -s 8.3</code>
-                            <button class="copy-btn" data-cmd-id="linuxCmd">Copiar</button>
+                            <code id="linuxCmd" class="text-green-400 text-xs sm:text-sm">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/php/install.sh | bash -s 8.3</code>
+                            <button class="copy-btn" data-cmd-id="linuxCmd"><i class="far fa-copy"></i> Copiar</button>
                         </div>
                     </div>
                     <!-- Windows PowerShell -->
                     <div>
-                        <div class="flex items-center gap-2 mb-2"><span class="text-lg">🪟</span><span class="font-medium">Windows PowerShell (Admin)</span></div>
+                        <div class="flex items-center gap-2 mb-2"><i class="fab fa-windows text-lg text-blue-500"></i><span class="font-medium">Windows PowerShell (Admin)</span></div>
                         <div class="relative code-block">
-                            <code id="winCmd" class="text-green-400">Set-ExecutionPolicy Bypass -Scope Process; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; iex "& { $(irm https://devforge.sh/install/php.ps1) } 8.3"</code>
-                            <button class="copy-btn" data-cmd-id="winCmd">Copiar</button>
+                            <code id="winCmd" class="text-green-400 text-xs sm:text-sm">Set-ExecutionPolicy Bypass -Scope Process; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; iex "& { $(irm https://rafaelferreira2312.github.io/devforge/scripts/php/install.ps1) } 8.3"</code>
+                            <button class="copy-btn" data-cmd-id="winCmd"><i class="far fa-copy"></i> Copiar</button>
                         </div>
                     </div>
                     <!-- macOS -->
                     <div>
-                        <div class="flex items-center gap-2 mb-2"><span class="text-lg">🍎</span><span class="font-medium">macOS (Homebrew)</span></div>
+                        <div class="flex items-center gap-2 mb-2"><i class="fab fa-apple text-lg text-gray-500"></i><span class="font-medium">macOS (Homebrew)</span></div>
                         <div class="relative code-block">
-                            <code id="macCmd" class="text-green-400">curl -fsSL https://devforge.sh/install/php.sh | bash -s 8.3</code>
-                            <button class="copy-btn" data-cmd-id="macCmd">Copiar</button>
+                            <code id="macCmd" class="text-green-400 text-xs sm:text-sm">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/php/install.sh | bash -s 8.3</code>
+                            <button class="copy-btn" data-cmd-id="macCmd"><i class="far fa-copy"></i> Copiar</button>
                         </div>
                     </div>
                 </div>
-                <p class="text-xs text-gray-500 mt-4">Os scripts fazem backup automático da sua configuração atual (<code>php.ini</code>) antes de instalar.</p>
+                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-database"></i> Os scripts fazem backup automático da sua configuração atual (<code>php.ini</code>) antes de instalar.</p>
             </div>
 
             <!-- Requisitos e Hardware -->
             <div class="grid md:grid-cols-2 gap-6 mb-8">
-                <div class="bg-white dark:bg-gray-900 rounded-xl border p-6">
-                    <h3 class="text-lg font-bold mb-3">📋 Requisitos mínimos</h3>
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
+                    <h3 class="text-lg font-bold mb-3 flex items-center gap-2"><i class="fas fa-microchip text-blue-500"></i> Requisitos mínimos</h3>
                     <ul class="list-disc list-inside space-y-1 text-sm">
                         <li>CPU: 2+ núcleos (x86_64 ou ARM64)</li>
                         <li>RAM: 4 GB (recomendado 8 GB para projetos grandes)</li>
@@ -139,8 +366,8 @@
                         <li>SO: Ubuntu 20.04+, Debian 11+, RHEL 8+, Windows 10/11, macOS 11+</li>
                     </ul>
                 </div>
-                <div class="bg-white dark:bg-gray-900 rounded-xl border p-6">
-                    <h3 class="text-lg font-bold mb-3">💻 Hardware recomendado (Dev)</h3>
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
+                    <h3 class="text-lg font-bold mb-3 flex items-center gap-2"><i class="fas fa-laptop-code text-green-500"></i> Hardware recomendado (Dev)</h3>
                     <ul class="list-disc list-inside space-y-1 text-sm">
                         <li>Notebook: Dell XPS, MacBook Pro M1/M2, Lenovo ThinkPad</li>
                         <li>CPU: i5 / Ryzen 5 ou superior</li>
@@ -151,11 +378,11 @@
             </div>
 
             <!-- Programas e Extensões -->
-            <div class="bg-white dark:bg-gray-900 rounded-xl border p-6 mb-8">
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
                 <h2 class="text-xl font-semibold mb-4">🛠️ Stack recomendada</h2>
                 <div class="grid md:grid-cols-2 gap-6">
                     <div>
-                        <h3 class="font-medium mb-2">Programas essenciais</h3>
+                        <h3 class="font-medium mb-2 flex items-center gap-2"><i class="fas fa-boxes text-purple-500"></i> Programas essenciais</h3>
                         <ul class="list-disc list-inside text-sm space-y-1">
                             <li>Servidor web: Nginx / Apache</li>
                             <li>Banco de dados: MySQL 8 / MariaDB / PostgreSQL</li>
@@ -165,7 +392,7 @@
                         </ul>
                     </div>
                     <div>
-                        <h3 class="font-medium mb-2">Extensões VSCode</h3>
+                        <h3 class="font-medium mb-2 flex items-center gap-2"><i class="fab fa-vscode text-blue-500"></i> Extensões VSCode</h3>
                         <ul class="list-disc list-inside text-sm space-y-1">
                             <li>PHP Intelephense</li>
                             <li>Laravel Extension Pack</li>
@@ -176,23 +403,22 @@
                     </div>
                 </div>
                 <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800">
-                    <h3 class="font-medium mb-2">🐳 Docker (opcional)</h3>
+                    <h3 class="font-medium mb-2 flex items-center gap-2"><i class="fab fa-docker text-blue-500"></i> Docker (opcional)</h3>
                     <p class="text-sm">Use <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">docker run -d -p 80:80 --name php-app php:8.3-apache</code> para teste rápido.</p>
-                    <p class="text-sm mt-1">Projeto Dockerfile pronto: <a href="#" class="text-blue-600">baixar template</a></p>
                 </div>
             </div>
 
-            <!-- Troubleshooting real -->
-            <div class="bg-white dark:bg-gray-900 rounded-xl border p-6 mb-8">
+            <!-- Troubleshooting -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
                 <h2 class="text-xl font-semibold mb-4">🔧 Troubleshooting (diagnósticos reais)</h2>
                 <div class="space-y-4">
                     <div class="border-l-4 border-red-400 pl-4">
-                        <p class="font-medium">❌ Erro: “mysqli extension missing”</p>
+                        <p class="font-medium">❌ Erro: "mysqli extension missing"</p>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Causa: extensão mysqli não instalada.<br>
                         Solução: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">sudo apt install php8.3-mysql</code> (ou versão correspondente) e reinicie o PHP-FPM/Apache.</p>
                     </div>
                     <div class="border-l-4 border-yellow-400 pl-4">
-                        <p class="font-medium">⚠️ Aviso: “PHP Startup: Unable to load dynamic library”</p>
+                        <p class="font-medium">⚠️ Aviso: "PHP Startup: Unable to load dynamic library"</p>
                         <p class="text-sm text-gray-600 dark:text-gray-400">Causa: extensão habilitada mas arquivo .so ausente.<br>
                         Solução: verifique se a extensão foi instalada via <code>apt list --installed | grep php</code> e reative com <code>phpenmod</code>.</p>
                     </div>
@@ -201,42 +427,74 @@
                         <p class="text-sm text-gray-600 dark:text-gray-400">Solução temporária: <code>COMPOSER_MEMORY_LIMIT=-1 composer update</code>.</p>
                     </div>
                 </div>
+                
+                <!-- DIAGNÓSTICO AUTOMÁTICO - CORRIGIDO -->
                 <div class="mt-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
-                    <p class="text-sm font-medium">📋 Diagnóstico automático:</p>
-                    <div class="relative code-block mt-2">
-                        <code id="diagCmd" class="text-sm">php -v && composer --version && php -m | grep -E "mysql|curl|json"</code>
-                        <button class="copy-btn" data-cmd-id="diagCmd">Copiar</button>
+                    <p class="text-sm font-medium flex items-center gap-2 mb-2">
+                        <i class="fas fa-stethoscope text-blue-500"></i> Diagnóstico automático:
+                    </p>
+                    <div class="relative">
+                        <div class="bg-gray-900 rounded-lg p-3 font-mono text-xs sm:text-sm text-green-400 overflow-x-auto">
+                            <code id="diagCmd">php -v && composer --version && php -m | grep -E "mysql|curl|json|mbstring|gd|zip" && php -i | grep "Loaded Configuration File"</code>
+                        </div>
+                        <button class="copy-btn absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs" data-cmd-id="diagCmd">
+                            <i class="far fa-copy"></i> Copiar
+                        </button>
                     </div>
+                    <p class="text-xs text-gray-500 mt-2">
+                        <i class="fas fa-info-circle"></i> Este comando verifica: versão do PHP, Composer, extensões instaladas e arquivo php.ini ativo.
+                    </p>
                 </div>
             </div>
 
             <!-- Scripts e downloads -->
-            <div class="bg-white dark:bg-gray-900 rounded-xl border p-6 mb-8">
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
                 <h2 class="text-xl font-semibold mb-4">📜 Scripts prontos</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                    <a href="../scripts/php/install.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition">📥 install.sh (Linux/Mac)</a>
-                    <a href="../scripts/php/install.ps1" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition">📥 install.ps1 (Win)</a>
-                    <a href="../scripts/php/uninstall.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition">🗑️ uninstall.sh</a>
-                    <a href="../scripts/php/backup-env.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition">💾 backup-env.sh</a>
+                    <a href="../scripts/php/install.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install.sh</a>
+                    <a href="../scripts/php/install.ps1" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install.ps1</a>
+                    <a href="../scripts/php/uninstall.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition flex items-center justify-center gap-2"><i class="fas fa-trash"></i> uninstall.sh</a>
+                    <a href="../scripts/php/backup-env.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition flex items-center justify-center gap-2"><i class="fas fa-archive"></i> backup-env.sh</a>
                 </div>
-                <p class="text-xs text-gray-500 mt-4">Os scripts realizam backup automático antes de modificar configurações. Versões verificadas nas principais distribuições.</p>
+                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-shield-alt"></i> Os scripts realizam backup automático antes de modificar configurações. Versões verificadas nas principais distribuições.</p>
             </div>
 
             <!-- FAQ -->
-            <div class="bg-white dark:bg-gray-900 rounded-xl border p-6">
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
                 <h2 class="text-xl font-semibold mb-4">❓ Perguntas frequentes</h2>
                 <div class="space-y-3">
-                    <details><summary class="cursor-pointer font-medium">Como mudar a versão do PHP depois de instalada?</summary><p class="text-sm mt-2">No Ubuntu/Debian use <code>sudo update-alternatives --config php</code>. No Windows, use o gerenciador de versões <code>phpenv</code>.</p></details>
-                    <details><summary class="cursor-pointer font-medium">O script de instalação faz backup da minha configuração atual?</summary><p class="text-sm mt-2">Sim, todos os scripts movem o <code>php.ini</code> original para <code>/etc/php/&lt;versão&gt;/cli/php.ini.bak</code>.</p></details>
-                    <details><summary class="cursor-pointer font-medium">Posso usar o DevForge em produção?</summary><p class="text-sm mt-2">Os scripts são otimizados para desenvolvimento. Para produção, use imagens Docker oficiais ou empacotamento específico.</p></details>
+                    <details class="group">
+                        <summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-question-circle text-blue-500"></i> Como mudar a versão do PHP depois de instalada?</summary>
+                        <p class="text-sm mt-2 pl-6">No Ubuntu/Debian use <code>sudo update-alternatives --config php</code>. No Windows, use o gerenciador de versões <code>phpenv</code>.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-database text-green-500"></i> O script de instalação faz backup da minha configuração atual?</summary>
+                        <p class="text-sm mt-2 pl-6">Sim, todos os scripts movem o <code>php.ini</code> original para <code>/etc/php/&lt;versão&gt;/cli/php.ini.bak</code>.</p>
+                    </details>
+                    <details class="group">
+                        <summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-cloud-upload-alt text-purple-500"></i> Posso usar o DevForge em produção?</summary>
+                        <p class="text-sm mt-2 pl-6">Os scripts são otimizados para desenvolvimento. Para produção, use imagens Docker oficiais ou empacotamento específico.</p>
+                    </details>
                 </div>
             </div>
+
+            <!-- Rodapé com informações do autor -->
+            <footer class="mt-10 pt-6 border-t border-gray-200 dark:border-gray-800">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+                    <p>DevForge © 2025-2026 - Open Source sob licença MIT</p>
+                    <div class="flex gap-4">
+                        <a href="https://github.com/rafaelferreira2312/devforge" target="_blank" class="hover:text-blue-600"><i class="fab fa-github"></i> GitHub</a>
+                        <span><i class="fab fa-whatsapp text-green-600"></i> (21) 97160-4248</span>
+                        <span><i class="fas fa-pix text-green-500"></i> PIX: (21) 97160-4248</span>
+                    </div>
+                </div>
+            </footer>
         </div>
     </main>
 </div>
 
 <script>
-    // Seletor de versão dinâmico nos comandos
+    // ==================== SELETOR DE VERSÃO ====================
     const versionSelect = document.getElementById('phpVersion');
     const linuxCmdSpan = document.getElementById('linuxCmd');
     const winCmdSpan = document.getElementById('winCmd');
@@ -244,14 +502,14 @@
 
     function updateCommands() {
         const ver = versionSelect.value;
-        linuxCmdSpan.innerText = `curl -fsSL https://devforge.sh/install/php.sh | bash -s ${ver}`;
-        winCmdSpan.innerText = `Set-ExecutionPolicy Bypass -Scope Process; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; iex "& { $(irm https://devforge.sh/install/php.ps1) } ${ver}"`;
-        macCmdSpan.innerText = `curl -fsSL https://devforge.sh/install/php.sh | bash -s ${ver}`;
+        linuxCmdSpan.innerText = `curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/php/install.sh | bash -s ${ver}`;
+        winCmdSpan.innerText = `Set-ExecutionPolicy Bypass -Scope Process; [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12; iex "& { $(irm https://rafaelferreira2312.github.io/devforge/scripts/php/install.ps1) } ${ver}"`;
+        macCmdSpan.innerText = `curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/php/install.sh | bash -s ${ver}`;
     }
     versionSelect.addEventListener('change', updateCommands);
     updateCommands();
 
-    // Botão copiar genérico
+    // ==================== BOTÃO COPIAR ====================
     document.querySelectorAll('.copy-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             const cmdId = btn.getAttribute('data-cmd-id');
@@ -259,25 +517,79 @@
             if (codeElement) {
                 const text = codeElement.innerText;
                 navigator.clipboard.writeText(text);
-                const originalText = btn.innerText;
-                btn.innerText = '✓ Copiado!';
-                setTimeout(() => btn.innerText = originalText, 1500);
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✓ Copiado!';
+                setTimeout(() => btn.innerHTML = originalText, 1500);
             }
         });
     });
 
-    // Dark mode (simples)
-    const darkToggle = document.getElementById('darkModeToggle');
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        document.documentElement.classList.add('dark');
-    } else {
-        document.documentElement.classList.remove('dark');
+    // ==================== SIDEBAR MOBILE ====================
+    const sidebar = document.getElementById('sidebarMobile');
+    const overlay = document.getElementById('overlayMobile');
+
+    window.openSidebar = function() {
+        sidebar.classList.add('open');
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
     }
-    darkToggle?.addEventListener('click', () => {
-        document.documentElement.classList.toggle('dark');
-        localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+
+    window.closeSidebar = function() {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    document.getElementById('openSidebarBtn')?.addEventListener('click', openSidebar);
+    document.getElementById('closeSidebarBtn')?.addEventListener('click', closeSidebar);
+
+    document.querySelectorAll('#sidebarMobile a').forEach(link => {
+        link.addEventListener('click', closeSidebar);
     });
+
+    // ==================== DARK MODE ====================
+    function initDarkMode() {
+        const isDark = localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        
+        if (isDark) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        
+        const toggleButtons = document.querySelectorAll('#darkModeToggleDesktop, #darkModeToggleMobile');
+        toggleButtons.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+                });
+            }
+        });
+    }
+
+    // ==================== BUSCA GLOBAL ====================
+    function initSearch() {
+        const searchInputs = ['globalSearchDesktop', 'globalSearchMobile'];
+        searchInputs.forEach(id => {
+            const input = document.getElementById(id);
+            if (input) {
+                input.addEventListener('input', (e) => {
+                    const term = e.target.value.toLowerCase();
+                    document.querySelectorAll('.stack-card, .card').forEach(card => {
+                        if (card) {
+                            const text = card.innerText.toLowerCase();
+                            card.style.display = text.includes(term) ? 'block' : 'none';
+                        }
+                    });
+                });
+            }
+        });
+    }
+
+    // ==================== INICIALIZAR ====================
+    initDarkMode();
+    initSearch();
 </script>
-<script src="../assets/js/copy.js" defer></script>
 </body>
-							</html>
+</html>
