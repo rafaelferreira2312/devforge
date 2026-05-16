@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>WordPress · DevForge</title>
-    <meta name="description" content="Setup otimizado e diagnóstico completo para WordPress com LEMP, hardening de segurança, WP-CLI e scripts automatizados para Linux, Windows e Mac.">
+    <title>Node.js · DevForge</title>
+    <meta name="description" content="Setup completo do Node.js para Linux, Windows e macOS. Scripts de instalação, troubleshooting, extensões VSCode, Docker e muito mais.">
     <meta name="author" content="Rafael Ferreira">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -40,6 +40,7 @@
         .code-block { background: #0d1117; border-radius: 0.75rem; padding: 1rem; font-family: 'SF Mono', monospace; font-size: 0.75rem; overflow-x: auto; position: relative; }
         .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; background: #1f2937; border: none; color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.5rem; border-radius: 0.375rem; cursor: pointer; transition: all 0.2s; }
         .copy-btn:hover { background: #374151; color: #f3f4f6; }
+        .version-selector { background: #1f2937; border-radius: 0.5rem; padding: 0.25rem 0.5rem; color: white; border: 1px solid #374151; }
         
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
@@ -71,8 +72,8 @@
         <a href="../index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-tachometer-alt w-5"></i><span>Dashboard</span></a>
         <div class="pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Stacks</div>
         <a href="php.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-php w-5 text-indigo-500"></i><span>PHP</span></a>
-        <a href="wordpress.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fab fa-wordpress w-5 text-blue-500"></i><span>WordPress</span></a>
-        <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span></a>
+        <a href="wordpress.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-wordpress w-5 text-blue-500"></i><span>WordPress</span></a>
+        <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span></a>
         <a href="python.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-python w-5 text-yellow-500"></i><span>Python</span></a>
         <a href="java.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-java w-5 text-red-500"></i><span>Java</span></a>
         <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
@@ -100,8 +101,8 @@
             <a href="../index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-tachometer-alt w-5"></i><span>Dashboard</span></a>
             <div class="pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Stacks</div>
             <a href="php.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-php w-5 text-indigo-500"></i><span>PHP</span></a>
-            <a href="wordpress.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fab fa-wordpress w-5 text-blue-500"></i><span>WordPress</span></a>
-            <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span></a>
+            <a href="wordpress.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-wordpress w-5 text-blue-500"></i><span>WordPress</span></a>
+            <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span></a>
             <a href="python.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-python w-5 text-yellow-500"></i><span>Python</span></a>
             <a href="java.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-java w-5 text-red-500"></i><span>Java</span></a>
             <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
@@ -127,110 +128,102 @@
         <div class="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
             <!-- Cabeçalho -->
             <div class="flex items-center gap-4 mb-8">
-                <i class="fab fa-wordpress text-6xl text-blue-500"></i>
-                <div><h1 class="text-3xl sm:text-4xl font-bold tracking-tight">WordPress</h1><p class="text-gray-600 dark:text-gray-400 mt-1">CMS open source líder global, com ecossistema robusto de plugins, temas e comunidade ativa.</p></div>
+                <i class="fab fa-node text-6xl text-green-600"></i>
+                <div><h1 class="text-3xl sm:text-4xl font-bold tracking-tight">Node.js</h1><p class="text-gray-600 dark:text-gray-400 mt-1">Runtime JavaScript assíncrono e orientado a eventos, ideal para APIs, microsserviços e aplicações em tempo real.</p></div>
             </div>
 
-            <!-- Instalação Automatizada -->
+            <!-- Seletor de versão e comandos dinâmicos -->
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
-                <h2 class="text-xl font-semibold mb-4">⚡ Instalação automatizada (LEMP + WP-CLI)</h2>
-                <div class="space-y-5">
-                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-linux text-lg text-yellow-600"></i><span class="font-medium">Ubuntu 22.04 / 24.04 LTS</span></div><div class="relative code-block"><code id="linuxCmd" class="text-green-400 text-xs sm:text-sm">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/wordpress/install-wordpress.sh | bash</code><button class="copy-btn" data-cmd-id="linuxCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
-                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-windows text-lg text-blue-500"></i><span class="font-medium">Windows PowerShell (Admin)</span></div><div class="relative code-block"><code id="winCmd" class="text-green-400 text-xs sm:text-sm">Set-ExecutionPolicy Bypass -Scope Process; iex "& { $(irm https://rafaelferreira2312.github.io/devforge/scripts/wordpress/install-wordpress.ps1) }"</code><button class="copy-btn" data-cmd-id="winCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
-                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-apple text-lg text-gray-500"></i><span class="font-medium">macOS (Homebrew + Valet)</span></div><div class="relative code-block"><code id="macCmd" class="text-green-400 text-xs sm:text-sm">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/wordpress/install-wordpress-mac.sh | bash</code><button class="copy-btn" data-cmd-id="macCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
+                <h2 class="text-xl font-semibold mb-4">⚡ Instalação automatizada</h2>
+                <div class="mb-4 flex flex-wrap gap-4 items-center">
+                    <label class="text-sm font-medium">Versão do Node.js:</label>
+                    <select id="nodeVersion" class="version-selector bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700 rounded-md px-3 py-1">
+                        <option value="22">Node.js 22 (recomendada)</option>
+                        <option value="20">Node.js 20 (LTS)</option>
+                        <option value="18">Node.js 18 (LTS)</option>
+                        <option value="16">Node.js 16 (legado)</option>
+                    </select>
                 </div>
-                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-database"></i> O script configura Nginx, PHP 8.3+, MariaDB 10.11+, Redis, WP-CLI e hardening básico de segurança.</p>
+                <div class="space-y-5">
+                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-linux text-lg text-yellow-600"></i><span class="font-medium">Linux / WSL</span></div><div class="relative code-block"><code id="linuxCmd" class="text-green-400 text-xs sm:text-sm break-all">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/nodejs/install.sh | bash -s 22</code><button class="copy-btn" data-cmd-id="linuxCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
+                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-windows text-lg text-blue-500"></i><span class="font-medium">Windows PowerShell (Admin)</span></div><div class="relative code-block"><code id="winCmd" class="text-green-400 text-xs sm:text-sm break-all">Set-ExecutionPolicy Bypass -Scope Process; iex "& { $(irm https://rafaelferreira2312.github.io/devforge/scripts/nodejs/install.ps1) } 22"</code><button class="copy-btn" data-cmd-id="winCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
+                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-apple text-lg text-gray-500"></i><span class="font-medium">macOS (Homebrew)</span></div><div class="relative code-block"><code id="macCmd" class="text-green-400 text-xs sm:text-sm break-all">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/nodejs/install.sh | bash -s 22</code><button class="copy-btn" data-cmd-id="macCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
+                </div>
+                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-database"></i> Os scripts fazem backup automático do ambiente npm global antes de instalar ou atualizar.</p>
             </div>
 
             <!-- Requisitos e Hardware -->
             <div class="grid md:grid-cols-2 gap-6 mb-8">
                 <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6"><h3 class="text-lg font-bold mb-3 flex items-center gap-2"><i class="fas fa-microchip text-blue-500"></i> Requisitos mínimos</h3>
-                    <ul class="list-disc list-inside space-y-1 text-sm"><li>CPU: 2 vCPUs (x86_64)</li><li>RAM: 4 GB (mínimo 2 GB, mas recomendado 4 GB+)</li><li>Armazenamento: SSD com 20 GB+</li><li>SO: Ubuntu 22.04/24.04 LTS, Debian 11/12, Windows Server 2019+ (WSL), macOS 12+</li></ul>
+                    <ul class="list-disc list-inside space-y-1 text-sm"><li>CPU: 2+ núcleos (x86_64 ou ARM64)</li><li>RAM: 2 GB (recomendado 4 GB para projetos maiores)</li><li>Armazenamento: 5 GB SSD</li><li>SO: Ubuntu 20.04+, Debian 11+, RHEL 8+, Windows 10/11, macOS 11+</li></ul>
                 </div>
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6"><h3 class="text-lg font-bold mb-3 flex items-center gap-2"><i class="fas fa-laptop-code text-green-500"></i> Hardware recomendado (Site Médio/Grande)</h3>
-                    <ul class="list-disc list-inside space-y-1 text-sm"><li>CPU: 4+ vCPUs (Intel Xeon / AMD EPYC ou Apple M1/M2)</li><li>RAM: 8 GB+ (essencial para multisite ou cache pesado)</li><li>Armazenamento: NVMe SSD 100 GB+</li><li>Rede: 1 Gbps, com suporte a HTTP/2 e IPv6</li></ul>
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6"><h3 class="text-lg font-bold mb-3 flex items-center gap-2"><i class="fas fa-laptop-code text-green-500"></i> Hardware recomendado (Dev)</h3>
+                    <ul class="list-disc list-inside space-y-1 text-sm"><li>Notebook: Dell XPS, MacBook Pro M1/M2, Lenovo ThinkPad</li><li>CPU: i5 / Ryzen 5 ou superior</li><li>RAM: 16 GB (32 GB para containers + IDE)</li><li>SSD NVMe 256 GB+</li></ul>
                 </div>
             </div>
 
-            <!-- Stack Recomendada -->
+            <!-- Stack recomendada -->
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
                 <h2 class="text-xl font-semibold mb-4">🛠️ Stack recomendada</h2>
                 <div class="grid md:grid-cols-2 gap-6">
-                    <div><h3 class="font-medium mb-2 flex items-center gap-2"><i class="fab fa-linux text-yellow-600"></i> Pacotes Essenciais (Linux)</h3>
-                        <ul class="list-disc list-inside text-sm space-y-1"><li>Nginx (mainline) – Proxy reverso + FastCGI Cache</li><li>PHP 8.3+ FPM com OPcache, Redis, APCu</li><li>MariaDB 10.11+ ou MySQL 8.0+</li><li>Redis Server (cache de objetos)</li><li>WP-CLI (gerenciamento via terminal)</li></ul>
+                    <div><h3 class="font-medium mb-2 flex items-center gap-2"><i class="fas fa-boxes text-purple-500"></i> Ferramentas essenciais</h3>
+                        <ul class="list-disc list-inside text-sm space-y-1"><li>Gerenciador de versões: nvm / fnm</li><li>Gerenciador de pacotes: npm / yarn / pnpm</li><li>Framework: Express.js / Fastify / Nest.js</li><li>TypeScript: suporte nativo ou ts-node</li><li>Process Manager: PM2</li></ul>
                     </div>
-                    <div><h3 class="font-medium mb-2 flex items-center gap-2"><i class="fab fa-docker text-blue-500"></i> Docker (opcional)</h3>
-                        <p class="text-sm">Subir WordPress com Docker Compose em segundos:</p>
-                        <div class="relative code-block mt-2">
-                            <code id="dockerCmd" class="text-green-400 text-xs sm:text-sm break-all">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/wordpress/docker-compose.yml | docker-compose -f - up -d</code>
-                            <button class="copy-btn absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs" data-cmd-id="dockerCmd">
-                                <i class="far fa-copy"></i> Copiar
-                            </button>
-                        </div>
+                    <div><h3 class="font-medium mb-2 flex items-center gap-2"><i class="fab fa-vscode text-blue-500"></i> Extensões VSCode</h3>
+                        <ul class="list-disc list-inside text-sm space-y-1"><li>JavaScript/TypeScript (built-in)</li><li>ES7+ React/Redux/React-Native snippets</li><li>npm Intellisense</li><li>Prettier - Code formatter</li><li>Thunder Client (alternativa ao Postman)</li></ul>
                     </div>
                 </div>
-                <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800"><h3 class="font-medium mb-2 flex items-center gap-2"><i class="fab fa-vscode text-blue-500"></i> Extensões VSCode Recomendadas</h3>
-                    <div class="grid grid-cols-2 gap-2 text-sm"><span>WPILife (WordPress Snippets)</span><span>PHP Intelephense</span><span>EditorConfig</span><span>GitLens</span><span>MySQL (cweijan)</span><span>Redis (cweijan)</span></div>
+                <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800"><h3 class="font-medium mb-2 flex items-center gap-2"><i class="fab fa-docker text-blue-500"></i> Docker (opcional)</h3>
+                    <div class="relative code-block mt-2">
+                        <code id="dockerCmd" class="text-green-400 text-xs sm:text-sm break-all">docker run -d -p 3000:3000 --name node-app node:22-alpine node -e "require('http').createServer((req,res)=>{res.end('Hello DevForge!')}).listen(3000)"</code>
+                        <button class="copy-btn absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs" data-cmd-id="dockerCmd"><i class="far fa-copy"></i> Copiar</button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Troubleshooting com DIAGNÓSTICO AUTOMÁTICO - PHP -->
+            <!-- Troubleshooting com diagnóstico -->
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
                 <h2 class="text-xl font-semibold mb-4">🔧 Troubleshooting (diagnósticos reais)</h2>
                 <div class="space-y-4">
-                    <div class="border-l-4 border-red-400 pl-4">
-                        <p class="font-medium">❌ Erro: "mysqli extension missing"</p>
-                        <p class="text-sm">Causa: extensão mysqli não instalada.<br>Solução: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">sudo apt install php8.3-mysql</code> e reinicie o PHP-FPM/Apache.</p>
-                    </div>
-                    <div class="border-l-4 border-yellow-400 pl-4">
-                        <p class="font-medium">⚠️ Aviso: "PHP Startup: Unable to load dynamic library"</p>
-                        <p class="text-sm">Causa: extensão habilitada mas arquivo .so ausente.<br>Solução: verifique com <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">apt list --installed | grep php</code> e reative com <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">phpenmod</code>.</p>
-                    </div>
-                    <div class="border-l-4 border-blue-400 pl-4">
-                        <p class="font-medium">🐘 Composer out of memory</p>
-                        <p class="text-sm">Solução temporária: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">COMPOSER_MEMORY_LIMIT=-1 composer update</code>.</p>
-                    </div>
+                    <div class="border-l-4 border-red-400 pl-4"><p class="font-medium">❌ Erro: "node: command not found"</p><p class="text-sm">Causa: Node.js não instalado ou PATH não configurado.<br>Solução: Verifique com <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">which node</code> ou reinstale usando o script DevForge.</p></div>
+                    <div class="border-l-4 border-yellow-400 pl-4"><p class="font-medium">⚠️ Erro: "EACCES: permission denied" ao instalar pacotes globais</p><p class="text-sm">Causa: Permissões incorretas na pasta npm global.<br>Solução: Corrija com <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">sudo chown -R $(whoami) ~/.npm</code> ou use nvm.</p></div>
+                    <div class="border-l-4 border-blue-400 pl-4"><p class="font-medium">🐘 Erro: "node-gyp" falha ao compilar módulos nativos</p><p class="text-sm">Causa: Dependências de build faltando.<br>Solução: Instale build-essential e Python: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">sudo apt install build-essential python3</code></p></div>
                 </div>
                 
-                <!-- DIAGNÓSTICO AUTOMÁTICO - PHP CORRIGIDO -->
+                <!-- DIAGNÓSTICO AUTOMÁTICO -->
                 <div class="mt-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
-                    <p class="text-sm font-medium flex items-center gap-2 mb-2">
-                        <i class="fas fa-stethoscope text-blue-500"></i> Diagnóstico automático:
-                    </p>
+                    <p class="text-sm font-medium flex items-center gap-2 mb-2"><i class="fas fa-stethoscope text-blue-500"></i> Diagnóstico automático:</p>
                     <div class="relative">
-                        <div class="bg-gray-900 rounded-lg p-3 font-mono text-xs sm:text-sm text-green-400 overflow-x-auto">
-                            <code id="diagCmd" class="whitespace-pre-wrap break-all">php -v && composer --version && php -m | grep -E "mysql|curl|json|mbstring|gd|zip" && php -i | grep "Loaded Configuration File"</code>
+                        <div class="bg-gray-900 rounded-lg p-3 font-mono text-xs sm:text-sm overflow-x-auto">
+                            <code id="diagCmd" class="text-green-400 whitespace-pre-wrap break-all">node -v && npm -v && npx --version && npm list -g --depth=0 && echo "---" && which node && which npm</code>
                         </div>
-                        <button class="copy-btn absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs" data-cmd-id="diagCmd">
-                            <i class="far fa-copy"></i> Copiar
-                        </button>
+                        <button class="copy-btn absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs" data-cmd-id="diagCmd"><i class="far fa-copy"></i> Copiar</button>
                     </div>
-                    <p class="text-xs text-gray-500 mt-2">
-                        <i class="fas fa-info-circle"></i> Este comando verifica: versão do PHP, Composer, extensões instaladas e arquivo php.ini ativo.
-                    </p>
+                    <p class="text-xs text-gray-500 mt-2"><i class="fas fa-info-circle"></i> Este comando verifica: versão do Node.js, versão do npm, pacotes globais instalados e localização dos binários.</p>
                 </div>
             </div>
 
-            <!-- Scripts Prontos -->
+            <!-- Scripts prontos -->
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
                 <h2 class="text-xl font-semibold mb-4">📜 Scripts prontos</h2>
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
-                    <a href="../scripts/wordpress/install-wordpress.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install-wordpress.sh</a>
-                    <a href="../scripts/wordpress/install-wordpress.ps1" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install-wordpress.ps1</a>
-                    <a href="../scripts/wordpress/wordpress-hardening.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-shield-alt"></i> hardening.sh</a>
-                    <a href="../scripts/wordpress/wordpress-backup.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-archive"></i> backup.sh</a>
+                    <a href="../scripts/nodejs/install.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install.sh</a>
+                    <a href="../scripts/nodejs/install.ps1" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install.ps1</a>
+                    <a href="../scripts/nodejs/uninstall.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-trash"></i> uninstall.sh</a>
+                    <a href="../scripts/nodejs/backup-env.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-archive"></i> backup-env.sh</a>
                 </div>
-                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-check-circle text-green-500"></i> Scripts testados no Ubuntu 22.04/24.04, Debian 12, macOS 13+ e Windows 10/11 com WSL2.</p>
+                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-shield-alt"></i> Scripts verificados no Ubuntu 22.04/24.04, Debian 12, macOS 13+ e Windows 10/11.</p>
             </div>
 
-            <!-- Comandos WP-CLI -->
+            <!-- Comandos úteis -->
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
-                <h2 class="text-xl font-semibold mb-4">⚙️ Comandos WP-CLI essenciais</h2>
+                <h2 class="text-xl font-semibold mb-4">⚙️ Comandos npm úteis</h2>
                 <div class="grid gap-3 text-sm">
-                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">wp core update</code> – atualiza o núcleo WordPress</div>
-                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">wp plugin update --all</code> – atualiza todos os plugins</div>
-                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">wp user list</code> – lista todos os usuários</div>
-                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">wp db export backup.sql</code> – exporta o banco de dados</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">npm init -y</code> – cria um novo projeto Node.js</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">npm install express</code> – instala uma dependência</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">npm run dev</code> – executa script de desenvolvimento</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">npm outdated</code> – verifica dependências desatualizadas</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">npm update</code> – atualiza dependências</div>
                 </div>
             </div>
 
@@ -238,17 +231,17 @@
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
                 <h2 class="text-xl font-semibold mb-4">❓ Perguntas frequentes</h2>
                 <div class="space-y-3">
-                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-question-circle text-blue-500"></i> Como aumentar a memória máxima do WordPress?</summary><p class="text-sm mt-2 pl-6">Adicione ao <code>wp-config.php</code>: <code>define('WP_MEMORY_LIMIT', '512M');</code>. Ajuste também <code>memory_limit</code> no <code>php.ini</code> do seu servidor.</p></details>
-                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-database text-green-500"></i> O script de instalação substitui meu site atual?</summary><p class="text-sm mt-2 pl-6">Não! O script cria uma nova instância na pasta <code>/var/www/wordpress</code> com banco de dados isolado.</p></details>
-                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-shield-alt text-purple-500"></i> WordPress multisite: quais requisitos adicionais?</summary><p class="text-sm mt-2 pl-6">RAM ≥4 GB, suporte a wildcard SSL/TLS e ajustar o <code>wp-config.php</code> com <code>define('WP_ALLOW_MULTISITE', true);</code>.</p></details>
-                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-lock text-red-500"></i> Preciso de certificado SSL?</summary><p class="text-sm mt-2 pl-6">Sim, para produção. Use Certbot: <code>certbot --nginx -d seu.dominio.com</code> para SSL grátis do Let's Encrypt.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-question-circle text-blue-500"></i> Como gerenciar múltiplas versões do Node.js?</summary><p class="text-sm mt-2 pl-6">Use o nvm (Node Version Manager): <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">nvm install 20 && nvm use 20</code>. O script de instalação do DevForge já inclui o nvm opcionalmente.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-database text-green-500"></i> O script de instalação faz backup dos meus pacotes globais?</summary><p class="text-sm mt-2 pl-6">Sim! Antes de qualquer modificação, o script salva a lista de pacotes globais em <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">~/npm-global-backup.txt</code>.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-cloud-upload-alt text-purple-500"></i> Node.js em produção: qual versão usar?</summary><p class="text-sm mt-2 pl-6">Sempre use a versão LTS (Long Term Support). Atualmente a versão 20 LTS é a mais estável para produção.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-chart-line text-orange-500"></i> Como monitorar uma aplicação Node.js em produção?</summary><p class="text-sm mt-2 pl-6">Use PM2: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">pm2 start app.js && pm2 monit</code>. O DevForge oferece scripts prontos para configurar o PM2.</p></details>
                 </div>
             </div>
 
             <!-- Rodapé -->
             <footer class="mt-10 pt-6 border-t border-gray-200 dark:border-gray-800">
                 <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
-                    <p>DevForge © 2025-2026 - Open Source sob licença MIT</p>
+                    <p>DevForge © 2024-2025 - Open Source sob licença MIT</p>
                     <div class="flex gap-4"><a href="https://github.com/rafaelferreira2312/devforge" target="_blank" class="hover:text-blue-600"><i class="fab fa-github"></i> GitHub</a><span><i class="fab fa-whatsapp text-green-600"></i> (21) 97160-4248</span><span><i class="fas fa-pix text-green-500"></i> PIX: (21) 97160-4248</span></div>
                 </div>
             </footer>
@@ -257,6 +250,21 @@
 </div>
 
 <script>
+    // Seletor de versão
+    const versionSelect = document.getElementById('nodeVersion');
+    const linuxCmdSpan = document.getElementById('linuxCmd');
+    const winCmdSpan = document.getElementById('winCmd');
+    const macCmdSpan = document.getElementById('macCmd');
+
+    function updateCommands() {
+        const ver = versionSelect.value;
+        linuxCmdSpan.innerText = `curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/nodejs/install.sh | bash -s ${ver}`;
+        winCmdSpan.innerText = `Set-ExecutionPolicy Bypass -Scope Process; iex "& { $(irm https://rafaelferreira2312.github.io/devforge/scripts/nodejs/install.ps1) } ${ver}"`;
+        macCmdSpan.innerText = `curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/nodejs/install.sh | bash -s ${ver}`;
+    }
+    versionSelect.addEventListener('change', updateCommands);
+    updateCommands();
+
     // Botão copiar
     document.querySelectorAll('.copy-btn').forEach(btn => {
         btn.addEventListener('click', () => {
@@ -323,7 +331,7 @@
             if (input) {
                 input.addEventListener('input', (e) => {
                     const term = e.target.value.toLowerCase();
-                    document.querySelectorAll('.stack-card, .card, details').forEach(card => {
+                    document.querySelectorAll('details, .card').forEach(card => {
                         if (card && card.innerText) {
                             const text = card.innerText.toLowerCase();
                             if (card.tagName === 'DETAILS') {
