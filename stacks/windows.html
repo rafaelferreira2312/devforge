@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Windows · DevForge</title>
+    <meta name="description" content="Setup completo para Windows. Comandos PowerShell/CMD, scripts de diagnóstico de hardware (CPU, memória, HD, rede), verificação de software e recomendação de stack ideal.">
+    <meta name="author" content="Rafael Ferreira">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <style>
+        * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        
+        @media (min-width: 1024px) {
+            .layout-desktop { display: flex; min-height: 100vh; }
+            .sidebar-desktop { position: fixed; top: 0; left: 0; width: 280px; height: 100vh; overflow-y: auto; border-right: 1px solid; }
+            .main-content-desktop { margin-left: 280px; flex: 1; min-height: 100vh; }
+        }
+        
+        .sidebar-mobile {
+            position: fixed; top: 0; left: 0; width: 280px; height: 100vh; z-index: 1000;
+            transform: translateX(-100%); transition: transform 0.3s ease-in-out; overflow-y: auto;
+        }
+        .sidebar-mobile.open { transform: translateX(0); }
+        .overlay-mobile {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5);
+            z-index: 999; display: none;
+        }
+        .overlay-mobile.open { display: block; }
+        
+        @media (min-width: 1024px) {
+            .sidebar-mobile, .mobile-header, .overlay-mobile { display: none !important; }
+        }
+        @media (max-width: 1023px) {
+            .sidebar-desktop { display: none !important; }
+            .main-content-desktop { margin-left: 0 !important; }
+        }
+        
+        .code-block { background: #0d1117; border-radius: 0.75rem; padding: 1rem; font-family: 'SF Mono', monospace; font-size: 0.75rem; overflow-x: auto; position: relative; }
+        .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; background: #1f2937; border: none; color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.5rem; border-radius: 0.375rem; cursor: pointer; transition: all 0.2s; }
+        .copy-btn:hover { background: #374151; color: #f3f4f6; }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        .dark ::-webkit-scrollbar-track { background: #1e1e2f; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; }
+        
+        .windows-bg {
+            background: linear-gradient(135deg, #0078D4 0%, #004e8c 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-200">
+
+<div id="overlayMobile" class="overlay-mobile" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR MOBILE -->
+<aside id="sidebarMobile" class="sidebar-mobile bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 shadow-xl">
+    <div class="p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center">
+        <div>
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">forge your dev environment</p>
+        </div>
+        <button id="closeSidebarBtn" class="text-gray-500 hover:text-gray-700 dark:text-gray-400"><i class="fas fa-times text-xl"></i></button>
+    </div>
+    <div class="px-4 mt-4 mb-4">
+        <div class="relative">
+            <input type="text" id="globalSearchMobile" placeholder="Buscar stacks, comandos..." class="w-full bg-gray-100 dark:bg-gray-800 border-0 rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-blue-500">
+            <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i>
+        </div>
+    </div>
+    <nav class="flex-1 px-4 space-y-1 text-sm pb-20">
+        <a href="../index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-tachometer-alt w-5"></i><span>Dashboard</span></a>
+        <div class="pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Stacks</div>
+        <a href="php.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-php w-5 text-indigo-500"></i><span>PHP</span></a>
+        <a href="wordpress.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-wordpress w-5 text-blue-500"></i><span>WordPress</span></a>
+        <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span></a>
+        <a href="python.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-python w-5 text-yellow-500"></i><span>Python</span></a>
+        <a href="java.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-java w-5 text-red-500"></i><span>Java</span></a>
+        <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
+        <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span></a>
+        <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-gem w-5 text-red-400"></i><span>Rails</span></a>
+        <a href="devops.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cloud-upload-alt w-5 text-purple-500"></i><span>DevOps</span></a>
+        <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span></a>
+        <a href="docker.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-docker w-5 text-blue-500"></i><span>Docker</span></a>
+        <a href="linux.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-linux w-5 text-yellow-600"></i><span>Linux</span></a>
+        <a href="windows.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fab fa-windows w-5 text-blue-500"></i><span>Windows</span></a>
+        <a href="mobile.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-mobile-alt w-5 text-gray-500"></i><span>Mobile</span></a>
+        <a href="cybersecurity.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-shield-alt w-5 text-green-500"></i><span>Security</span></a>
+    </nav>
+    <div class="p-4 border-t border-gray-200 dark:border-gray-800">
+        <button id="darkModeToggleMobile" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm flex items-center gap-3"><i class="fas fa-moon w-5"></i><span>Alternar tema</span></button>
+    </div>
+</aside>
+
+<!-- LAYOUT DESKTOP -->
+<div class="layout-desktop">
+    <aside class="sidebar-desktop bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col">
+        <div class="p-6"><h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1><p class="text-xs text-gray-500 dark:text-gray-400 mt-1">forge your dev environment</p></div>
+        <div class="px-4 mb-4"><div class="relative"><input type="text" id="globalSearchDesktop" placeholder="Buscar stacks, comandos..." class="w-full bg-gray-100 dark:bg-gray-800 border-0 rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-blue-500"><i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i></div></div>
+        <nav class="flex-1 px-4 space-y-1 text-sm overflow-y-auto pb-4">
+            <a href="../index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-tachometer-alt w-5"></i><span>Dashboard</span></a>
+            <div class="pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Stacks</div>
+            <a href="php.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-php w-5 text-indigo-500"></i><span>PHP</span></a>
+            <a href="wordpress.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-wordpress w-5 text-blue-500"></i><span>WordPress</span></a>
+            <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span></a>
+            <a href="python.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-python w-5 text-yellow-500"></i><span>Python</span></a>
+            <a href="java.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-java w-5 text-red-500"></i><span>Java</span></a>
+            <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
+            <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span></a>
+            <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-gem w-5 text-red-400"></i><span>Rails</span></a>
+            <a href="devops.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cloud-upload-alt w-5 text-purple-500"></i><span>DevOps</span></a>
+            <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span></a>
+            <a href="docker.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-docker w-5 text-blue-500"></i><span>Docker</span></a>
+            <a href="linux.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-linux w-5 text-yellow-600"></i><span>Linux</span></a>
+            <a href="windows.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fab fa-windows w-5 text-blue-500"></i><span>Windows</span></a>
+            <a href="mobile.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-mobile-alt w-5 text-gray-500"></i><span>Mobile</span></a>
+            <a href="cybersecurity.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-shield-alt w-5 text-green-500"></i><span>Security</span></a>
+        </nav>
+        <div class="p-4 border-t border-gray-200 dark:border-gray-800"><button id="darkModeToggleDesktop" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm flex items-center gap-3"><i class="fas fa-moon w-5"></i><span>Alternar tema</span></button></div>
+    </aside>
+
+    <main class="main-content-desktop">
+        <div class="mobile-header sticky top-0 bg-gray-50 dark:bg-gray-950 z-30 p-4 border-b border-gray-200 dark:border-gray-800 flex items-center gap-3 lg:hidden">
+            <button id="openSidebarBtn" class="text-gray-600 dark:text-gray-300"><i class="fas fa-bars text-2xl"></i></button>
+            <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+            <!-- Cabeçalho -->
+            <div class="flex items-center gap-4 mb-8">
+                <i class="fab fa-windows text-6xl text-blue-500"></i>
+                <div><h1 class="text-3xl sm:text-4xl font-bold tracking-tight">Windows</h1><p class="text-gray-600 dark:text-gray-400 mt-1">Sistema operacional mais utilizado no mundo para desenvolvimento. Comandos PowerShell, CMD, diagnósticos de hardware e recomendações de stack.</p></div>
+            </div>
+
+            <!-- Diagnóstico Interativo -->
+            <div class="windows-bg rounded-xl p-5 sm:p-6 mb-8 text-white">
+                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2"><i class="fas fa-stethoscope"></i> Diagnóstico da Máquina - DevForge Analyzer (Windows)</h2>
+                <p class="text-sm opacity-90 mb-4">Execute o script PowerShell abaixo para analisar sua máquina e receber recomendações personalizadas de stack.</p>
+                <div class="relative code-block bg-gray-900">
+                    <code id="diagnosticCmd" class="text-green-400 text-xs break-all">powershell -ExecutionPolicy Bypass -Command "iex (irm https://rafaelferreira2312.github.io/devforge/scripts/windows/diagnostic.ps1)"</code>
+                    <button class="copy-btn" data-cmd-id="diagnosticCmd"><i class="far fa-copy"></i> Copiar</button>
+                </div>
+                <p class="text-xs opacity-75 mt-3"><i class="fas fa-info-circle"></i> O script analisa: CPU, Memória RAM, Disco, Rede, GPU, Software instalado (Winget/Chocolatey), e recomenda a stack ideal para sua máquina.</p>
+            </div>
+
+            <!-- Comandos PowerShell Essenciais -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">💻 Comandos PowerShell Essenciais</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-medium text-sm mb-2">📂 Navegação e Arquivos</p>
+                        <div class="relative code-block"><code id="lsCmd" class="text-green-400 text-xs break-all">Get-ChildItem -Recurse</code><button class="copy-btn" data-cmd-id="lsCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="cdCmd" class="text-green-400 text-xs break-all">Set-Location C:\caminho</code><button class="copy-btn" data-cmd-id="cdCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="cpCmd" class="text-green-400 text-xs break-all">Copy-Item -Path origem -Destination destino -Recurse</code><button class="copy-btn" data-cmd-id="cpCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="mvCmd" class="text-green-400 text-xs break-all">Move-Item -Path arquivo -Destination novo_nome</code><button class="copy-btn" data-cmd-id="mvCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="rmCmd" class="text-green-400 text-xs break-all">Remove-Item -Path diretorio -Recurse -Force</code><button class="copy-btn" data-cmd-id="rmCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                    <div>
+                        <p class="font-medium text-sm mb-2">🔍 Sistema e Processos</p>
+                        <div class="relative code-block"><code id="psCmd" class="text-green-400 text-xs break-all">Get-Process | Sort-Object -Property CPU -Descending | Select-Object -First 10</code><button class="copy-btn" data-cmd-id="psCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="killCmd" class="text-green-400 text-xs break-all">Stop-Process -Id PID -Force</code><button class="copy-btn" data-cmd-id="killCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="serviceCmd" class="text-green-400 text-xs break-all">Get-Service | Where-Object {$_.Status -eq "Running"}</code><button class="copy-btn" data-cmd-id="serviceCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="eventCmd" class="text-green-400 text-xs break-all">Get-EventLog -LogName System -Newest 20</code><button class="copy-btn" data-cmd-id="eventCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Monitoramento de Hardware -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">📊 Monitoramento de Hardware (PowerShell)</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-medium text-sm mb-2">🖥️ CPU e Memória</p>
+                        <div class="relative code-block"><code id="cpuCmd" class="text-green-400 text-xs break-all">Get-WmiObject -Class Win32_Processor | Select-Object Name, NumberOfCores, MaxClockSpeed</code><button class="copy-btn" data-cmd-id="cpuCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="memCmd" class="text-green-400 text-xs break-all">Get-WmiObject -Class Win32_ComputerSystem | Select-Object TotalPhysicalMemory</code><button class="copy-btn" data-cmd-id="memCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="memUsageCmd" class="text-green-400 text-xs break-all">Get-Counter '\Memory\Available MBytes'</code><button class="copy-btn" data-cmd-id="memUsageCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                    <div>
+                        <p class="font-medium text-sm mb-2">💾 Disco e Rede</p>
+                        <div class="relative code-block"><code id="diskCmd" class="text-green-400 text-xs break-all">Get-WmiObject -Class Win32_LogicalDisk | Select-Object DeviceID, Size, FreeSpace</code><button class="copy-btn" data-cmd-id="diskCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="diskUsageCmd" class="text-green-400 text-xs break-all">Get-PSDrive -Name C | Select-Object Used, Free</code><button class="copy-btn" data-cmd-id="diskUsageCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="netCmd" class="text-green-400 text-xs break-all">Get-NetIPAddress | Where-Object {$_.AddressFamily -eq "IPv4"}</code><button class="copy-btn" data-cmd-id="netCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comandos CMD Essenciais -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">💻 Comandos CMD Essenciais (Prompt de Comando)</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-medium text-sm mb-2">📂 Navegação e Arquivos</p>
+                        <div class="relative code-block"><code id="dirCmd" class="text-green-400 text-xs break-all">dir /s</code><button class="copy-btn" data-cmd-id="dirCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="cdCmd2" class="text-green-400 text-xs break-all">cd C:\caminho</code><button class="copy-btn" data-cmd-id="cdCmd2"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="copyCmd" class="text-green-400 text-xs break-all">copy origem destino</code><button class="copy-btn" data-cmd-id="copyCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="moveCmd" class="text-green-400 text-xs break-all">move arquivo novo_nome</code><button class="copy-btn" data-cmd-id="moveCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="delCmd" class="text-green-400 text-xs break-all">del /s /q pasta</code><button class="copy-btn" data-cmd-id="delCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                    <div>
+                        <p class="font-medium text-sm mb-2">🔍 Sistema e Rede</p>
+                        <div class="relative code-block"><code id="tasklistCmd" class="text-green-400 text-xs break-all">tasklist</code><button class="copy-btn" data-cmd-id="tasklistCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="taskkillCmd" class="text-green-400 text-xs break-all">taskkill /PID 1234 /F</code><button class="copy-btn" data-cmd-id="taskkillCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="ipconfigCmd" class="text-green-400 text-xs break-all">ipconfig /all</code><button class="copy-btn" data-cmd-id="ipconfigCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="pingCmd" class="text-green-400 text-xs break-all">ping google.com -t</code><button class="copy-btn" data-cmd-id="pingCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="systeminfoCmd" class="text-green-400 text-xs break-all">systeminfo</code><button class="copy-btn" data-cmd-id="systeminfoCmd"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gerenciamento de Pacotes (Winget/Chocolatey) -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">📦 Gerenciamento de Pacotes (Winget / Chocolatey)</h2>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div>
+                        <p class="font-medium text-sm mb-2">🪟 Winget (Windows Package Manager)</p>
+                        <div class="relative code-block"><code id="wingetInstall" class="text-green-400 text-xs break-all">winget install OpenJS.NodeJS</code><button class="copy-btn" data-cmd-id="wingetInstall"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="wingetList" class="text-green-400 text-xs break-all">winget list</code><button class="copy-btn" data-cmd-id="wingetList"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="wingetUpgrade" class="text-green-400 text-xs break-all">winget upgrade --all</code><button class="copy-btn" data-cmd-id="wingetUpgrade"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                    <div>
+                        <p class="font-medium text-sm mb-2">🍫 Chocolatey</p>
+                        <div class="relative code-block"><code id="chocoInstall" class="text-green-400 text-xs break-all">choco install python nodejs docker-desktop</code><button class="copy-btn" data-cmd-id="chocoInstall"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="chocoList" class="text-green-400 text-xs break-all">choco list --local-only</code><button class="copy-btn" data-cmd-id="chocoList"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="chocoUpgrade" class="text-green-400 text-xs break-all">choco upgrade all -y</code><button class="copy-btn" data-cmd-id="chocoUpgrade"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scripts Windows -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">📜 Scripts prontos (PowerShell)</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                    <a href="../scripts/windows/diagnostic.ps1" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-stethoscope"></i> diagnostic.ps1</a>
+                    <a href="../scripts/windows/optimize-system.ps1" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-tachometer-alt"></i> optimize-system.ps1</a>
+                    <a href="../scripts/windows/install-dev-tools.ps1" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-tools"></i> install-dev-tools.ps1</a>
+                    <a href="../scripts/windows/security-audit.ps1" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-shield-alt"></i> security-audit.ps1</a>
+                </div>
+                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-check-circle"></i> Scripts compatíveis com Windows 10/11, Windows Server 2019/2022.</p>
+            </div>
+
+            <!-- FAQ -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
+                <h2 class="text-xl font-semibold mb-4">❓ Perguntas frequentes - Windows</h2>
+                <div class="space-y-3">
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-question-circle text-blue-500"></i> PowerShell vs CMD: qual usar?</summary><p class="text-sm mt-2 pl-6">PowerShell é mais poderoso (acesso a objetos .NET, pipelines avançados). CMD é mais simples para comandos básicos. PowerShell recomendado para desenvolvimento.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-database text-green-500"></i> Como instalar WSL2 no Windows?</summary><p class="text-sm mt-2 pl-6">PowerShell Admin: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">wsl --install</code>. Depois reinicie e instale sua distribuição preferida (Ubuntu, Debian).</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-shield-alt text-purple-500"></i> Como verificar integridade do sistema?</summary><p class="text-sm mt-2 pl-6">Use <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">sfc /scannow</code> e <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">DISM /Online /Cleanup-Image /RestoreHealth</code> no CMD como Admin.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-chart-line text-orange-500"></i> Melhor forma de instalar ferramentas dev no Windows?</summary><p class="text-sm mt-2 pl-6">Use Winget (nativo), Chocolatey (terceiro), ou os scripts do DevForge que automatizam a instalação das principais stacks.</p></details>
+                </div>
+            </div>
+
+            <!-- Rodapé -->
+            <footer class="mt-10 pt-6 border-t border-gray-200 dark:border-gray-800">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+                    <p>DevForge © 2025-2026 - Open Source sob licença MIT</p>
+                    <div class="flex gap-4"><a href="https://github.com/rafaelferreira2312/devforge" target="_blank" class="hover:text-blue-600"><i class="fab fa-github"></i> GitHub</a><span><i class="fab fa-whatsapp text-green-600"></i> (21) 97160-4248</span><span><i class="fas fa-pix text-green-500"></i> PIX: (21) 97160-4248</span></div>
+                </div>
+            </footer>
+        </div>
+    </main>
+</div>
+
+<script>
+    // Botão copiar
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const cmdId = btn.getAttribute('data-cmd-id');
+            const codeElement = document.getElementById(cmdId);
+            if (codeElement) {
+                navigator.clipboard.writeText(codeElement.innerText);
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✓ Copiado!';
+                setTimeout(() => btn.innerHTML = originalText, 1500);
+            }
+        });
+    });
+
+    // Sidebar mobile
+    const sidebar = document.getElementById('sidebarMobile');
+    const overlay = document.getElementById('overlayMobile');
+
+    window.openSidebar = function() {
+        sidebar.classList.add('open');
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    window.closeSidebar = function() {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    document.getElementById('openSidebarBtn')?.addEventListener('click', openSidebar);
+    document.getElementById('closeSidebarBtn')?.addEventListener('click', closeSidebar);
+
+    document.querySelectorAll('#sidebarMobile a').forEach(link => {
+        link.addEventListener('click', closeSidebar);
+    });
+
+    // Dark Mode
+    function initDarkMode() {
+        const isDark = localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        
+        if (isDark) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        
+        const toggleButtons = document.querySelectorAll('#darkModeToggleDesktop, #darkModeToggleMobile');
+        toggleButtons.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+                });
+            }
+        });
+    }
+
+    initDarkMode();
+</script>
+</body>
+</html>
