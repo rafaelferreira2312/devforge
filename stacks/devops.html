@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>DevOps · DevForge</title>
+    <meta name="description" content="Setup completo para DevOps: Kubernetes, Docker, Terraform, Ansible, CI/CD, Prometheus, Grafana e ferramentas de infraestrutura como código.">
+    <meta name="author" content="Rafael Ferreira">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <style>
+        * { font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        
+        @media (min-width: 1024px) {
+            .layout-desktop { display: flex; min-height: 100vh; }
+            .sidebar-desktop { position: fixed; top: 0; left: 0; width: 280px; height: 100vh; overflow-y: auto; border-right: 1px solid; }
+            .main-content-desktop { margin-left: 280px; flex: 1; min-height: 100vh; }
+        }
+        
+        .sidebar-mobile {
+            position: fixed; top: 0; left: 0; width: 280px; height: 100vh; z-index: 1000;
+            transform: translateX(-100%); transition: transform 0.3s ease-in-out; overflow-y: auto;
+        }
+        .sidebar-mobile.open { transform: translateX(0); }
+        .overlay-mobile {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5);
+            z-index: 999; display: none;
+        }
+        .overlay-mobile.open { display: block; }
+        
+        @media (min-width: 1024px) {
+            .sidebar-mobile, .mobile-header, .overlay-mobile { display: none !important; }
+        }
+        @media (max-width: 1023px) {
+            .sidebar-desktop { display: none !important; }
+            .main-content-desktop { margin-left: 0 !important; }
+        }
+        
+        .code-block { background: #0d1117; border-radius: 0.75rem; padding: 1rem; font-family: 'SF Mono', monospace; font-size: 0.75rem; overflow-x: auto; position: relative; }
+        .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; background: #1f2937; border: none; color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.5rem; border-radius: 0.375rem; cursor: pointer; transition: all 0.2s; }
+        .copy-btn:hover { background: #374151; color: #f3f4f6; }
+        .version-selector { background: #1f2937; border-radius: 0.5rem; padding: 0.25rem 0.5rem; color: white; border: 1px solid #374151; }
+        
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        .dark ::-webkit-scrollbar-track { background: #1e1e2f; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        .dark ::-webkit-scrollbar-thumb { background: #334155; }
+        
+        .tool-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-200">
+
+<div id="overlayMobile" class="overlay-mobile" onclick="closeSidebar()"></div>
+
+<!-- SIDEBAR MOBILE -->
+<aside id="sidebarMobile" class="sidebar-mobile bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 shadow-xl">
+    <div class="p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center">
+        <div>
+            <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">forge your dev environment</p>
+        </div>
+        <button id="closeSidebarBtn" class="text-gray-500 hover:text-gray-700 dark:text-gray-400"><i class="fas fa-times text-xl"></i></button>
+    </div>
+    <div class="px-4 mt-4 mb-4">
+        <div class="relative">
+            <input type="text" id="globalSearchMobile" placeholder="Buscar stacks, comandos..." class="w-full bg-gray-100 dark:bg-gray-800 border-0 rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-blue-500">
+            <i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i>
+        </div>
+    </div>
+    <nav class="flex-1 px-4 space-y-1 text-sm pb-20">
+        <a href="../index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-tachometer-alt w-5"></i><span>Dashboard</span></a>
+        <div class="pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Stacks</div>
+        <a href="php.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-php w-5 text-indigo-500"></i><span>PHP</span></a>
+        <a href="wordpress.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-wordpress w-5 text-blue-500"></i><span>WordPress</span></a>
+        <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span></a>
+        <a href="python.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-python w-5 text-yellow-500"></i><span>Python</span></a>
+        <a href="java.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-java w-5 text-red-500"></i><span>Java</span></a>
+        <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
+        <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span></a>
+        <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-gem w-5 text-red-400"></i><span>Rails</span></a>
+        <a href="devops.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fas fa-cloud-upload-alt w-5 text-purple-500"></i><span>DevOps</span></a>
+        <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span></a>
+        <a href="docker.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-docker w-5 text-blue-500"></i><span>Docker</span></a>
+        <a href="linux.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-linux w-5 text-yellow-600"></i><span>Linux</span></a>
+        <a href="windows.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-windows w-5 text-blue-500"></i><span>Windows</span></a>
+        <a href="mobile.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-mobile-alt w-5 text-gray-500"></i><span>Mobile</span></a>
+        <a href="cybersecurity.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-shield-alt w-5 text-green-500"></i><span>Security</span></a>
+    </nav>
+    <div class="p-4 border-t border-gray-200 dark:border-gray-800">
+        <button id="darkModeToggleMobile" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm flex items-center gap-3"><i class="fas fa-moon w-5"></i><span>Alternar tema</span></button>
+    </div>
+</aside>
+
+<!-- LAYOUT DESKTOP -->
+<div class="layout-desktop">
+    <aside class="sidebar-desktop bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col">
+        <div class="p-6"><h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1><p class="text-xs text-gray-500 dark:text-gray-400 mt-1">forge your dev environment</p></div>
+        <div class="px-4 mb-4"><div class="relative"><input type="text" id="globalSearchDesktop" placeholder="Buscar stacks, comandos..." class="w-full bg-gray-100 dark:bg-gray-800 border-0 rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-blue-500"><i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i></div></div>
+        <nav class="flex-1 px-4 space-y-1 text-sm overflow-y-auto pb-4">
+            <a href="../index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-tachometer-alt w-5"></i><span>Dashboard</span></a>
+            <div class="pt-4 pb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">Stacks</div>
+            <a href="php.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-php w-5 text-indigo-500"></i><span>PHP</span></a>
+            <a href="wordpress.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-wordpress w-5 text-blue-500"></i><span>WordPress</span></a>
+            <a href="nodejs.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-node w-5 text-green-600"></i><span>Node.js</span></a>
+            <a href="python.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-python w-5 text-yellow-500"></i><span>Python</span></a>
+            <a href="java.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-java w-5 text-red-500"></i><span>Java</span></a>
+            <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
+            <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span></a>
+            <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-gem w-5 text-red-400"></i><span>Rails</span></a>
+            <a href="devops.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fas fa-cloud-upload-alt w-5 text-purple-500"></i><span>DevOps</span></a>
+            <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span></a>
+            <a href="docker.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-docker w-5 text-blue-500"></i><span>Docker</span></a>
+            <a href="linux.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-linux w-5 text-yellow-600"></i><span>Linux</span></a>
+            <a href="windows.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-windows w-5 text-blue-500"></i><span>Windows</span></a>
+            <a href="mobile.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-mobile-alt w-5 text-gray-500"></i><span>Mobile</span></a>
+            <a href="cybersecurity.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-shield-alt w-5 text-green-500"></i><span>Security</span></a>
+        </nav>
+        <div class="p-4 border-t border-gray-200 dark:border-gray-800"><button id="darkModeToggleDesktop" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm flex items-center gap-3"><i class="fas fa-moon w-5"></i><span>Alternar tema</span></button></div>
+    </aside>
+
+    <main class="main-content-desktop">
+        <div class="mobile-header sticky top-0 bg-gray-50 dark:bg-gray-950 z-30 p-4 border-b border-gray-200 dark:border-gray-800 flex items-center gap-3 lg:hidden">
+            <button id="openSidebarBtn" class="text-gray-600 dark:text-gray-300"><i class="fas fa-bars text-2xl"></i></button>
+            <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1>
+        </div>
+
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+            <!-- Cabeçalho -->
+            <div class="flex items-center gap-4 mb-8">
+                <i class="fas fa-cloud-upload-alt text-6xl text-purple-500"></i>
+                <div><h1 class="text-3xl sm:text-4xl font-bold tracking-tight">DevOps</h1><p class="text-gray-600 dark:text-gray-400 mt-1">Cultura, práticas e ferramentas que unificam desenvolvimento e operações. Automação, CI/CD, containers, orquestração, monitoramento e infraestrutura como código.</p></div>
+            </div>
+
+            <!-- Badges das ferramentas -->
+            <div class="flex flex-wrap gap-2 mb-8">
+                <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs">🐳 Docker</span>
+                <span class="px-3 py-1 bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700 dark:text-cyan-300 rounded-full text-xs">☸️ Kubernetes</span>
+                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-xs">🏗️ Terraform</span>
+                <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-xs">⚙️ Ansible</span>
+                <span class="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-full text-xs">🔄 GitHub Actions</span>
+                <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded-full text-xs">📊 Prometheus</span>
+                <span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 rounded-full text-xs">📈 Grafana</span>
+                <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-full text-xs">🔍 ELK Stack</span>
+            </div>
+
+            <!-- Instalação Automatizada - DevOps Tools -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">⚡ Instalação automatizada - DevOps Tools</h2>
+                <div class="space-y-5">
+                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-linux text-lg text-yellow-600"></i><span class="font-medium">Linux / WSL (Ubuntu/Debian)</span></div><div class="relative code-block"><code id="linuxCmd" class="text-green-400 text-xs sm:text-sm break-all">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/devops/install-devops.sh | bash</code><button class="copy-btn" data-cmd-id="linuxCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
+                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-windows text-lg text-blue-500"></i><span class="font-medium">Windows PowerShell (Admin)</span></div><div class="relative code-block"><code id="winCmd" class="text-green-400 text-xs sm:text-sm break-all">Set-ExecutionPolicy Bypass -Scope Process; iex "& { $(irm https://rafaelferreira2312.github.io/devforge/scripts/devops/install-devops.ps1) }"</code><button class="copy-btn" data-cmd-id="winCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
+                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-apple text-lg text-gray-500"></i><span class="font-medium">macOS (Homebrew)</span></div><div class="relative code-block"><code id="macCmd" class="text-green-400 text-xs sm:text-sm break-all">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/devops/install-devops.sh | bash</code><button class="copy-btn" data-cmd-id="macCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
+                </div>
+                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-package"></i> Instala: Docker, Docker Compose, kubectl, Helm, Terraform, Ansible, AWS CLI, kubectx, stern, jq, yq, GitHub CLI, helm-diff, k9s, kind, minikube, Lens CLI</p>
+            </div>
+
+            <!-- Docker + Docker Compose -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fab fa-docker text-3xl text-blue-500"></i>
+                    <h2 class="text-xl font-semibold">Docker & Docker Compose</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
+                        <p class="font-medium text-sm mb-2">🐳 Docker básico</p>
+                        <div class="relative code-block"><code id="dockerBasic" class="text-green-400 text-xs break-all">docker run -d -p 80:80 --name nginx nginx:alpine</code><button class="copy-btn" data-cmd-id="dockerBasic"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="dockerPs" class="text-green-400 text-xs break-all">docker ps -a</code><button class="copy-btn" data-cmd-id="dockerPs"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="dockerLogs" class="text-green-400 text-xs break-all">docker logs -f nginx</code><button class="copy-btn" data-cmd-id="dockerLogs"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
+                        <p class="font-medium text-sm mb-2">📦 Docker Compose (multi-container)</p>
+                        <div class="relative code-block"><code id="composeUp" class="text-green-400 text-xs break-all">docker-compose up -d</code><button class="copy-btn" data-cmd-id="composeUp"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="composeDown" class="text-green-400 text-xs break-all">docker-compose down -v</code><button class="copy-btn" data-cmd-id="composeDown"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="composeLogs" class="text-green-400 text-xs break-all">docker-compose logs -f</code><button class="copy-btn" data-cmd-id="composeLogs"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kubernetes -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-cubes text-3xl text-cyan-500"></i>
+                    <h2 class="text-xl font-semibold">Kubernetes (k8s)</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
+                        <p class="font-medium text-sm mb-2">🎯 kubectl comandos essenciais</p>
+                        <div class="relative code-block"><code id="kubectlGet" class="text-green-400 text-xs break-all">kubectl get pods -n default</code><button class="copy-btn" data-cmd-id="kubectlGet"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="kubectlApply" class="text-green-400 text-xs break-all">kubectl apply -f deployment.yaml</code><button class="copy-btn" data-cmd-id="kubectlApply"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="kubectlLogs" class="text-green-400 text-xs break-all">kubectl logs -f pod-name</code><button class="copy-btn" data-cmd-id="kubectlLogs"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="kubectlExec" class="text-green-400 text-xs break-all">kubectl exec -it pod-name -- /bin/bash</code><button class="copy-btn" data-cmd-id="kubectlExec"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
+                        <p class="font-medium text-sm mb-2">🔄 Minikube / Kind (local cluster)</p>
+                        <div class="relative code-block"><code id="minikubeStart" class="text-green-400 text-xs break-all">minikube start --cpus=4 --memory=8192</code><button class="copy-btn" data-cmd-id="minikubeStart"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="kindCreate" class="text-green-400 text-xs break-all">kind create cluster --name devops</code><button class="copy-btn" data-cmd-id="kindCreate"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="helmInstall" class="text-green-400 text-xs break-all">helm install nginx bitnami/nginx</code><button class="copy-btn" data-cmd-id="helmInstall"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terraform + Ansible -->
+            <div class="grid md:grid-cols-2 gap-6 mb-8">
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <i class="fas fa-code-branch text-2xl text-purple-500"></i>
+                        <h2 class="text-lg font-semibold">Terraform (IaC)</h2>
+                    </div>
+                    <div class="relative code-block"><code id="terraformInit" class="text-green-400 text-xs break-all">terraform init</code><button class="copy-btn" data-cmd-id="terraformInit"><i class="far fa-copy"></i> Copiar</button></div>
+                    <div class="relative code-block mt-2"><code id="terraformPlan" class="text-green-400 text-xs break-all">terraform plan -out=tfplan</code><button class="copy-btn" data-cmd-id="terraformPlan"><i class="far fa-copy"></i> Copiar</button></div>
+                    <div class="relative code-block mt-2"><code id="terraformApply" class="text-green-400 text-xs break-all">terraform apply tfplan</code><button class="copy-btn" data-cmd-id="terraformApply"><i class="far fa-copy"></i> Copiar</button></div>
+                    <div class="relative code-block mt-2"><code id="terraformDestroy" class="text-green-400 text-xs break-all">terraform destroy -auto-approve</code><button class="copy-btn" data-cmd-id="terraformDestroy"><i class="far fa-copy"></i> Copiar</button></div>
+                </div>
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
+                    <div class="flex items-center gap-3 mb-4">
+                        <i class="fas fa-cogs text-2xl text-green-500"></i>
+                        <h2 class="text-lg font-semibold">Ansible (Config Management)</h2>
+                    </div>
+                    <div class="relative code-block"><code id="ansiblePing" class="text-green-400 text-xs break-all">ansible all -i inventory.ini -m ping</code><button class="copy-btn" data-cmd-id="ansiblePing"><i class="far fa-copy"></i> Copiar</button></div>
+                    <div class="relative code-block mt-2"><code id="ansiblePlaybook" class="text-green-400 text-xs break-all">ansible-playbook -i inventory.ini playbook.yml</code><button class="copy-btn" data-cmd-id="ansiblePlaybook"><i class="far fa-copy"></i> Copiar</button></div>
+                    <div class="relative code-block mt-2"><code id="ansibleGalaxy" class="text-green-400 text-xs break-all">ansible-galaxy install geerlingguy.nginx</code><button class="copy-btn" data-cmd-id="ansibleGalaxy"><i class="far fa-copy"></i> Copiar</button></div>
+                </div>
+            </div>
+
+            <!-- CI/CD GitHub Actions -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fab fa-github-alt text-2xl text-purple-500"></i>
+                    <h2 class="text-xl font-semibold">CI/CD - GitHub Actions</h2>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-3">Exemplo de workflow .github/workflows/deploy.yml</p>
+                <div class="relative code-block">
+                    <code id="githubActions" class="text-green-400 text-xs break-all whitespace-pre-wrap">
+name: Deploy to Kubernetes
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Build Docker image
+        run: docker build -t myapp:${{ github.sha }} .
+      - name: Push to registry
+        run: docker push myregistry/myapp:${{ github.sha }}
+      - name: Deploy to K8s
+        run: kubectl set image deployment/myapp myapp=myregistry/myapp:${{ github.sha }}
+                    </code>
+                    <button class="copy-btn" data-cmd-id="githubActions"><i class="far fa-copy"></i> Copiar</button>
+                </div>
+            </div>
+
+            <!-- Monitoramento Prometheus + Grafana -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <div class="flex items-center gap-3 mb-4">
+                    <i class="fas fa-chart-line text-2xl text-orange-500"></i>
+                    <h2 class="text-xl font-semibold">Monitoramento - Prometheus + Grafana</h2>
+                </div>
+                <div class="grid md:grid-cols-2 gap-4">
+                    <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
+                        <p class="font-medium text-sm mb-2">📊 Prometheus</p>
+                        <div class="relative code-block"><code id="prometheusConfig" class="text-green-400 text-xs break-all">docker run -d -p 9090:9090 prom/prometheus</code><button class="copy-btn" data-cmd-id="prometheusConfig"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="prometheusQuery" class="text-green-400 text-xs break-all">up{job="node"}</code><button class="copy-btn" data-cmd-id="prometheusQuery"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                    <div class="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
+                        <p class="font-medium text-sm mb-2">📈 Grafana</p>
+                        <div class="relative code-block"><code id="grafanaRun" class="text-green-400 text-xs break-all">docker run -d -p 3000:3000 grafana/grafana</code><button class="copy-btn" data-cmd-id="grafanaRun"><i class="far fa-copy"></i> Copiar</button></div>
+                        <div class="relative code-block mt-2"><code id="grafanaDash" class="text-green-400 text-xs break-all">Dashboard ID: 1860 (Node Exporter Full)</code><button class="copy-btn" data-cmd-id="grafanaDash"><i class="far fa-copy"></i> Copiar</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Troubleshooting DevOps -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">🔧 Troubleshooting DevOps</h2>
+                <div class="space-y-4">
+                    <div class="border-l-4 border-red-400 pl-4"><p class="font-medium">❌ Erro: "docker: permission denied"</p><p class="text-sm">Causa: Usuário não está no grupo docker.<br>Solução: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">sudo usermod -aG docker $USER && newgrp docker</code></p></div>
+                    <div class="border-l-4 border-yellow-400 pl-4"><p class="font-medium">⚠️ Erro: "context deadline exceeded" no kubectl</p><p class="text-sm">Causa: Cluster Kubernetes não respondendo ou kubeconfig inválido.<br>Solução: Verifique <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">kubectl cluster-info</code> e <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">kubectl config view</code></p></div>
+                    <div class="border-l-4 border-blue-400 pl-4"><p class="font-medium">🐘 Terraform: "state lock" error</p><p class="text-sm">Causa: Backend remoto com lock ativo.<br>Solução: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">terraform force-unlock LOCK_ID</code></p></div>
+                </div>
+                
+                <!-- DIAGNÓSTICO AUTOMÁTICO -->
+                <div class="mt-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
+                    <p class="text-sm font-medium flex items-center gap-2 mb-2"><i class="fas fa-stethoscope text-blue-500"></i> Diagnóstico automático DevOps:</p>
+                    <div class="relative">
+                        <div class="bg-gray-900 rounded-lg p-3 font-mono text-xs sm:text-sm overflow-x-auto">
+                            <code id="diagCmd" class="text-green-400 whitespace-pre-wrap break-all">docker version && kubectl version --client && terraform version && ansible --version && helm version && echo "---" && docker ps</code>
+                        </div>
+                        <button class="copy-btn absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs" data-cmd-id="diagCmd"><i class="far fa-copy"></i> Copiar</button>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-2"><i class="fas fa-info-circle"></i> Este comando verifica versões das principais ferramentas DevOps e containers em execução.</p>
+                </div>
+            </div>
+
+            <!-- Scripts DevOps -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">📜 Scripts prontos</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                    <a href="../scripts/devops/install-devops.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install-devops.sh</a>
+                    <a href="../scripts/devops/install-devops.ps1" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install-devops.ps1</a>
+                    <a href="../scripts/devops/docker-compose-full.yml" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-file"></i> docker-compose.yml</a>
+                    <a href="../scripts/devops/kubernetes-deployment.yaml" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-file"></i> k8s-deployment.yaml</a>
+                </div>
+                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-shield-alt"></i> Scripts verificados no Ubuntu 22.04/24.04, Debian 12, macOS 13+ e Windows 10/11 com WSL2.</p>
+            </div>
+
+            <!-- FAQ DevOps -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
+                <h2 class="text-xl font-semibold mb-4">❓ Perguntas frequentes - DevOps</h2>
+                <div class="space-y-3">
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-question-circle text-blue-500"></i> Qual a diferença entre Docker e Kubernetes?</summary><p class="text-sm mt-2 pl-6">Docker gerencia containers individuais. Kubernetes orquestra múltiplos containers em cluster, gerenciando escalabilidade, alta disponibilidade e rollouts.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-database text-green-500"></i> Terraform vs Ansible: quando usar cada um?</summary><p class="text-sm mt-2 pl-6">Terraform é para provisionamento de infraestrutura (criar VMs, redes). Ansible é para configuração (instalar pacotes, configurar serviços). Eles se complementam!</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-shield-alt text-purple-500"></i> Como testar Kubernetes localmente?</summary><p class="text-sm mt-2 pl-6">Use Minikube (VM), Kind (Docker-based) ou K3s (leve). O script de instalação do DevForge inclui todas essas opções.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-chart-line text-orange-500"></i> Melhor stack de monitoramento para DevOps?</summary><p class="text-sm mt-2 pl-6">Prometheus (métricas) + Grafana (visualização) + Loki (logs) + Tempo (traces) = LGTM Stack, recomendada pela Grafana Labs.</p></details>
+                </div>
+            </div>
+
+            <!-- Rodapé -->
+            <footer class="mt-10 pt-6 border-t border-gray-200 dark:border-gray-800">
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-gray-500">
+                    <p>DevForge © 2025-2026 - Open Source sob licença MIT</p>
+                    <div class="flex gap-4"><a href="https://github.com/rafaelferreira2312/devforge" target="_blank" class="hover:text-blue-600"><i class="fab fa-github"></i> GitHub</a><span><i class="fab fa-whatsapp text-green-600"></i> (21) 97160-4248</span><span><i class="fas fa-pix text-green-500"></i> PIX: (21) 97160-4248</span></div>
+                </div>
+            </footer>
+        </div>
+    </main>
+</div>
+
+<script>
+    // Botão copiar
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const cmdId = btn.getAttribute('data-cmd-id');
+            const codeElement = document.getElementById(cmdId);
+            if (codeElement) {
+                navigator.clipboard.writeText(codeElement.innerText);
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✓ Copiado!';
+                setTimeout(() => btn.innerHTML = originalText, 1500);
+            }
+        });
+    });
+
+    // Sidebar mobile
+    const sidebar = document.getElementById('sidebarMobile');
+    const overlay = document.getElementById('overlayMobile');
+
+    window.openSidebar = function() {
+        sidebar.classList.add('open');
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    window.closeSidebar = function() {
+        sidebar.classList.remove('open');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    document.getElementById('openSidebarBtn')?.addEventListener('click', openSidebar);
+    document.getElementById('closeSidebarBtn')?.addEventListener('click', closeSidebar);
+
+    document.querySelectorAll('#sidebarMobile a').forEach(link => {
+        link.addEventListener('click', closeSidebar);
+    });
+
+    // Dark Mode
+    function initDarkMode() {
+        const isDark = localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        
+        if (isDark) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+        
+        const toggleButtons = document.querySelectorAll('#darkModeToggleDesktop, #darkModeToggleMobile');
+        toggleButtons.forEach(btn => {
+            if (btn) {
+                btn.addEventListener('click', () => {
+                    document.documentElement.classList.toggle('dark');
+                    localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+                });
+            }
+        });
+    }
+
+    // Busca global
+    function initSearch() {
+        const searchInputs = ['globalSearchDesktop', 'globalSearchMobile'];
+        searchInputs.forEach(id => {
+            const input = document.getElementById(id);
+            if (input) {
+                input.addEventListener('input', (e) => {
+                    const term = e.target.value.toLowerCase();
+                    document.querySelectorAll('details').forEach(card => {
+                        if (card && card.innerText) {
+                            const text = card.innerText.toLowerCase();
+                            card.style.display = text.includes(term) ? 'block' : 'none';
+                        }
+                    });
+                });
+            }
+        });
+    }
+
+    initDarkMode();
+    initSearch();
+</script>
+</body>
+</html>
