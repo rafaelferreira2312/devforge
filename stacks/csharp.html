@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>IA/ML · DevForge</title>
-    <meta name="description" content="Setup completo para Inteligência Artificial e Machine Learning: Python, TensorFlow, PyTorch, Jupyter, CUDA, MLflow, Hugging Face, LangChain e muito mais.">
+    <title>C# .NET · DevForge</title>
+    <meta name="description" content="Setup completo do .NET para Linux, Windows e macOS. Scripts de instalação do SDK, Runtime, Entity Framework, troubleshooting, extensões VSCode e muito mais.">
     <meta name="author" content="Rafael Ferreira">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -48,8 +48,8 @@
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         .dark ::-webkit-scrollbar-thumb { background: #334155; }
         
-        .cuda-badge {
-            background: linear-gradient(135deg, #76B900 0%, #5A8F00 100%);
+        .dotnet-bg {
+            background: linear-gradient(135deg, #512BD4 0%, #3a1f8a 100%);
         }
     </style>
 </head>
@@ -82,15 +82,15 @@
         <a href="java.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-java w-5 text-red-500"></i><span>Java</span></a>
         <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
         <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span></a>
-        <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-gem w-5 text-red-400"></i><span>Ruby onRails</span></a>
-        <a href="stacks/csharp.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-microsoft w-5 text-purple-500"></i><span>C# .NET</span></a>
+        <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-gem w-5 text-red-400"></i><span>Rails</span></a>
         <a href="devops.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cloud-upload-alt w-5 text-purple-500"></i><span>DevOps</span></a>
-        <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span></a>
+        <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span></a>
         <a href="docker.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-docker w-5 text-blue-500"></i><span>Docker</span></a>
         <a href="linux.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-linux w-5 text-yellow-600"></i><span>Linux</span></a>
         <a href="windows.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-windows w-5 text-blue-500"></i><span>Windows</span></a>
         <a href="mobile.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-mobile-alt w-5 text-gray-500"></i><span>Mobile</span></a>
         <a href="cybersecurity.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-shield-alt w-5 text-green-500"></i><span>Security</span></a>
+        <a href="csharp.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-microsoft w-5 text-purple-500"></i><span>C# .NET</span></a>
     </nav>
     <div class="p-4 border-t border-gray-200 dark:border-gray-800">
         <button id="darkModeToggleMobile" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm flex items-center gap-3"><i class="fas fa-moon w-5"></i><span>Alternar tema</span></button>
@@ -112,14 +112,15 @@
             <a href="java.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-java w-5 text-red-500"></i><span>Java</span></a>
             <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
             <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span></a>
-            <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-gem w-5 text-red-400"></i><span>Ruby on Rails</span></a>
+            <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-gem w-5 text-red-400"></i><span>Rails</span></a>
             <a href="devops.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cloud-upload-alt w-5 text-purple-500"></i><span>DevOps</span></a>
-            <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span></a>
+            <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span></a>
             <a href="docker.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-docker w-5 text-blue-500"></i><span>Docker</span></a>
             <a href="linux.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-linux w-5 text-yellow-600"></i><span>Linux</span></a>
             <a href="windows.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-windows w-5 text-blue-500"></i><span>Windows</span></a>
             <a href="mobile.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-mobile-alt w-5 text-gray-500"></i><span>Mobile</span></a>
             <a href="cybersecurity.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-shield-alt w-5 text-green-500"></i><span>Security</span></a>
+            <a href="csharp.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 font-medium"><i class="fab fa-microsoft w-5 text-purple-500"></i><span>C# .NET</span></a>
         </nav>
         <div class="p-4 border-t border-gray-200 dark:border-gray-800"><button id="darkModeToggleDesktop" class="w-full text-left px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 text-sm flex items-center gap-3"><i class="fas fa-moon w-5"></i><span>Alternar tema</span></button></div>
     </aside>
@@ -130,153 +131,117 @@
             <h1 class="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1>
         </div>
 
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
             <!-- Cabeçalho -->
             <div class="flex items-center gap-4 mb-8">
-                <i class="fas fa-brain text-6xl text-pink-500"></i>
-                <div><h1 class="text-3xl sm:text-4xl font-bold tracking-tight">Inteligência Artificial & Machine Learning</h1><p class="text-gray-600 dark:text-gray-400 mt-1">Setup completo para desenvolvimento de modelos de IA/ML: TensorFlow, PyTorch, Jupyter, CUDA, MLflow, Hugging Face, LangChain e muito mais.</p></div>
+                <i class="fab fa-microsoft text-6xl text-purple-500"></i>
+                <div><h1 class="text-3xl sm:text-4xl font-bold tracking-tight">C# .NET</h1><p class="text-gray-600 dark:text-gray-400 mt-1">Plataforma de desenvolvimento moderna, multiplataforma e de alto desempenho da Microsoft. Ideal para web APIs, microsserviços, desktop, jogos e muito mais.</p></div>
             </div>
 
             <!-- Badges -->
             <div class="flex flex-wrap gap-2 mb-8">
-                <span class="px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 rounded-full text-xs">🐍 Python 3.11+</span>
-                <span class="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-full text-xs">🧠 TensorFlow</span>
-                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-xs">🔥 PyTorch</span>
-                <span class="cuda-badge px-3 py-1 rounded-full text-xs text-white">🎮 CUDA 12.x</span>
-                <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-xs">📓 Jupyter Lab</span>
-                <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs">🤗 Hugging Face</span>
-                <span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 rounded-full text-xs">🔗 LangChain</span>
-                <span class="px-3 py-1 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300 rounded-full text-xs">📊 MLflow</span>
+                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-xs">🔷 .NET 8.0 (LTS)</span>
+                <span class="px-3 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 rounded-full text-xs">🔶 .NET 9.0</span>
+                <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs">⚡ ASP.NET Core</span>
+                <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-xs">📦 Entity Framework</span>
+                <span class="px-3 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-full text-xs">🎮 Unity</span>
+                <span class="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-300 rounded-full text-xs">🖥️ Maui/Xamarin</span>
             </div>
 
-            <!-- Instalação Automatizada -->
+            <!-- Seletor de versão e comandos dinâmicos -->
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
-                <h2 class="text-xl font-semibold mb-4">⚡ Instalação automatizada - IA/ML Stack</h2>
+                <h2 class="text-xl font-semibold mb-4">⚡ Instalação automatizada - .NET SDK</h2>
                 <div class="mb-4 flex flex-wrap gap-4 items-center">
-                    <label class="text-sm font-medium">Versão do Python:</label>
-                    <select id="pythonVersion" class="version-selector bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700 rounded-md px-3 py-1">
-                        <option value="3.12">Python 3.12 + TensorFlow 2.15</option>
-                        <option value="3.11">Python 3.11 + PyTorch 2.1 (recomendada)</option>
-                        <option value="3.10">Python 3.10 + CUDA 12.1</option>
+                    <label class="text-sm font-medium">Versão do .NET:</label>
+                    <select id="dotnetVersion" class="version-selector bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-700 rounded-md px-3 py-1">
+                        <option value="8.0">.NET 8.0 (LTS - recomendada)</option>
+                        <option value="9.0">.NET 9.0 (STS)</option>
+                        <option value="7.0">.NET 7.0 (legado)</option>
+                        <option value="6.0">.NET 6.0 (LTS)</option>
                     </select>
                 </div>
                 <div class="space-y-5">
-                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-linux text-lg text-yellow-600"></i><span class="font-medium">Linux / WSL (CUDA Support)</span></div><div class="relative code-block"><code id="linuxCmd" class="text-green-400 text-xs sm:text-sm break-all">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/ia/install-ia.sh | bash -s 3.11</code><button class="copy-btn" data-cmd-id="linuxCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
-                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-windows text-lg text-blue-500"></i><span class="font-medium">Windows PowerShell (Admin)</span></div><div class="relative code-block"><code id="winCmd" class="text-green-400 text-xs sm:text-sm break-all">Set-ExecutionPolicy Bypass -Scope Process; iex "& { $(irm https://rafaelferreira2312.github.io/devforge/scripts/ia/install-ia.ps1) } 3.11"</code><button class="copy-btn" data-cmd-id="winCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
-                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-apple text-lg text-gray-500"></i><span class="font-medium">macOS (Metal Performance)</span></div><div class="relative code-block"><code id="macCmd" class="text-green-400 text-xs sm:text-sm break-all">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/ia/install-ia.sh | bash -s 3.11</code><button class="copy-btn" data-cmd-id="macCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
+                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-linux text-lg text-yellow-600"></i><span class="font-medium">Linux / WSL (Ubuntu/Debian)</span></div><div class="relative code-block"><code id="linuxCmd" class="text-green-400 text-xs sm:text-sm break-all">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/csharp/install-dotnet.sh | bash -s 8.0</code><button class="copy-btn" data-cmd-id="linuxCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
+                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-windows text-lg text-blue-500"></i><span class="font-medium">Windows PowerShell (Admin)</span></div><div class="relative code-block"><code id="winCmd" class="text-green-400 text-xs sm:text-sm break-all">Set-ExecutionPolicy Bypass -Scope Process; iex "& { $(irm https://rafaelferreira2312.github.io/devforge/scripts/csharp/install-dotnet.ps1) } 8.0"</code><button class="copy-btn" data-cmd-id="winCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
+                    <div><div class="flex items-center gap-2 mb-2"><i class="fab fa-apple text-lg text-gray-500"></i><span class="font-medium">macOS (Homebrew)</span></div><div class="relative code-block"><code id="macCmd" class="text-green-400 text-xs sm:text-sm break-all">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/csharp/install-dotnet.sh | bash -s 8.0</code><button class="copy-btn" data-cmd-id="macCmd"><i class="far fa-copy"></i> Copiar</button></div></div>
                 </div>
-                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-microchip"></i> Instala: Python, CUDA Toolkit (NVIDIA), cuDNN, TensorFlow, PyTorch, Jupyter Lab, MLflow, Hugging Face Transformers, LangChain, Ollama, e mais.</p>
+                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-database"></i> Os scripts instalam o .NET SDK, runtime, ferramentas globais e configuram o PATH automaticamente.</p>
             </div>
 
-            <!-- Requisitos de Hardware -->
+            <!-- Requisitos e Hardware -->
             <div class="grid md:grid-cols-2 gap-6 mb-8">
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
-                    <h3 class="text-lg font-bold mb-3 flex items-center gap-2"><i class="fas fa-microchip text-blue-500"></i> Requisitos mínimos</h3>
-                    <ul class="list-disc list-inside space-y-1 text-sm"><li>CPU: 4+ núcleos (x86_64)</li><li>RAM: 8 GB (recomendado 16 GB para treinamento)</li><li>Armazenamento: 50 GB SSD</li><li>GPU: Opcional (CPU-only mode)</li><li>SO: Ubuntu 22.04/24.04, Windows 10/11 (WSL2), macOS 12+</li></ul>
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6"><h3 class="text-lg font-bold mb-3 flex items-center gap-2"><i class="fas fa-microchip text-blue-500"></i> Requisitos mínimos</h3>
+                    <ul class="list-disc list-inside space-y-1 text-sm"><li>CPU: 2+ núcleos (x86_64 ou ARM64)</li><li>RAM: 2 GB (recomendado 4 GB para projetos maiores)</li><li>Armazenamento: 5 GB SSD</li><li>SO: Ubuntu 20.04+, Debian 11+, RHEL 8+, Windows 10/11, macOS 11+</li></ul>
                 </div>
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
-                    <h3 class="text-lg font-bold mb-3 flex items-center gap-2"><i class="fas fa-microchip text-green-500"></i> Hardware recomendado (Deep Learning)</h3>
-                    <ul class="list-disc list-inside space-y-1 text-sm"><li>GPU: NVIDIA RTX 3060/3070/3080/3090/4090 (12GB+ VRAM)</li><li>RAM: 32 GB+ (64 GB para LLMs)</li><li>Armazenamento: NVMe SSD 1 TB+</li><li>CPU: i7 / Ryzen 7 ou superior</li><li>Refrigeração: Adequada para uso intensivo de GPU</li></ul>
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6"><h3 class="text-lg font-bold mb-3 flex items-center gap-2"><i class="fas fa-laptop-code text-green-500"></i> Hardware recomendado (Dev)</h3>
+                    <ul class="list-disc list-inside space-y-1 text-sm"><li>Notebook: Dell XPS, MacBook Pro M1/M2, Lenovo ThinkPad</li><li>CPU: i5 / Ryzen 5 ou superior</li><li>RAM: 8 GB (16 GB para projetos grandes)</li><li>SSD NVMe 256 GB+</li></ul>
                 </div>
             </div>
 
-            <!-- TensorFlow + PyTorch -->
-            <div class="grid md:grid-cols-2 gap-6 mb-8">
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
-                    <div class="flex items-center gap-3 mb-4">
-                        <i class="fab fa-python text-2xl text-yellow-500"></i>
-                        <h2 class="text-lg font-semibold">TensorFlow / Keras</h2>
-                    </div>
-                    <div class="relative code-block"><code id="tfInstall" class="text-green-400 text-xs break-all">pip install tensorflow tensorflow-datasets</code><button class="copy-btn" data-cmd-id="tfInstall"><i class="far fa-copy"></i> Copiar</button></div>
-                    <div class="relative code-block mt-2"><code id="tfCheck" class="text-green-400 text-xs break-all">python -c "import tensorflow as tf; print(tf.reduce_sum(tf.random.normal([1000, 1000])))"</code><button class="copy-btn" data-cmd-id="tfCheck"><i class="far fa-copy"></i> Copiar</button></div>
-                    <div class="relative code-block mt-2"><code id="tfGpu" class="text-green-400 text-xs break-all">python -c "import tensorflow as tf; print(tf.config.list_physical_devices('GPU'))"</code><button class="copy-btn" data-cmd-id="tfGpu"><i class="far fa-copy"></i> Copiar</button></div>
-                </div>
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
-                    <div class="flex items-center gap-3 mb-4">
-                        <i class="fas fa-fire text-2xl text-red-500"></i>
-                        <h2 class="text-lg font-semibold">PyTorch</h2>
-                    </div>
-                    <div class="relative code-block"><code id="ptInstall" class="text-green-400 text-xs break-all">pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118</code><button class="copy-btn" data-cmd-id="ptInstall"><i class="far fa-copy"></i> Copiar</button></div>
-                    <div class="relative code-block mt-2"><code id="ptCheck" class="text-green-400 text-xs break-all">python -c "import torch; print(torch.rand(3,3).cuda() if torch.cuda.is_available() else torch.rand(3,3))"</code><button class="copy-btn" data-cmd-id="ptCheck"><i class="far fa-copy"></i> Copiar</button></div>
-                    <div class="relative code-block mt-2"><code id="ptGpu" class="text-green-400 text-xs break-all">python -c "import torch; print(f'CUDA: {torch.cuda.is_available()}, GPU: {torch.cuda.get_device_name(0) if torch.cuda.is_available() else \"CPU\"}')"</code><button class="copy-btn" data-cmd-id="ptGpu"><i class="far fa-copy"></i> Copiar</button></div>
-                </div>
-            </div>
-
-            <!-- Jupyter + MLflow -->
-            <div class="grid md:grid-cols-2 gap-6 mb-8">
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
-                    <div class="flex items-center gap-3 mb-4">
-                        <i class="fas fa-book text-2xl text-green-500"></i>
-                        <h2 class="text-lg font-semibold">Jupyter Lab / Notebook</h2>
-                    </div>
-                    <div class="relative code-block"><code id="jupyterInstall" class="text-green-400 text-xs break-all">pip install jupyterlab notebook ipykernel ipywidgets</code><button class="copy-btn" data-cmd-id="jupyterInstall"><i class="far fa-copy"></i> Copiar</button></div>
-                    <div class="relative code-block mt-2"><code id="jupyterRun" class="text-green-400 text-xs break-all">jupyter lab --ip=0.0.0.0 --port=8888 --no-browser --allow-root</code><button class="copy-btn" data-cmd-id="jupyterRun"><i class="far fa-copy"></i> Copiar</button></div>
-                    <div class="relative code-block mt-2"><code id="jupyterKernel" class="text-green-400 text-xs break-all">python -m ipykernel install --user --name=ia-env</code><button class="copy-btn" data-cmd-id="jupyterKernel"><i class="far fa-copy"></i> Copiar</button></div>
-                </div>
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
-                    <div class="flex items-center gap-3 mb-4">
-                        <i class="fas fa-chart-line text-2xl text-purple-500"></i>
-                        <h2 class="text-lg font-semibold">MLflow (Experiment Tracking)</h2>
-                    </div>
-                    <div class="relative code-block"><code id="mlflowInstall" class="text-green-400 text-xs break-all">pip install mlflow scikit-learn pandas numpy matplotlib seaborn</code><button class="copy-btn" data-cmd-id="mlflowInstall"><i class="far fa-copy"></i> Copiar</button></div>
-                    <div class="relative code-block mt-2"><code id="mlflowRun" class="text-green-400 text-xs break-all">mlflow ui --host 0.0.0.0 --port 5000</code><button class="copy-btn" data-cmd-id="mlflowRun"><i class="far fa-copy"></i> Copiar</button></div>
-                </div>
-            </div>
-
-            <!-- Hugging Face + LangChain -->
-            <div class="grid md:grid-cols-2 gap-6 mb-8">
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
-                    <div class="flex items-center gap-3 mb-4">
-                        <i class="fas fa-smile text-2xl text-yellow-500"></i>
-                        <h2 class="text-lg font-semibold">Hugging Face Transformers</h2>
-                    </div>
-                    <div class="relative code-block"><code id="hfInstall" class="text-green-400 text-xs break-all">pip install transformers datasets accelerate tokenizers evaluate</code><button class="copy-btn" data-cmd-id="hfInstall"><i class="far fa-copy"></i> Copiar</button></div>
-                    <div class="relative code-block mt-2"><code id="hfLoad" class="text-green-400 text-xs break-all">python -c "from transformers import pipeline; print(pipeline('sentiment-analysis')('I love AI!'))"</code><button class="copy-btn" data-cmd-id="hfLoad"><i class="far fa-copy"></i> Copiar</button></div>
-                </div>
-                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
-                    <div class="flex items-center gap-3 mb-4">
-                        <i class="fas fa-link text-2xl text-blue-500"></i>
-                        <h2 class="text-lg font-semibold">LangChain & LLMs</h2>
-                    </div>
-                    <div class="relative code-block"><code id="langchainInstall" class="text-green-400 text-xs break-all">pip install langchain langchain-community chromadb openai tiktoken</code><button class="copy-btn" data-cmd-id="langchainInstall"><i class="far fa-copy"></i> Copiar</button></div>
-                    <div class="relative code-block mt-2"><code id="ollama" class="text-green-400 text-xs break-all">curl -fsSL https://ollama.com/install.sh | sh && ollama run llama3.2</code><button class="copy-btn" data-cmd-id="ollama"><i class="far fa-copy"></i> Copiar</button></div>
-                </div>
-            </div>
-
-            <!-- CUDA + NVIDIA -->
-            <div class="bg-gradient-to-r from-green-800 to-green-900 rounded-xl p-5 sm:p-6 mb-8 text-white">
-                <h2 class="text-xl font-semibold mb-4 flex items-center gap-2"><i class="fas fa-microchip"></i> CUDA & NVIDIA GPU Setup</h2>
-                <div class="grid md:grid-cols-2 gap-4">
-                    <div>
-                        <p class="font-medium mb-2">🔧 Verificar NVIDIA GPU</p>
-                        <div class="relative code-block bg-gray-900 mt-2"><code id="nvidiaSmi" class="text-green-400 text-xs break-all">nvidia-smi</code><button class="copy-btn" data-cmd-id="nvidiaSmi"><i class="far fa-copy"></i> Copiar</button></div>
-                    </div>
-                    <div>
-                        <p class="font-medium mb-2">📦 Instalar CUDA Toolkit</p>
-                        <div class="relative code-block bg-gray-900 mt-2"><code id="cudaInstall" class="text-green-400 text-xs break-all">wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb && sudo dpkg -i cuda-keyring_1.1-1_all.deb && sudo apt update && sudo apt install cuda-toolkit-12</code><button class="copy-btn" data-cmd-id="cudaInstall"><i class="far fa-copy"></i> Copiar</button></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Troubleshooting IA/ML -->
+            <!-- Stack recomendada -->
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
-                <h2 class="text-xl font-semibold mb-4">🔧 Troubleshooting IA/ML</h2>
+                <h2 class="text-xl font-semibold mb-4">🛠️ Stack recomendada</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div><h3 class="font-medium mb-2 flex items-center gap-2"><i class="fas fa-boxes text-purple-500"></i> Ferramentas essenciais</h3>
+                        <ul class="list-disc list-inside text-sm space-y-1"><li>IDE: Visual Studio 2022 / VS Code / Rider</li><li>Frameworks: ASP.NET Core, Entity Framework Core</li><li>Gerenciador de pacotes: NuGet</li><li>Testes: xUnit, NUnit, MSTest</li><li>Containers: Docker + .NET SDK</li></ul>
+                    </div>
+                    <div><h3 class="font-medium mb-2 flex items-center gap-2"><i class="fab fa-vscode text-blue-500"></i> Extensões VSCode</h3>
+                        <ul class="list-disc list-inside text-sm space-y-1"><li>C# Dev Kit (Microsoft)</li><li>C# Extensions</li><li>NuGet Gallery</li><li>.NET Core Test Explorer</li><li>SQL Server (mssql)</li></ul>
+                    </div>
+                </div>
+                <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800"><h3 class="font-medium mb-2 flex items-center gap-2"><i class="fab fa-docker text-blue-500"></i> Docker (opcional)</h3>
+                    <div class="relative code-block mt-2">
+                        <code id="dockerCmd" class="text-green-400 text-xs sm:text-sm break-all">docker run -it --rm mcr.microsoft.com/dotnet/sdk:8.0 dotnet --info</code>
+                        <button class="copy-btn absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs" data-cmd-id="dockerCmd"><i class="far fa-copy"></i> Copiar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comandos dotnet CLI -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">⚙️ Comandos dotnet CLI úteis</h2>
+                <div class="grid gap-3 text-sm">
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">dotnet new console -n MeuApp</code> – cria novo projeto console</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">dotnet new webapi -n MinhaAPI</code> – cria API REST</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">dotnet build</code> – compila o projeto</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">dotnet run</code> – executa o projeto</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">dotnet add package Newtonsoft.Json</code> – adiciona pacote NuGet</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">dotnet ef migrations add InitialCreate</code> – cria migração EF Core</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">dotnet ef database update</code> – aplica migrações</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">dotnet publish -c Release -o ./publish</code> – publica o app</div>
+                </div>
+            </div>
+
+            <!-- Ferramentas globais -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">🔧 Ferramentas .NET globais</h2>
+                <div class="grid md:grid-cols-2 gap-4 text-sm">
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">dotnet tool install --global dotnet-ef</code> – Entity Framework Core tools</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">dotnet tool install --global swashbuckle.aspnetcore.cli</code> – Swagger CLI</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">dotnet tool install --global dotnet-outdated</code> – verifica pacotes desatualizados</div>
+                    <div class="flex items-center gap-2"><i class="fas fa-terminal text-gray-500"></i><code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">dotnet tool install --global coverlet.console</code> – cobertura de testes</div>
+                </div>
+            </div>
+
+            <!-- Troubleshooting -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">🔧 Troubleshooting .NET</h2>
                 <div class="space-y-4">
-                    <div class="border-l-4 border-red-400 pl-4"><p class="font-medium">❌ Erro: "CUDA out of memory"</p><p class="text-sm">Causa: GPU sem memória suficiente para o modelo/batch.<br>Solução: Reduza batch_size, use gradient accumulation ou modelo menor: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">batch_size = 8</code> → <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">batch_size = 4</code></p></div>
-                    <div class="border-l-4 border-yellow-400 pl-4"><p class="font-medium">⚠️ Erro: "TensorFlow not using GPU"</p><p class="text-sm">Causa: CUDA/cuDNN não configurados corretamente.<br>Solução: Verifique <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">tf.config.list_physical_devices('GPU')</code> e instale CUDA Toolkit.</p></div>
-                    <div class="border-l-4 border-blue-400 pl-4"><p class="font-medium">🐍 Erro: "ModuleNotFoundError: No module named 'torch'"</p><p class="text-sm">Causa: Ambiente virtual sem PyTorch instalado.<br>Solução: Ative o virtualenv e instale: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">pip install torch torchvision torchaudio</code></p></div>
+                    <div class="border-l-4 border-red-400 pl-4"><p class="font-medium">❌ Erro: "dotnet: command not found"</p><p class="text-sm">Causa: .NET SDK não instalado ou não está no PATH.<br>Solução: Verifique com <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">which dotnet</code> ou reinstale usando o script DevForge.</p></div>
+                    <div class="border-l-4 border-yellow-400 pl-4"><p class="font-medium">⚠️ Erro: "Unable to resolve project reference"</p><p class="text-sm">Causa: Problemas de restore do NuGet.<br>Solução: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">dotnet restore --force</code></p></div>
+                    <div class="border-l-4 border-blue-400 pl-4"><p class="font-medium">🐘 Erro: "HTTP Error 500.30 - ANCM In-Process Start Failure"</p><p class="text-sm">Causa: Erro na inicialização da aplicação ASP.NET Core.<br>Solução: Verifique logs com <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">dotnet run --launch-profile "Development"</code></p></div>
                 </div>
                 
                 <!-- DIAGNÓSTICO AUTOMÁTICO -->
                 <div class="mt-4 bg-gray-50 dark:bg-gray-800/50 rounded-lg p-3">
-                    <p class="text-sm font-medium flex items-center gap-2 mb-2"><i class="fas fa-stethoscope text-blue-500"></i> Diagnóstico automático IA/ML:</p>
+                    <p class="text-sm font-medium flex items-center gap-2 mb-2"><i class="fas fa-stethoscope text-blue-500"></i> Diagnóstico automático .NET:</p>
                     <div class="relative">
                         <div class="bg-gray-900 rounded-lg p-3 font-mono text-xs sm:text-sm overflow-x-auto">
-                            <code id="diagCmd" class="text-green-400 whitespace-pre-wrap break-all">python --version && pip list | grep -E "tensorflow|torch|transformers|langchain|jupyter|mlflow" && python -c "import torch; print(f'PyTorch CUDA: {torch.cuda.is_available()}')" && python -c "import tensorflow as tf; print(f'TensorFlow GPU: {tf.config.list_physical_devices(\"GPU\")}')"</code>
+                            <code id="diagCmd" class="text-green-400 whitespace-pre-wrap break-all">dotnet --info && dotnet --list-sdks && dotnet --list-runtimes && echo "---" && which dotnet</code>
                         </div>
                         <button class="copy-btn absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs" data-cmd-id="diagCmd"><i class="far fa-copy"></i> Copiar</button>
                     </div>
-                    <p class="text-xs text-gray-500 mt-2"><i class="fas fa-info-circle"></i> Este comando verifica versão do Python, principais bibliotecas IA/ML e suporte a GPU.</p>
+                    <p class="text-xs text-gray-500 mt-2"><i class="fas fa-info-circle"></i> Este comando verifica versão do .NET, SDKs instalados, runtimes e localização do binário dotnet.</p>
                 </div>
             </div>
             <!-- ==================== AVISO UNIVERSAL DE EXECUÇÃO DE SCRIPTS ==================== -->
@@ -429,28 +394,45 @@
             </script>            
             <!-- ==================== FIM DO AVISO UNIVERSAL ==================== -->
 
-            <!-- Scripts IA/ML -->
+            <!-- Scripts prontos -->
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
                 <h2 class="text-xl font-semibold mb-4">📜 Scripts prontos</h2>
-                <div class="grid grid-cols-2 md:grid-cols-5 gap-3 text-sm">
-                    <a href="../scripts/ia/install-ia.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install-ia.sh</a>
-                    <a href="../scripts/ia/install-ia.ps1" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install-ia.ps1</a>
-                    <a href="../scripts/ia/install-cuda.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-microchip"></i> install-cuda.sh</a>
-                    <a href="../scripts/ia/setup-venv.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-box"></i> setup-venv.sh</a>
-                    <a href="../scripts/ia/train-example.py" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-code"></i> train-example.py</a>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+                    <a href="../scripts/csharp/install-dotnet.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install-dotnet.sh</a>
+                    <a href="../scripts/csharp/install-dotnet.ps1" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-download"></i> install-dotnet.ps1</a>
+                    <a href="../scripts/csharp/uninstall-dotnet.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-trash"></i> uninstall-dotnet.sh</a>
+                    <a href="../scripts/csharp/backup-env.sh" download class="bg-gray-100 dark:bg-gray-800 text-center py-2 rounded hover:bg-gray-200 transition flex items-center justify-center gap-2"><i class="fas fa-archive"></i> backup-env.sh</a>
                 </div>
-                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-shield-alt"></i> Scripts verificados no Ubuntu 22.04/24.04 (CUDA 12.x), Windows 10/11 com WSL2 e macOS 13+.</p>
+                <p class="text-xs text-gray-500 mt-4"><i class="fas fa-shield-alt"></i> Scripts verificados no Ubuntu 22.04/24.04, Debian 12, macOS 13+ e Windows 10/11.</p>
             </div>
 
-            <!-- FAQ IA/ML -->
+            <!-- Exemplo de código C# -->
+            <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
+                <h2 class="text-xl font-semibold mb-4">📝 Exemplo de código - Minimal API</h2>
+                <div class="relative code-block">
+                    <code id="csharpCode" class="text-green-400 text-xs break-all whitespace-pre-wrap">
+var builder = WebApplication.CreateBuilder(args);
+var app = builder.Build();
+
+app.MapGet("/", () => "Hello DevForge!");
+
+app.MapGet("/health", () => new { Status = "Healthy", Timestamp = DateTime.UtcNow });
+
+app.Run();
+                    </code>
+                    <button class="copy-btn absolute top-2 right-2 bg-gray-700 hover:bg-gray-600 text-white px-2 py-1 rounded text-xs" data-cmd-id="csharpCode"><i class="far fa-copy"></i> Copiar</button>
+                </div>
+                <p class="text-xs text-gray-500 mt-3"><i class="fas fa-code"></i> Execute com: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">dotnet run</code> e acesse http://localhost:5000</p>
+            </div>
+
+            <!-- FAQ -->
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6">
-                <h2 class="text-xl font-semibold mb-4">❓ Perguntas frequentes - IA/ML</h2>
+                <h2 class="text-xl font-semibold mb-4">❓ Perguntas frequentes - C# .NET</h2>
                 <div class="space-y-3">
-                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-question-circle text-blue-500"></i> TensorFlow vs PyTorch: qual escolher?</summary><p class="text-sm mt-2 pl-6">PyTorch é mais popular para pesquisa e prototyping (debugging fácil). TensorFlow é mais usado em produção (TF Serving, TF Lite). Ambos são excelentes!</p></details>
-                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-database text-green-500"></i> Como usar GPU com TensorFlow/PyTorch?</summary><p class="text-sm mt-2 pl-6">Instale CUDA Toolkit e cuDNN. O script DevForge já faz isso automaticamente. Verifique com <code>nvidia-smi</code> e os comandos de teste de GPU acima.</p></details>
-                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-shield-alt text-purple-500"></i> Melhor forma de gerenciar ambientes Python para ML?</summary><p class="text-sm mt-2 pl-6">Use conda (Anaconda/Miniconda) para projetos com CUDA ou pyenv + virtualenv. O script DevForge configura ambos automaticamente.</p></details>
-                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-chart-line text-orange-500"></i> Como monitorar experimentos de ML?</summary><p class="text-sm mt-2 pl-6">Use MLflow (gratuito, self-hosted), Weights & Biases (W&B) ou TensorBoard. O DevForge inclui MLflow configurado.</p></details>
-                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-microchip text-red-500"></i> GPU recomendada para Deep Learning em 2025/2026?</summary><p class="text-sm mt-2 pl-6">NVIDIA RTX 4090 (24GB VRAM) para entusiastas, RTX 6000 Ada para profissionais. Mínimo recomendado: RTX 3060 12GB.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-question-circle text-blue-500"></i> .NET Framework vs .NET Core vs .NET?</summary><p class="text-sm mt-2 pl-6">.NET Framework (Windows only, legado). .NET Core (multiplataforma, moderno). .NET 5+ (unificação, sucessor do .NET Core). Use .NET 8.0 LTS para novos projetos.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-database text-green-500"></i> Como gerenciar múltiplas versões do .NET?</summary><p class="text-sm mt-2 pl-6">Use <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">dotnet --list-sdks</code> e <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">dotnet new globaljson --sdk-version 8.0.100</code> para fixar versão por projeto.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-shield-alt text-purple-500"></i> Entity Framework vs Dapper: qual usar?</summary><p class="text-sm mt-2 pl-6">Entity Framework: ORM completo, ideal para projetos grandes com mudanças frequentes de schema. Dapper: micro-ORM leve, mais rápido para queries complexas.</p></details>
+                    <details><summary class="cursor-pointer font-medium flex items-center gap-2"><i class="fas fa-chart-line text-orange-500"></i> Como publicar uma aplicação .NET?</summary><p class="text-sm mt-2 pl-6">Use <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">dotnet publish -c Release -o ./publish</code>. Para self-contained: <code class="bg-gray-100 dark:bg-gray-800 px-1 rounded">dotnet publish --self-contained true -r linux-x64</code></p></details>
                 </div>
             </div>
 
@@ -467,16 +449,16 @@
 
 <script>
     // Seletor de versão
-    const versionSelect = document.getElementById('pythonVersion');
+    const versionSelect = document.getElementById('dotnetVersion');
     const linuxCmdSpan = document.getElementById('linuxCmd');
     const winCmdSpan = document.getElementById('winCmd');
     const macCmdSpan = document.getElementById('macCmd');
 
     function updateCommands() {
         const ver = versionSelect.value;
-        linuxCmdSpan.innerText = `curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/ia/install-ia.sh | bash -s ${ver}`;
-        winCmdSpan.innerText = `Set-ExecutionPolicy Bypass -Scope Process; iex "& { $(irm https://rafaelferreira2312.github.io/devforge/scripts/ia/install-ia.ps1) } ${ver}"`;
-        macCmdSpan.innerText = `curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/ia/install-ia.sh | bash -s ${ver}`;
+        linuxCmdSpan.innerText = `curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/csharp/install-dotnet.sh | bash -s ${ver}`;
+        winCmdSpan.innerText = `Set-ExecutionPolicy Bypass -Scope Process; iex "& { $(irm https://rafaelferreira2312.github.io/devforge/scripts/csharp/install-dotnet.ps1) } ${ver}"`;
+        macCmdSpan.innerText = `curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/csharp/install-dotnet.sh | bash -s ${ver}`;
     }
     versionSelect.addEventListener('change', updateCommands);
     updateCommands();

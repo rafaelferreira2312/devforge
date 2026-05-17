@@ -61,7 +61,7 @@
     <div class="p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center">
         <div>
             <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1>
-            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">forge your dev environment</p>
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Crie seu próprio ambiente.</p>
         </div>
         <button id="closeSidebarBtn" class="text-gray-500 hover:text-gray-700 dark:text-gray-400"><i class="fas fa-times text-xl"></i></button>
     </div>
@@ -82,6 +82,7 @@
         <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
         <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span></a>
         <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-gem w-5 text-red-400"></i><span>Rails</span></a>
+        <a href="stacks/csharp.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-microsoft w-5 text-purple-500"></i><span>C# .NET</span></a>
         <a href="devops.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cloud-upload-alt w-5 text-purple-500"></i><span>DevOps</span></a>
         <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span></a>
         <a href="docker.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-docker w-5 text-blue-500"></i><span>Docker</span></a>
@@ -98,7 +99,7 @@
 <!-- LAYOUT DESKTOP -->
 <div class="layout-desktop">
     <aside class="sidebar-desktop bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col">
-        <div class="p-6"><h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1><p class="text-xs text-gray-500 dark:text-gray-400 mt-1">forge your dev environment</p></div>
+        <div class="p-6"><h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1><p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Crie seu próprio ambiente.</p></div>
         <div class="px-4 mb-4"><div class="relative"><input type="text" id="globalSearchDesktop" placeholder="Buscar stacks, comandos..." class="w-full bg-gray-100 dark:bg-gray-800 border-0 rounded-lg py-2 pl-10 pr-4 text-sm focus:ring-2 focus:ring-blue-500"><i class="fas fa-search absolute left-3 top-2.5 text-gray-400 text-sm"></i></div></div>
         <nav class="flex-1 px-4 space-y-1 text-sm overflow-y-auto pb-4">
             <a href="../index.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-tachometer-alt w-5"></i><span>Dashboard</span></a>
@@ -111,6 +112,7 @@
             <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
             <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span></a>
             <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-gem w-5 text-red-400"></i><span>Rails</span></a>
+            <a href="stacks/csharp.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-microsoft w-5 text-purple-500"></i><span>C# .NET</span></a>
             <a href="devops.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cloud-upload-alt w-5 text-purple-500"></i><span>DevOps</span></a>
             <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span></a>
             <a href="docker.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-docker w-5 text-blue-500"></i><span>Docker</span></a>
@@ -331,7 +333,6 @@
                     </div>
                 </div>
             </div>
-
             <script>
             // Script para os botões de cópia do aviso universal
             document.querySelectorAll('.copy-btn-ps1, .copy-btn-linux, .copy-btn-macos').forEach(btn => {
@@ -376,8 +377,7 @@
             } else {
                 setupAvisoCopyButtons();
             }
-            </script>
-            
+            </script>            
             <!-- ==================== FIM DO AVISO UNIVERSAL ==================== -->
 
             <!-- Scripts Windows -->
