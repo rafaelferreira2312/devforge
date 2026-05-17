@@ -16,130 +16,79 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="assets/css/main.css">
     <style>
-        /* Estilos adicionais para responsividade */
         * {
             font-family: 'Inter', system-ui, -apple-system, sans-serif;
         }
         
-        /* Desktop: sidebar fixa */
         @media (min-width: 1024px) {
-            .layout-desktop {
-                display: flex;
-                min-height: 100vh;
-            }
-            .sidebar-desktop {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 280px;
-                height: 100vh;
-                overflow-y: auto;
-                border-right: 1px solid;
-            }
-            .main-content-desktop {
-                margin-left: 280px;
-                flex: 1;
-                min-height: 100vh;
-            }
+            .layout-desktop { display: flex; min-height: 100vh; }
+            .sidebar-desktop { position: fixed; top: 0; left: 0; width: 280px; height: 100vh; overflow-y: auto; border-right: 1px solid; }
+            .main-content-desktop { margin-left: 280px; flex: 1; min-height: 100vh; }
         }
         
-        /* Sidebar mobile */
         .sidebar-mobile {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 280px;
-            height: 100vh;
-            z-index: 1000;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease-in-out;
-            overflow-y: auto;
+            position: fixed; top: 0; left: 0; width: 280px; height: 100vh; z-index: 1000;
+            transform: translateX(-100%); transition: transform 0.3s ease-in-out; overflow-y: auto;
         }
-        .sidebar-mobile.open {
-            transform: translateX(0);
-        }
+        .sidebar-mobile.open { transform: translateX(0); }
         .overlay-mobile {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-            display: none;
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.5);
+            z-index: 999; display: none;
         }
-        .overlay-mobile.open {
-            display: block;
-        }
+        .overlay-mobile.open { display: block; }
         
         @media (min-width: 1024px) {
-            .sidebar-mobile, .mobile-header, .overlay-mobile {
-                display: none !important;
-            }
+            .sidebar-mobile, .mobile-header, .overlay-mobile { display: none !important; }
         }
-        
         @media (max-width: 1023px) {
-            .sidebar-desktop {
-                display: none !important;
-            }
-            .main-content-desktop {
-                margin-left: 0 !important;
-            }
+            .sidebar-desktop { display: none !important; }
+            .main-content-desktop { margin-left: 0 !important; }
         }
         
-        .card-hover {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .card-hover:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
+        .card-hover { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .card-hover:hover { transform: translateY(-4px); box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15); }
+        
+        .code-block { background: #0d1117; border-radius: 0.75rem; padding: 1rem; font-family: 'SF Mono', monospace; font-size: 0.75rem; overflow-x: auto; position: relative; }
+        .copy-btn { position: absolute; top: 0.5rem; right: 0.5rem; background: #1f2937; border: none; color: #9ca3af; font-size: 0.7rem; padding: 0.25rem 0.5rem; border-radius: 0.375rem; cursor: pointer; transition: all 0.2s; }
+        .copy-btn:hover { background: #374151; color: #f3f4f6; }
+        .dark .copy-btn { background: #374151; color: #d1d5db; }
+        .dark .copy-btn:hover { background: #4b5563; color: #ffffff; }
+        
+        /* Animação do contador */
+        .counter-number {
+            font-size: 2rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
         
-        .code-block {
-            background: #0d1117;
-            border-radius: 0.75rem;
-            padding: 1rem;
-            font-family: 'SF Mono', 'Fira Code', monospace;
-            font-size: 0.75rem;
-            overflow-x: auto;
-            position: relative;
+        /* Badge do Discord */
+        .discord-badge {
+            background: #5865F2;
+            transition: transform 0.2s;
+        }
+        .discord-badge:hover {
+            transform: scale(1.05);
+            background: #4752c4;
         }
         
-        .copy-btn {
-            position: absolute;
-            top: 0.5rem;
-            right: 0.5rem;
-            background: #1f2937;
-            border: none;
-            color: #9ca3af;
-            font-size: 0.7rem;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.375rem;
-            cursor: pointer;
-            transition: all 0.2s;
+        /* Contribuidores */
+        .contributor-avatar {
+            transition: transform 0.2s, box-shadow 0.2s;
         }
-        .copy-btn:hover {
-            background: #374151;
-            color: #f3f4f6;
-        }
-        
-        .dark .copy-btn {
-            background: #374151;
-            color: #d1d5db;
-        }
-        
-        .dark .copy-btn:hover {
-            background: #4b5563;
-            color: #ffffff;
+        .contributor-avatar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-200">
 
-<!-- OVERLAY MOBILE -->
 <div id="overlayMobile" class="overlay-mobile" onclick="closeSidebar()"></div>
 
-<!-- SIDEBAR MOBILE (HAMBÚRGUER) -->
+<!-- SIDEBAR MOBILE -->
 <aside id="sidebarMobile" class="sidebar-mobile bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 shadow-xl">
     <div class="p-6 border-b border-gray-200 dark:border-gray-800 flex justify-between items-center">
         <div>
@@ -186,7 +135,6 @@
 
 <!-- LAYOUT DESKTOP -->
 <div class="layout-desktop">
-    <!-- SIDEBAR DESKTOP -->
     <aside class="sidebar-desktop bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 flex flex-col">
         <div class="p-6">
             <h1 class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">DevForge</h1>
@@ -226,9 +174,7 @@
         </div>
     </aside>
 
-    <!-- MAIN CONTENT DESKTOP -->
     <main class="main-content-desktop">
-        <!-- Header mobile (só aparece no mobile/tablet) -->
         <div class="mobile-header sticky top-0 bg-gray-50 dark:bg-gray-950 z-30 p-4 border-b border-gray-200 dark:border-gray-800 flex items-center gap-3 lg:hidden">
             <button id="openSidebarBtn" class="text-gray-600 dark:text-gray-300">
                 <i class="fas fa-bars text-2xl"></i>
@@ -237,7 +183,32 @@
         </div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-8">
-            <!-- Banner de apresentação -->
+            
+            <!-- ==================== STATS DO PROJETO - NOVO ==================== -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-4 text-center">
+                    <i class="fas fa-users text-2xl text-blue-500 mb-2"></i>
+                    <div class="counter-number" id="visitorCount">0</div>
+                    <p class="text-xs text-gray-500 mt-1">Visitas totais</p>
+                </div>
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-4 text-center">
+                    <i class="fab fa-github text-2xl text-gray-600 dark:text-gray-400 mb-2"></i>
+                    <div class="counter-number" id="starsCount">0</div>
+                    <p class="text-xs text-gray-500 mt-1">⭐ Stars no GitHub</p>
+                </div>
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-4 text-center">
+                    <i class="fas fa-code-branch text-2xl text-purple-500 mb-2"></i>
+                    <div class="counter-number" id="forksCount">0</div>
+                    <p class="text-xs text-gray-500 mt-1">🍴 Forks</p>
+                </div>
+                <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-4 text-center">
+                    <i class="fas fa-eye text-2xl text-green-500 mb-2"></i>
+                    <div class="counter-number" id="watchersCount">0</div>
+                    <p class="text-xs text-gray-500 mt-1">👁️ Watchers</p>
+                </div>
+            </div>
+
+            <!-- Banner de apresentação com social links -->
             <div class="mb-8 bg-gradient-to-r from-blue-600/10 to-indigo-600/10 rounded-2xl p-6 border border-blue-200 dark:border-blue-800">
                 <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
                     <div>
@@ -247,14 +218,20 @@
                         </p>
                     </div>
                     <div class="flex gap-2 flex-wrap">
-                        <span class="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-full text-sm">🐘 PHP</span>
-                        <span class="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-sm">📄 WP</span>
-                        <span class="px-3 py-1 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 rounded-full text-sm">🐳 Docker</span>
+                        <a href="https://discord.gg/rChnYKDa" target="_blank" class="discord-badge flex items-center gap-2 px-4 py-2 rounded-lg text-white text-sm">
+                            <i class="fab fa-discord"></i> Discord
+                        </a>
+                        <a href="https://www.linkedin.com/in/rafael-ferreira-dev/" target="_blank" class="bg-blue-700 hover:bg-blue-800 flex items-center gap-2 px-4 py-2 rounded-lg text-white text-sm transition">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                        <a href="https://github.com/rafaelferreira2312/devforge" target="_blank" class="bg-gray-800 hover:bg-gray-900 flex items-center gap-2 px-4 py-2 rounded-lg text-white text-sm transition">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Terminal Fake Interativo -->
+            <!-- Terminal Fake Interativo com animação de digitação -->
             <div class="mb-8 bg-gray-900 rounded-xl shadow-lg overflow-hidden border border-gray-800">
                 <div class="flex items-center px-4 py-2 bg-gray-800">
                     <div class="flex space-x-2">
@@ -265,14 +242,14 @@
                     <span class="text-xs text-gray-400 ml-4">terminal@devforge:~</span>
                     <span class="text-xs text-gray-500 ml-auto hidden sm:inline">Linux · zsh · 80x24</span>
                 </div>
-                <div id="fakeTerminal" class="p-4 font-mono text-xs sm:text-sm text-green-400 space-y-1 h-40 overflow-y-auto">
+                <div id="fakeTerminal" class="p-4 font-mono text-xs sm:text-sm text-green-400 space-y-1 h-48 overflow-y-auto">
                     <div>$> Bem-vindo ao DevForge — setup automatizado</div>
                     <div class="text-gray-500">─────────────────────────────────────────────────</div>
                     <div><span class="text-yellow-400">➜</span> Comandos disponíveis:</div>
                     <div>  <span class="text-blue-400">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/php/install.sh | bash</span></div>
                     <div>  <span class="text-blue-400">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/wordpress/install-wordpress.sh | bash</span></div>
                     <div class="text-gray-500">─────────────────────────────────────────────────</div>
-                    <div class="text-blue-400">$> ready to forge your environment.</div>
+                    <div id="typingLine" class="text-blue-400"></div>
                 </div>
                 <div class="px-4 py-2 bg-gray-800/50 flex flex-wrap justify-between items-center gap-2">
                     <div class="flex flex-wrap gap-2">
@@ -323,6 +300,27 @@
                             <code id="quickCmd3" class="text-xs bg-gray-100 dark:bg-gray-800 block p-2 rounded overflow-x-auto">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/nodejs/install.sh | bash -s 20</code>
                             <button class="copy-btn" data-cmd="quickCmd3"><i class="far fa-copy"></i> Copiar</button>
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== CONTRIBUIDORES DO GITHUB - NOVO ==================== -->
+            <div class="mt-12 bg-gradient-to-r from-gray-100 to-gray-50 dark:from-gray-900 dark:to-gray-800 rounded-2xl p-6 sm:p-8 border border-gray-200 dark:border-gray-700">
+                <div class="text-center mb-6">
+                    <i class="fab fa-github-alt text-4xl text-gray-600 mb-3"></i>
+                    <h3 class="text-2xl font-bold">Contribuidores</h3>
+                    <div class="w-20 h-1 bg-blue-600 mx-auto mt-2 rounded-full"></div>
+                    <p class="text-sm text-gray-500 mt-2">Pessoas que ajudaram a construir o DevForge</p>
+                </div>
+                <div id="contributorsList" class="flex flex-wrap justify-center gap-4 mb-6 min-h-[100px]">
+                    <div class="text-gray-500">Carregando contribuidores...</div>
+                </div>
+                
+                <!-- Últimos commits -->
+                <div class="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+                    <h4 class="text-center font-semibold mb-3">📝 Últimas atividades</h4>
+                    <div id="lastCommits" class="space-y-2 max-h-40 overflow-y-auto">
+                        <div class="text-gray-500 text-sm text-center">Carregando commits...</div>
                     </div>
                 </div>
             </div>
@@ -381,6 +379,105 @@
 </div>
 
 <script>
+    // ==================== CONTADOR DE VISITAS ====================
+    async function updateVisitorCount() {
+        try {
+            const response = await fetch('https://api.countapi.xyz/hit/devforge.rafaelferreira/visits');
+            const data = await response.json();
+            animateNumber('visitorCount', 0, data.value);
+        } catch (error) {
+            document.getElementById('visitorCount').innerText = '1.2k+';
+        }
+    }
+
+    // ==================== STATS DO GITHUB ====================
+    async function fetchGitHubStats() {
+        try {
+            const repo = 'rafaelferreira2312/devforge';
+            const response = await fetch(`https://api.github.com/repos/${repo}`);
+            const data = await response.json();
+            
+            if (data.stargazers_count !== undefined) {
+                animateNumber('starsCount', 0, data.stargazers_count);
+                animateNumber('forksCount', 0, data.forks_count);
+                animateNumber('watchersCount', 0, data.watchers_count);
+            }
+        } catch (error) {
+            document.getElementById('starsCount').innerHTML = '<i class="fas fa-star text-yellow-500"></i> 0';
+        }
+    }
+
+    // ==================== ANIMAÇÃO DO CONTADOR ====================
+    function animateNumber(elementId, start, end) {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+        
+        let current = start;
+        const increment = Math.ceil((end - start) / 50);
+        const duration = 1000;
+        const stepTime = duration / 50;
+        
+        const timer = setInterval(() => {
+            current += increment;
+            if (current >= end) {
+                element.innerText = end.toLocaleString();
+                clearInterval(timer);
+            } else {
+                element.innerText = current.toLocaleString();
+            }
+        }, stepTime);
+    }
+
+    // ==================== BUSCAR CONTRIBUIDORES ====================
+    async function fetchContributors() {
+        try {
+            const repo = 'rafaelferreira2312/devforge';
+            const response = await fetch(`https://api.github.com/repos/${repo}/contributors?per_page=12`);
+            const contributors = await response.json();
+            
+            const container = document.getElementById('contributorsList');
+            if (Array.isArray(contributors) && contributors.length > 0) {
+                container.innerHTML = contributors.map(contributor => `
+                    <a href="${contributor.html_url}" target="_blank" class="contributor-avatar group relative">
+                        <img src="${contributor.avatar_url}" alt="${contributor.login}" class="w-12 h-12 rounded-full border-2 border-blue-500 group-hover:border-blue-400 transition">
+                        <span class="absolute -bottom-6 left-1/2 transform -translate-x-1/2 text-xs text-gray-500 opacity-0 group-hover:opacity-100 transition whitespace-nowrap">${contributor.login}</span>
+                    </a>
+                `).join('');
+            } else {
+                container.innerHTML = '<div class="text-gray-500">Seja o primeiro contribuidor! 🚀</div>';
+            }
+        } catch (error) {
+            document.getElementById('contributorsList').innerHTML = '<div class="text-gray-500">Carregando contribuidores...</div>';
+        }
+    }
+
+    // ==================== BUSCAR ÚLTIMOS COMMITS ====================
+    async function fetchLastCommits() {
+        try {
+            const repo = 'rafaelferreira2312/devforge';
+            const response = await fetch(`https://api.github.com/repos/${repo}/commits?per_page=5`);
+            const commits = await response.json();
+            
+            const container = document.getElementById('lastCommits');
+            if (Array.isArray(commits) && commits.length > 0) {
+                container.innerHTML = commits.map(commit => `
+                    <div class="flex items-center gap-3 text-sm p-2 bg-gray-50 dark:bg-gray-800/50 rounded-lg">
+                        <i class="fab fa-github-alt text-gray-500"></i>
+                        <span class="flex-1 truncate">${commit.commit.message.split('\n')[0].substring(0, 60)}</span>
+                        <span class="text-xs text-gray-500">${new Date(commit.commit.author.date).toLocaleDateString('pt-BR')}</span>
+                        <a href="${commit.html_url}" target="_blank" class="text-blue-500 hover:text-blue-600">
+                            <i class="fas fa-external-link-alt text-xs"></i>
+                        </a>
+                    </div>
+                `).join('');
+            } else {
+                container.innerHTML = '<div class="text-gray-500 text-sm text-center">Nenhum commit recente</div>';
+            }
+        } catch (error) {
+            document.getElementById('lastCommits').innerHTML = '<div class="text-gray-500 text-sm text-center">Erro ao carregar commits</div>';
+        }
+    }
+
     // ==================== CARDS DINÂMICOS ====================
     function loadStacksCards() {
         const container = document.getElementById('cardsGrid');
@@ -405,7 +502,7 @@
         `).join('');
     }
 
-    // ==================== TERMINAL FAKE ====================
+    // ==================== TERMINAL FAKE COM ANIMAÇÃO ====================
     const terminalDiv = document.getElementById('fakeTerminal');
     function addToTerminal(text, color = 'text-green-400') {
         const line = document.createElement('div');
@@ -414,6 +511,34 @@
         terminalDiv.appendChild(line);
         terminalDiv.scrollTop = terminalDiv.scrollHeight;
     }
+
+    // Animação de digitação
+    const messages = [
+        '$> ready to forge your environment.',
+        '$> dica: use "devforge help" para ver todos os comandos',
+        '$> contribua em: github.com/rafaelferreira2312/devforge'
+    ];
+    let msgIndex = 0;
+    let charIndex = 0;
+    const typingLine = document.getElementById('typingLine');
+    
+    function typeEffect() {
+        if (!typingLine) return;
+        if (charIndex < messages[msgIndex].length) {
+            typingLine.innerHTML += messages[msgIndex].charAt(charIndex);
+            charIndex++;
+            setTimeout(typeEffect, 50);
+        } else {
+            setTimeout(() => {
+                typingLine.innerHTML = '';
+                charIndex = 0;
+                msgIndex = (msgIndex + 1) % messages.length;
+                typeEffect();
+            }, 3000);
+        }
+    }
+    
+    setTimeout(typeEffect, 1000);
 
     document.getElementById('runDemoCmdPHP')?.addEventListener('click', () => {
         addToTerminal('$> <span class="text-blue-400">curl -fsSL https://rafaelferreira2312.github.io/devforge/scripts/php/install.sh | bash -s 8.3</span>');
@@ -431,7 +556,14 @@
     });
 
     document.getElementById('clearTerminal')?.addEventListener('click', () => {
-        terminalDiv.innerHTML = '<div class="text-green-400">$> Terminal limpo. Ready to forge.</div>';
+        terminalDiv.innerHTML = '<div class="text-green-400">$> Terminal limpo. Ready to forge.</div><div id="typingLine" class="text-blue-400"></div>';
+        const newTypingLine = document.getElementById('typingLine');
+        if (newTypingLine) {
+            typingLine.innerHTML = '';
+            charIndex = 0;
+            msgIndex = 0;
+            typeEffect();
+        }
     });
 
     // ==================== BOTÃO COPIAR ====================
@@ -470,7 +602,6 @@
     document.getElementById('openSidebarBtn')?.addEventListener('click', openSidebar);
     document.getElementById('closeSidebarBtn')?.addEventListener('click', closeSidebar);
 
-    // Fechar sidebar ao clicar em link (mobile)
     document.querySelectorAll('#sidebarMobile a').forEach(link => {
         link.addEventListener('click', closeSidebar);
     });
@@ -513,11 +644,15 @@
         });
     }
 
-    // ==================== INICIALIZAR ====================
+    // ==================== INICIALIZAR TUDO ====================
     loadStacksCards();
     setupCopyButtons();
     initDarkMode();
     initSearch();
+    updateVisitorCount();
+    fetchGitHubStats();
+    fetchContributors();
+    fetchLastCommits();
 </script>
 </body>
 </html>
