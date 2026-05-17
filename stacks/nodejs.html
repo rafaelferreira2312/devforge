@@ -202,6 +202,155 @@
                     <p class="text-xs text-gray-500 mt-2"><i class="fas fa-info-circle"></i> Este comando verifica: versão do Node.js, versão do npm, pacotes globais instalados e localização dos binários.</p>
                 </div>
             </div>
+            <!-- ==================== AVISO UNIVERSAL DE EXECUÇÃO DE SCRIPTS ==================== -->
+            <div class="bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/20 dark:to-amber-900/20 border-l-4 border-yellow-500 rounded-r-xl p-4 mb-8 shadow-sm">
+                <div class="flex items-start gap-3">
+                    <div class="flex-shrink-0">
+                        <i class="fas fa-exclamation-triangle text-yellow-600 dark:text-yellow-400 text-xl"></i>
+                    </div>
+                    <div class="flex-1">
+                        <p class="font-bold text-yellow-800 dark:text-yellow-400 text-base">⚠️ IMPORTANTE - Como executar os scripts corretamente</p>
+                        <p class="text-sm text-yellow-700 dark:text-yellow-300 mt-1">
+                            Os scripts abaixo funcionam em <strong>Windows, Linux e macOS</strong>. Siga as instruções específicas do seu sistema:
+                        </p>
+                        
+                        <!-- Windows -->
+                        <div class="mt-3 bg-gray-900 rounded-lg p-3">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fab fa-windows text-blue-500 text-sm"></i>
+                                <span class="font-mono text-xs font-bold text-white">WINDOWS (PowerShell)</span>
+                            </div>
+                            <div class="relative">
+                                <code class="text-green-400 text-xs break-all block whitespace-pre-wrap">
+            # ERRO COMUM: "arquivo não assinado" ou "execução de scripts desabilitada"
+            # SOLUÇÃO 1: Executar com bypass (recomendado)
+            powershell -ExecutionPolicy Bypass -File "C:\caminho\script.ps1"
+
+            # SOLUÇÃO 2: Baixar e executar direto (pode ter erro de codificação)
+            powershell -ExecutionPolicy Bypass -Command "iex (irm https://.../script.ps1)"
+
+            # SOLUÇÃO 3: Habilitar execução permanentemente (como Administrador)
+            Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+            # Se houver erros de acentuação (caracteres estranhos): O script ainda funciona, apenas a saída visual pode ficar distorcida
+                                </code>
+                                <button class="copy-btn-ps1 absolute top-1 right-1 bg-gray-700 hover:bg-gray-600 text-white px-2 py-0.5 rounded text-xs" data-cmd-windows="windows-ps1">Copiar</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Linux / WSL -->
+                        <div class="mt-3 bg-gray-900 rounded-lg p-3">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fab fa-linux text-yellow-500 text-sm"></i>
+                                <span class="font-mono text-xs font-bold text-white">LINUX / WSL (Bash)</span>
+                            </div>
+                            <div class="relative">
+                                <code class="text-green-400 text-xs break-all block whitespace-pre-wrap">
+            # ERRO COMUM: "permission denied" ou "comando não encontrado"
+            # SOLUÇÃO 1: Dar permissão de execução (obrigatório)
+            chmod +x script.sh
+
+            # SOLUÇÃO 2: Executar o script
+            ./script.sh
+
+            # SOLUÇÃO 3: Executar via curl (baixar e executar direto)
+            curl -fsSL https://.../script.sh | bash
+
+            # SOLUÇÃO 4: Se der erro de permissão, use sudo (cuidado!)
+            sudo chmod +x script.sh && sudo ./script.sh
+
+            # Se houver erros de permissão: Execute 'ls -la script.sh' para verificar permissões atuais
+                                </code>
+                                <button class="copy-btn-linux absolute top-1 right-1 bg-gray-700 hover:bg-gray-600 text-white px-2 py-0.5 rounded text-xs" data-cmd-linux="linux-bash">Copiar</button>
+                            </div>
+                        </div>
+                        
+                        <!-- macOS -->
+                        <div class="mt-3 bg-gray-900 rounded-lg p-3">
+                            <div class="flex items-center gap-2 mb-2">
+                                <i class="fab fa-apple text-gray-400 text-sm"></i>
+                                <span class="font-mono text-xs font-bold text-white">macOS (Terminal / Zsh)</span>
+                            </div>
+                            <div class="relative">
+                                <code class="text-green-400 text-xs break-all block whitespace-pre-wrap">
+            # ERRO COMUM: "permission denied" ou "operation not permitted"
+            # SOLUÇÃO 1: Dar permissão de execução
+            chmod +x script.sh
+
+            # SOLUÇÃO 2: Executar o script
+            ./script.sh
+
+            # SOLUÇÃO 3: Se der erro de "quarentena" (arquivo baixado da internet)
+            xattr -d com.apple.quarantine script.sh
+
+            # SOLUÇÃO 4: Executar via curl
+            curl -fsSL https://.../script.sh | bash
+
+            # Se erro persistir: Vá em Preferências do Sistema → Segurança e Privacidade → Permitir execução
+                                </code>
+                                <button class="copy-btn-macos absolute top-1 right-1 bg-gray-700 hover:bg-gray-600 text-white px-2 py-0.5 rounded text-xs" data-cmd-macos="macos-bash">Copiar</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Dica final -->
+                        <div class="mt-3 p-2 bg-yellow-100 dark:bg-yellow-900/30 rounded-lg">
+                            <p class="text-xs text-yellow-800 dark:text-yellow-300">
+                                <i class="fas fa-lightbulb mr-1"></i> 
+                                <strong>Dicas importantes:</strong><br>
+                                • <strong>Windows:</strong> Se aparecerem caracteres estranhos (ex: "�" ou "Ã§Ã£o"), ignore - o script funciona normalmente. Para evitar, baixe o script localmente e execute.<br>
+                                • <strong>Linux/macOS:</strong> Sempre use <code class="bg-gray-800 text-green-400 px-1 rounded">chmod +x</code> antes de executar scripts baixados.<br>
+                                • <strong>WSL (Windows):</strong> Siga as instruções do Linux, mas certifique-se de que o script está dentro do sistema de arquivos do Linux (não no /mnt/c/).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script>
+            // Script para os botões de cópia do aviso universal
+            document.querySelectorAll('.copy-btn-ps1, .copy-btn-linux, .copy-btn-macos').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    let text = '';
+                    if (btn.classList.contains('copy-btn-ps1')) {
+                        text = `# Windows PowerShell - Executar script\npowershell -ExecutionPolicy Bypass -File "script.ps1"\n\n# Ou via curl\npowershell -ExecutionPolicy Bypass -Command "iex (irm https://.../script.ps1)"\n\n# Habilitar execução permanentemente (Admin)\nSet-ExecutionPolicy RemoteSigned -Scope CurrentUser`;
+                    } else if (btn.classList.contains('copy-btn-linux')) {
+                        text = `# Linux/WSL - Dar permissão e executar\nchmod +x script.sh\n./script.sh\n\n# Ou via curl\ncurl -fsSL https://.../script.sh | bash\n\n# Se erro de permissão persistir\nsudo chmod +x script.sh && sudo ./script.sh`;
+                    } else if (btn.classList.contains('copy-btn-macos')) {
+                        text = `# macOS - Dar permissão e executar\nchmod +x script.sh\n./script.sh\n\n# Remover quarentena (se necessário)\nxattr -d com.apple.quarantine script.sh\n\n# Ou via curl\ncurl -fsSL https://.../script.sh | bash`;
+                    }
+                    navigator.clipboard.writeText(text);
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '✓ Copiado!';
+                    setTimeout(() => btn.innerHTML = originalText, 2000);
+                });
+            });
+            // Script para botões de cópia do aviso universal
+            function setupAvisoCopyButtons() {
+                document.querySelectorAll('.copy-btn-ps1, .copy-btn-linux, .copy-btn-macos').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        let text = '';
+                        if (btn.classList.contains('copy-btn-ps1')) {
+                            text = `powershell -ExecutionPolicy Bypass -File "script.ps1"`;
+                        } else if (btn.classList.contains('copy-btn-linux')) {
+                            text = `chmod +x script.sh && ./script.sh`;
+                        } else if (btn.classList.contains('copy-btn-macos')) {
+                            text = `chmod +x script.sh && ./script.sh`;
+                        }
+                        navigator.clipboard.writeText(text);
+                        const originalText = btn.innerHTML;
+                        btn.innerHTML = '✓ Copiado!';
+                        setTimeout(() => btn.innerHTML = originalText, 1500);
+                    });
+                });
+            }
+
+            // Chamar a função quando a página carregar
+            if (document.readyState === 'loading') {
+                document.addEventListener('DOMContentLoaded', setupAvisoCopyButtons);
+            } else {
+                setupAvisoCopyButtons();
+            }
+            </script>            
+            <!-- ==================== FIM DO AVISO UNIVERSAL ==================== -->
 
             <!-- Scripts prontos -->
             <div class="bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-5 sm:p-6 mb-8">
