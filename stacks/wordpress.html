@@ -53,6 +53,55 @@
         .dark .backup-info {
             background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
         }
+        /* Dark mode - fundo escuro, texto claro */
+        .dark body {
+            background-color: #0f0f0f;
+            color: #e5e5e5;
+        }
+
+        .dark .bg-white {
+            background-color: #1a1a1a !important;
+        }
+
+        .dark .bg-gray-50 {
+            background-color: #111111 !important;
+        }
+
+        .dark .text-gray-600, .dark .text-gray-700 {
+            color: #d1d1d1 !important;
+        }
+
+        .dark .text-gray-500, .dark .text-gray-400 {
+            color: #a0a0a0 !important;
+        }
+
+        /* Ícones - ficam brancos no dark mode */
+        .dark i, .dark .fas, .dark .fab, .dark .far {
+            color: #ffffff !important;
+        }
+
+        /* EXCEÇÕES - Ícones que mantêm suas cores originais no dark mode */
+        .dark .fa-php, .dark .fa-wordpress, .dark .fa-node, .dark .fa-python,
+        .dark .fa-java, .dark .fa-golang, .dark .fa-docker, .dark .fa-linux,
+        .dark .fa-windows, .dark .fa-github, .dark .fa-linkedin, .dark .fa-discord,
+        .dark .fa-microsoft, .dark .text-blue-500 i, .dark .text-green-500 i,
+        .dark .text-yellow-500 i, .dark .text-red-500 i, .dark .text-purple-500 i,
+        .dark .text-indigo-500 i, .dark .text-pink-500 i, .dark .text-orange-500 i {
+            color: inherit !important;
+        }
+
+        /* Cards no dark mode */
+        .dark .border-gray-200 {
+            border-color: #2a2a2a !important;
+        }
+
+        .dark .bg-gray-100 {
+            background-color: #1f1f1f !important;
+        }
+
+        .dark .bg-gray-50 {
+            background-color: #161616 !important;
+        }
     </style>
 </head>
 <body class="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-200">
@@ -87,7 +136,7 @@
         <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
         <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span></a>
         <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-gem w-5 text-red-400"></i><span>Ruby on Rails</span></a>
-        <a href="stacks/csharp.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-microsoft w-5 text-purple-500"></i><span>C# .NET</span></a>
+        <a href="csharp.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-microsoft w-5 text-purple-500"></i><span>C# .NET</span></a>
         <a href="devops.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cloud-upload-alt w-5 text-purple-500"></i><span>DevOps</span></a>
         <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span></a>
         <a href="docker.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-docker w-5 text-blue-500"></i><span>Docker</span></a>
@@ -117,7 +166,7 @@
             <a href="go.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-golang w-5 text-blue-400"></i><span>Go</span></a>
             <a href="rust.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cogs w-5 text-orange-500"></i><span>Rust</span></a>
             <a href="rails.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-gem w-5 text-red-400"></i><span>Ruby on Rails</span></a>
-            <a href="stacks/csharp.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-microsoft w-5 text-purple-500"></i><span>C# .NET</span></a>
+            <a href="csharp.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-microsoft w-5 text-purple-500"></i><span>C# .NET</span></a>
             <a href="devops.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-cloud-upload-alt w-5 text-purple-500"></i><span>DevOps</span></a>
             <a href="ia.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fas fa-brain w-5 text-pink-500"></i><span>IA/ML</span></a>
             <a href="docker.html" class="flex items-center space-x-3 px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition"><i class="fab fa-docker w-5 text-blue-500"></i><span>Docker</span></a>
